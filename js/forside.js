@@ -16,8 +16,15 @@ var SEKT_IDX=[48,102];
 var SPD_R6=[31.5,29.2,26.8,24.3,24.5,26.5,38.2,45.9,44.7,43.5,40.2,38.9,28.3,28.2,26.4,21.3,34.3,40.8,37.8,32.3,33.2,16.2,14.9,16.3,14.4,17.7,29.8,28.3,25.4,21.6,31.0,34.7,34.5,33.8,29.6,31.5,33.3,34.9,28.7,24.4,22.5,17.3,23.2,30.2,30.8,32.6,32.4,31.9,31.2,21.7,15.2,33.1,32.5,29.2,25.7,24.1,27.5,23.8,18.3,27.6,50.5,45.8,45.6,45.4,39.7,38.0,36.1,44.3,60.6,64.1,60.8,54.5,53.5,51.9,26.1,25.5,25.4,24.9,25.2,17.9,11.0,12.0,28.1,30.0,30.7,27.2,24.9,25.0,29.8,29.7,20.5,18.8,22.4,22.4,29.4,30.0,25.6,22.7,25.0,24.5,27.2,30.3,29.1,24.7,23.0,20.4,13.2,46.0,50.6,51.9,52.5,51.0,47.4,38.6,33.2,30.5,48.7,33.6,32.3,24.9];
 /* PB-runden 8. august, 2:14.71 — samme bane. */
 var SPD_PB=[38.9,39.7,43.3,52.2,56.9,54.7,48.0,45.4,47.5,49.6,48.0,44.2,46.9,51.3,55.4,54.5,56.4,56.2,50.0,43.6,42.0,37.7,29.4,17.4,40.4,50.0,41.2,28.6,34.5,42.0,61.4,55.1,51.1,49.3,42.4,38.1,38.2,44.0,43.4,31.1,27.7,35.4,56.0,57.6,59.6,56.6,50.2,40.3,20.4,22.4,47.5,54.6,61.4,58.8,54.4,43.6,26.9,21.3,49.6,75.5,75.8,73.3,69.3,65.1,58.1,52.5,55.2,63.2,64.3,63.1,59.4,56.7,55.2,49.0,47.1,46.7,37.2,32.4,43.9,50.7,56.6,60.5,53.3,42.3,34.7,36.8,41.9,42.4,33.9,30.3,39.1,28.9,36.2,41.8,45.8,46.2,42.9,49.1,51.7,53.1,58.5,62.2,55.7,48.8,32.1,44.2,48.2,49.8,61.1,67.8,71.3,66.5,57.8,46.5,34.2,37.8,37.1,43.8,46.5,39.1];
-/* Beste runde per oekt paa Froland MX 2026. Kun oekter som er verifisert. */
-var SESONG=[['2 May',157.65],['23 May',137.84],['22 Jul',212.04],['8 Aug',134.71]];
+/* Beste runde per oekt paa Froland MX 2026 — ALLE maalt med SAMME maalstrek
+   (den offisielle 'jomas'-gaten i app/build-assets/gates.json), regnet ut av raasporet
+   i tidel-2026-08-11.mxbackup.
+   RETTET: 2. mai sto tidligere som 157.65. Det tallet kom fra en AUTO-funnet maalstrek
+   (appen merker oekta "auto finish line"), mens de andre kom fra den offisielle. Da
+   sammenlignet grafen tall som ikke er sammenlignbare — nettopp det siden lover at
+   Tidel aldri gjoer. Med samme strek er 2. mai 179.29.
+   23. mai, 22. juli og 8. august traff appens egne tall paa hundredelen. */
+var SESONG=[['2 May',179.29],['23 May',137.84],['22 Jul',212.04],['8 Aug',134.71]];
 
 function fmtT(s){var m=Math.floor(s/60),r=s-m*60;return m+':'+(r<10?'0':'')+r.toFixed(2);}
 function spdCol(f){f=Math.max(0,Math.min(1,f));
@@ -132,13 +139,26 @@ function linjeSVG(w,h,serier,opt){
        (serier[k].dash?' stroke-dasharray="'+serier[k].dash+'"':'')+'/>';
   }
   if(opt.tegnforklaring){
-    var lx=pad.l+6,ly=pad.t+4;
-    for(k=0;k<serier.length;k++){
-      s+='<line x1="'+lx+'" y1="'+ly+'" x2="'+(lx+22)+'" y2="'+ly+'" stroke="'+serier[k].c+
-         '" stroke-width="2.6"'+(serier[k].dash?' stroke-dasharray="'+serier[k].dash+'"':'')+'/>';
-      s+='<text x="'+(lx+30)+'" y="'+(ly+4)+'" fill="#9B9BA3" font-size="12" '+
-         'font-family="Barlow Condensed,sans-serif" font-weight="700" letter-spacing="1.6">'+serier[k].n+'</text>';
-      lx+=30+String(serier[k].n).length*6.4+26;
+    /* Paa smal skjerm stables forklaringen over hverandre. Ved siden av hverandre
+       gikk den ut av rammen og siste serie ble usynlig. */
+    if(opt.stablet){
+      var ly2=14;
+      for(k=0;k<serier.length;k++){
+        s+='<line x1="'+pad.l+'" y1="'+ly2+'" x2="'+(pad.l+20)+'" y2="'+ly2+'" stroke="'+serier[k].c+
+           '" stroke-width="2.6"'+(serier[k].dash?' stroke-dasharray="'+serier[k].dash+'"':'')+'/>';
+        s+='<text x="'+(pad.l+27)+'" y="'+(ly2+4)+'" fill="#9B9BA3" font-size="12.5" '+
+           'font-family="Barlow Condensed,sans-serif" font-weight="700" letter-spacing="1.2">'+serier[k].n+'</text>';
+        ly2+=17;
+      }
+    } else {
+      var lx=pad.l+6,ly=pad.t+4;
+      for(k=0;k<serier.length;k++){
+        s+='<line x1="'+lx+'" y1="'+ly+'" x2="'+(lx+22)+'" y2="'+ly+'" stroke="'+serier[k].c+
+           '" stroke-width="2.6"'+(serier[k].dash?' stroke-dasharray="'+serier[k].dash+'"':'')+'/>';
+        s+='<text x="'+(lx+30)+'" y="'+(ly+4)+'" fill="#9B9BA3" font-size="12" '+
+           'font-family="Barlow Condensed,sans-serif" font-weight="700" letter-spacing="1.6">'+serier[k].n+'</text>';
+        lx+=30+String(serier[k].n).length*6.4+26;
+      }
     }
   }
   s+='</svg>'; return s;
@@ -185,9 +205,31 @@ function stolper(rows){
 (function(){
   sett('satKart', satSVG());
   sett('sektStolper', stolper([['S1',42.82],['S2',42.68],['S3',44.36]]));
-  sett('fartGraf', linjeSVG(1240,330,[
-    {v:SPD_R6,c:'#F5F5F7',w:2.0,dash:'7 5',n:'LAP 6 — 3:32.04'},
-    {v:SPD_PB,c:'#FF2438',w:2.8,n:'YOUR BEST — 2:14.71'}
-  ],{sekt:true,min:0,tegnforklaring:true}));
-  sett('sesongGraf', sesongSVG(1240,360,SESONG,{l:60,r:60,fs:17,fs2:14}));
+
+  /* Grafene MAA tegnes i containerens egen pikselbredde. Tegner vi dem i 1240 og lar
+     nettleseren skalere ned til 320, krymper teksten med samme faktor — maalt til
+     2,5 px paa telefon, altsaa uleselig. Med w = clientWidth blir skalaen 1,0, og
+     11 px er 11 px uansett skjerm. */
+  function tegnGrafer(){
+    var fg = document.getElementById('fartGraf');
+    var sg = document.getElementById('sesongGraf');
+    if(!fg || !sg) return;
+    var w = Math.round(fg.clientWidth);
+    if(w < 240) return;
+    var smal = w < 560;
+
+    sett('fartGraf', linjeSVG(w, smal ? 250 : Math.round(w*0.266), [
+      {v:SPD_R6,c:'#F5F5F7',w:2.0,dash:'7 5',n:'LAP 6 — 3:32.04'},
+      {v:SPD_PB,c:'#FF2438',w:2.8,n:'YOUR BEST — 2:14.71'}
+    ], {sekt:true, min:0, tegnforklaring:true, stablet:smal,
+        pad:{l: smal?34:44, r: smal?12:14, t: smal?46:16, b: smal?30:32}}));
+
+    var w2 = Math.round(sg.clientWidth);
+    sett('sesongGraf', sesongSVG(w2, smal ? 240 : Math.round(w2*0.29), SESONG,
+      {l: smal?32:60, r: smal?32:60, fs: smal?15:17, fs2: smal?12:14}));
+  }
+
+  tegnGrafer();
+  var t;
+  addEventListener('resize', function(){ clearTimeout(t); t = setTimeout(tegnGrafer, 150); });
 })();

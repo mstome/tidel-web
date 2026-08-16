@@ -8,10 +8,14 @@
   src:url(/assets/brand/font/barlow-condensed-700.woff2) format('woff2')}
 
 :root{
-  --ink:#F5F5F7; --mut:#9B9BA3; --dim:#6C6C74;
+  /* --dim var #6C6C74 = 3,84:1 mot bakgrunnen, under WCAG-kravet paa 4,5:1.
+     #82828B gir 5,26:1 og treffer smaatekst i bunnen, bildetekster og etiketter. */
+  --ink:#F5F5F7; --mut:#9B9BA3; --dim:#82828B;
   --bg:#08080A; --bg2:#0E0E10; --panel:#131317; --line:#212127; --line2:#33333B;
   --acc:#E30613; --accHot:#FF2438; --accSoft:rgba(227,6,19,.13);
-  --gain:#3DCC7E; --loss:#FF9F45;
+  /* --gold ble brukt i forside.css uten aa vaere definert her: gulltallet og
+     seksjonsstolpene rendret graatt. */
+  --gain:#3DCC7E; --loss:#FF9F45; --gold:#FFD60A; --hr:#4DA6FF;
   --disp:'Barlow Condensed','Arial Narrow',system-ui,sans-serif;
   --body:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
 }
