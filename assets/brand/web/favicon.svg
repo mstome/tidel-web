@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- TIDEL-merket redusert til det som faktisk bærer identiteten: de tre strekene
+       fra E-en, midtstreken i brand-rød, skjeve som ordmerket (skewX -9deg). -->
+  <rect width="64" height="64" fill="#0B0B0C"/>
+  <g transform="translate(34.5 32) skewX(-9) translate(-34.5 -32)">
+    <rect x="14" y="13" width="37" height="10" fill="#F5F5F7"/>
+    <rect x="14" y="27" width="37" height="10" fill="#E30613"/>
+    <rect x="14" y="41" width="37" height="10" fill="#F5F5F7"/>
+  </g>
+</svg>

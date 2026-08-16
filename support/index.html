@@ -1,0 +1,214 @@
+<!doctype html>
+<!-- Support-URL er PÅKREVD av Apple (retningslinje 1.5) og forventet av Google.
+     Apple avviser sider som bare er en FAQ uten kontaktvei, og sider som er
+     «coming soon». Derfor: ekte svar + en e-postadresse som besvares. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Support — Tidel</title>
+<meta name="description" content="Help with Tidel: devices, importing rides, GPS accuracy, RaceBox, your account and privacy.">
+<link rel="icon" href="/assets/brand/web/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/css/tidel.css">
+</head>
+<body>
+
+<nav class="nav">
+  <a class="brand" href="/"><span class="wmSet">TID<svg class="wm" viewBox="0 0 52 70" aria-hidden="true"><rect width="52" height="16"/><rect class="m" y="27" width="52" height="16"/><rect y="54" width="52" height="16"/></svg>L</span><small>MX Performance Tracker</small></a>
+  <div class="links">
+    <a href="/support/" aria-current="page">Support</a>
+    <a href="/privacy/">Privacy</a>
+    <a href="/terms/">Terms</a>
+    <a href="/contact/">Contact</a>
+  </div>
+</nav>
+
+<main class="doc">
+  <div class="kick">Support</div>
+  <h1>Help</h1>
+  <p class="lead">Tidel is in beta and moving fast. If something is broken, we would rather hear it
+    than not &mdash; write to <a href="mailto:post@tidel.no">post@tidel.no</a> and a person
+    answers.</p>
+  <p class="meta">Last updated 16 August 2026</p>
+
+  <h2>Devices</h2>
+  <div class="faq">
+    <details open>
+      <summary>What do I need?</summary>
+      <div class="sv"><p>A phone with GPS. That is the whole list. iPhone on iOS 15 or later, or
+        Android 7.0 or later. Everything else &mdash; a watch, an external receiver &mdash; is
+        optional.</p></div>
+    </details>
+    <details>
+      <summary>Does my watch work?</summary>
+      <div class="sv">
+        <p><strong>Apple Watch:</strong> yes, on iPhone. Record the ride as a workout, and Tidel
+          reads the route and heart rate from Apple Health.</p>
+        <p><strong>Garmin, Polar, Suunto, Coros and others:</strong> it depends on the watch, not on
+          Tidel. Two routes work:</p>
+        <ul>
+          <li>The watch writes workouts to <strong>Apple Health</strong> &mdash; then Tidel imports
+            them like any other workout, on iPhone.</li>
+          <li>You export the ride as a <strong>GPX file</strong> and open it in Tidel. This works on
+            both iPhone and Android.</li>
+        </ul>
+        <p>Tidel is not affiliated with any of these companies, and there is no direct integration
+          with their apps.</p>
+      </div>
+    </details>
+    <details>
+      <summary>Is there a difference between iPhone and Android?</summary>
+      <div class="sv"><p>The analysis is identical. The difference is import: reading workouts
+        straight from Apple Health is an iPhone feature, because Health is an Apple system. On
+        Android you record with the phone or import a GPX file. Health Connect support is not built
+        yet.</p></div>
+    </details>
+  </div>
+
+  <h2>Recording and importing</h2>
+  <div class="faq">
+    <details>
+      <summary>Do I need signal at the track?</summary>
+      <div class="sv"><p>No. Recording, importing and analysis all happen on the phone. Most tracks
+        have no coverage anyway. Your sessions sync to your account when you are back on a
+        network.</p></div>
+    </details>
+    <details>
+      <summary>How do I import a ride I already recorded?</summary>
+      <div class="sv">
+        <p>Go to <strong>More &rarr; Import</strong>. From there you can:</p>
+        <ul>
+          <li>pull workouts straight from <strong>Apple Health</strong> (iPhone),</li>
+          <li>open a <strong>GPX file</strong> from any app or watch,</li>
+          <li>drop in an <strong>Apple Health export zip</strong> if you want your whole history at
+            once,</li>
+          <li>download sessions from a paired <strong>RaceBox</strong>.</li>
+        </ul>
+        <p>Tidel finds the track, sets the finish line and splits the laps on its own.</p>
+      </div>
+    </details>
+    <details>
+      <summary>It imported my bike ride to the shops as a session</summary>
+      <div class="sv"><p>Tidel filters out rides that do not look like laps, but it is not perfect.
+        Delete the session from the session list &mdash; that removes its GPS file too.</p></div>
+    </details>
+  </div>
+
+  <h2>Lap times and GPS</h2>
+  <div class="faq">
+    <details>
+      <summary>Why did I get fewer laps than I rode?</summary>
+      <div class="sv">
+        <p>A lap only counts if the GPS actually shows you crossing the finish line, in the right
+          direction, with no gap in the recording. The usual causes are:</p>
+        <ul>
+          <li>the finish line sits somewhere you do not really pass, or passes it at an angle,</li>
+          <li>the GPS dropped out for a few seconds,</li>
+          <li>you stopped for long enough that the lap is not a lap any more.</li>
+        </ul>
+        <p>Open <strong>Track setup</strong> from the map and move the finish line to a spot you
+          cross cleanly every lap, ideally on a straight. Tidel re-counts immediately, and tells you
+          why each discarded pass was discarded.</p>
+      </div>
+    </details>
+    <details>
+      <summary>How accurate are the times?</summary>
+      <div class="sv"><p>Accurate enough to compare your own laps with each other, which is the
+        point. A phone gives roughly one position per second; a RaceBox gives twenty-five. Neither
+        is transponder timing, and neither should be used to settle a result or claim a record.</p></div>
+    </details>
+    <details>
+      <summary>What is the &ldquo;best sectors combined&rdquo; time?</summary>
+      <div class="sv"><p>Your fastest time in each sector, added together. It is a calculation, not
+        a lap you rode &mdash; it shows what the day was worth if you put your best parts on the
+        same lap. Tidel drops any sector where the GPS had a gap or you stopped, and marks the
+        number when it had to.</p></div>
+    </details>
+  </div>
+
+  <h2>RaceBox</h2>
+  <div class="faq">
+    <details>
+      <summary>Which boxes work?</summary>
+      <div class="sv"><p>RaceBox Mini, Mini S and Micro, over Bluetooth. Tidel reads 25 Hz position
+        plus altitude, satellite count, heading and three-axis G-force. Tidel has no partnership
+        with RaceBox &mdash; it is simply a receiver the app can talk to.</p></div>
+    </details>
+    <details>
+      <summary>It will not connect</summary>
+      <div class="sv">
+        <p>Only one app can talk to a RaceBox at a time. Close the RaceBox app completely, including
+          from the app switcher, and disconnect any other phone that has been paired to it. The box
+          keeps recording on its own even when nothing is connected, so you will not lose the
+          session.</p>
+        <p>Then open <strong>More &rarr; My devices</strong> and connect again.</p>
+      </div>
+    </details>
+  </div>
+
+  <h2>Your account</h2>
+  <div class="faq">
+    <details>
+      <summary>I never made an account. Do I have one?</summary>
+      <div class="sv"><p>Yes &mdash; an anonymous one, created automatically so your sessions
+        survive a new phone. There is no email, no password and no profile to fill in. You can see
+        its 8-character code under <strong>More &rarr; My share code</strong>.</p></div>
+    </details>
+    <details>
+      <summary>How do I move to a new phone?</summary>
+      <div class="sv"><p>Export a backup from <strong>More &rarr; Backup</strong> on the old phone
+        and open it on the new one. That carries everything across, including sessions, tracks,
+        settings and trophies.</p></div>
+    </details>
+    <details>
+      <summary>How do I delete everything?</summary>
+      <div class="sv"><p>In the app: <strong>More &rarr; Your account &rarr; Delete my account</strong>.
+        Without the app installed, see <a href="/delete-account/">tidel.no/delete-account</a>. There
+        is a 7-day grace period, then it is permanently gone.</p></div>
+    </details>
+    <details>
+      <summary>Is there a web version?</summary>
+      <div class="sv"><p>A web version is being built for deeper analysis on a big screen. It is in
+        private testing and not open yet.</p></div>
+    </details>
+  </div>
+
+  <h2>Price and privacy</h2>
+  <div class="faq">
+    <details>
+      <summary>What does it cost?</summary>
+      <div class="sv"><p>Nothing while in beta. There are no ads and no in-app purchases. If paid
+        features arrive later, we will say so in advance and your existing rides stay
+        accessible.</p></div>
+    </details>
+    <details>
+      <summary>Who can see my rides?</summary>
+      <div class="sv"><p>Only you, unless you deliberately share a session or a record. Sessions are
+        private by default and there is no public leaderboard. The full detail is in the
+        <a href="/privacy/">Privacy Policy</a>.</p></div>
+    </details>
+  </div>
+
+  <h2>Still stuck?</h2>
+  <div class="kort">
+    <p>Write to <a href="mailto:post@tidel.no">post@tidel.no</a>. Tell us the phone you use, what
+      you did, and what happened instead. If it is about one particular session, the date and track
+      are enough to find it.</p>
+  </div>
+</main>
+
+<footer>
+  <div class="in">
+    <div class="rad">
+      <a href="/">Home</a><a href="/download/">Download</a><a href="/support/">Support</a><a href="/privacy/">Privacy</a>
+      <a href="/personvern/">Personvern</a><a href="/terms/">Terms</a>
+      <a href="/delete-account/">Delete account</a><a href="/contact/">Contact</a>
+    </div>
+    <div class="sig">
+      <span>&copy; 2026 Tidel</span><span>post@tidel.no</span>
+      <span class="sp">EVERY TENTH COUNTS.</span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

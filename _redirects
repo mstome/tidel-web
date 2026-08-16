@@ -1,0 +1,13 @@
+# Adresser folk gjetter paa, og adressen som allerede staar i Play Console-utkastene.
+# Formatet leses av Cloudflare Pages og Netlify. Andre verter ignorerer fila.
+
+/personvern.html   /personvern/      301
+/privacy.html      /privacy/         301
+/terms.html        /terms/           301
+/tos               /terms/           301
+/help              /support/         301
+/hjelp             /support/         301
+/slett-konto       /delete-account/  301
+/slettekonto       /delete-account/  301
+/account-deletion  /delete-account/  301
+/kontakt           /contact/         301

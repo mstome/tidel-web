@@ -1,0 +1,332 @@
+<!doctype html>
+<!-- ═══════════════════════════════════════════════════════════════════════════════
+     SKREVET MOT DET APPEN FAKTISK GJØR, ikke mot en mal.
+     Grunnlaget er en gjennomgang av app-template.html, racebox.js, HealthImportStore.swift,
+     patch-*-project.sh og alle SKY-*.sql. Endres datapraksisen i appen, MÅ denne siden og
+     Data safety-skjemaet i Play Console oppdateres i samme slipp — et avvik mellom dem er
+     i seg selv et policybrudd.
+     JURIDISK: teksten er skrevet for å være sann og fullstendig, ikke som juridisk rådgivning.
+     Få den gjennomgått av jurist før kommersiell lansering.
+     ═══════════════════════════════════════════════════════════════════════════════ -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Privacy Policy — Tidel</title>
+<meta name="description" content="What Tidel collects, what stays on your phone, who processes it, and how to delete it.">
+<link rel="icon" href="/assets/brand/web/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/css/tidel.css">
+</head>
+<body>
+
+<nav class="nav">
+  <a class="brand" href="/"><span class="wmSet">TID<svg class="wm" viewBox="0 0 52 70" aria-hidden="true"><rect width="52" height="16"/><rect class="m" y="27" width="52" height="16"/><rect y="54" width="52" height="16"/></svg>L</span><small>MX Performance Tracker</small></a>
+  <div class="links">
+    <a href="/support/">Support</a>
+    <a href="/privacy/" aria-current="page">Privacy</a>
+    <a href="/terms/">Terms</a>
+    <a href="/contact/">Contact</a>
+  </div>
+</nav>
+
+<main class="doc">
+  <div class="kick">Privacy</div>
+  <h1>Privacy Policy</h1>
+  <p class="lead">Tidel is a motocross lap timer. It records where you ride, so it can tell you
+    how fast you rode. This page says exactly what that means for your data.</p>
+  <p class="meta">Last updated 16 August 2026 &middot; applies to the Tidel app for iOS and Android
+    &middot; Norwegian version: <a href="/personvern/">personvern</a></p>
+
+  <div class="kort">
+    <p><strong>The short version.</strong> Your sessions are private by default and nobody else can
+      see them. There are no ads, no trackers and no third-party analytics in the app at all.
+      Tidel does store your sessions on its own server so they survive a new phone &mdash; and you
+      can delete all of it, permanently, at any time.</p>
+  </div>
+
+  <div class="toc">
+    <h4>On this page</h4>
+    <ol>
+      <li><a href="#hvem">Who is responsible</a></li>
+      <li><a href="#hva">What Tidel collects, and why</a></li>
+      <li><a href="#lokalt">What never leaves your phone</a></li>
+      <li><a href="#konto">Your account</a></li>
+      <li><a href="#deling">Sharing, and who else processes data</a></li>
+      <li><a href="#baner">The public track catalogue</a></li>
+      <li><a href="#sikkerhet">How the data is kept</a></li>
+      <li><a href="#sletting">Retention and deletion</a></li>
+      <li><a href="#rettigheter">Your rights</a></li>
+      <li><a href="#barn">Children</a></li>
+      <li><a href="#endringer">Changes</a></li>
+      <li><a href="#kontakt">Contact</a></li>
+    </ol>
+  </div>
+
+  <h2 id="hvem">1. Who is responsible</h2>
+  <p>The app is <strong>Tidel</strong>. The developer and data controller is
+    <strong>Magnus Linnerud Støme</strong>, Norway. For anything on this page, write to
+    <a href="mailto:post@tidel.no">post@tidel.no</a>.</p>
+
+  <h2 id="hva">2. What Tidel collects, and why</h2>
+  <p>&ldquo;Sent to the server&rdquo; below means Tidel&rsquo;s own cloud, which exists so your
+    history survives a lost or replaced phone. Nothing in this table is sold, and nothing is
+    used for advertising.</p>
+
+  <table>
+    <tr><th>Data</th><th>Why</th><th>Sent to server</th></tr>
+    <tr>
+      <td><strong>Precise location (GPS)</strong><br>Position, speed, timestamp along the ride</td>
+      <td>Timing laps, drawing your line on the map, recognising which track you are on</td>
+      <td class="ja">Yes &mdash; compressed, in a private file only your account can open</td>
+    </tr>
+    <tr>
+      <td><strong>Lap and session data</strong><br>Lap times, sector times, distance, speed,
+        session name, notes, bike, conditions</td>
+      <td>The analysis itself</td>
+      <td class="ja">Yes</td>
+    </tr>
+    <tr>
+      <td><strong>Heart rate</strong> (iOS)</td>
+      <td>Shown per lap and in the analysis. Read from Apple Health for rides you already
+        recorded with a watch</td>
+      <td class="ja">Yes &mdash; inside the same private session file</td>
+    </tr>
+    <tr>
+      <td><strong>Workouts from Apple Health</strong> (iOS)<br>Workout, route, heart rate, distance</td>
+      <td>Turning a ride you recorded on a watch into lap data</td>
+      <td class="ja">Yes, once imported as a session</td>
+    </tr>
+    <tr>
+      <td><strong>External GPS telemetry</strong><br>RaceBox: position at 25 Hz, altitude,
+        accuracy, satellites, heading, G-force, gyro</td>
+      <td>Higher-resolution analysis when you use an external receiver</td>
+      <td class="ja">Yes, as part of the session</td>
+    </tr>
+    <tr>
+      <td><strong>External device identity</strong><br>Model, serial number and Bluetooth id of a
+        paired RaceBox</td>
+      <td>Recognising the box between sessions, and tagging which device recorded what</td>
+      <td class="ja">Yes, in your own settings</td>
+    </tr>
+    <tr>
+      <td><strong>Rider name</strong> (optional)</td>
+      <td>Shown on your own session cards and in anything you choose to share</td>
+      <td class="ja">Yes, if you enter one</td>
+    </tr>
+    <tr>
+      <td><strong>Account identifier</strong><br>A random id, plus an 8-character share code</td>
+      <td>Owning your data, and letting a friend add you</td>
+      <td class="ja">Yes</td>
+    </tr>
+    <tr>
+      <td><strong>Email address</strong></td>
+      <td>Only if you sign in to the web version. The app itself never asks for one</td>
+      <td class="ja">Yes, if you provide one</td>
+    </tr>
+    <tr>
+      <td><strong>Usage events</strong><br>An event name from a fixed list (e.g. &ldquo;an import
+        finished&rdquo;), a number or error code, plus app version, platform, language and a random
+        identifier for your installation</td>
+      <td>Finding out which parts break, and on which platform. The events never contain lap times,
+        positions, names, track names or notes. They are <strong>not linked to your account</strong>
+        &mdash; no user id is stored with them &mdash; but they are tied to a random identifier for
+        your installation, so one crash on one phone can be told apart from a hundred crashes
+        everywhere. That makes them pseudonymous rather than anonymous, and we treat them as
+        personal data. Switch them off under More &rarr; Feedback and nothing is sent</td>
+      <td class="ja">Yes, without your identity</td>
+    </tr>
+    <tr>
+      <td><strong>Feedback you send</strong><br>The text you write, the category you picked, an
+        optional contact address, any session data you tick to attach, plus app version, platform
+        and language</td>
+      <td>Answering you and fixing what you reported. Sent only when you press Send under
+        More &rarr; Feedback. Unlike usage events this <strong>is</strong> linked to your account,
+        so we can look into what actually happened on it &mdash; please do not put anyone
+        else&rsquo;s personal details into the message</td>
+      <td class="ja">Yes, when you send it</td>
+    </tr>
+    <tr>
+      <td><strong>Camera</strong></td>
+      <td>Scanning a friend&rsquo;s QR share code. Frames are read in memory and never stored</td>
+      <td class="nei">No &mdash; nowhere, ever</td>
+    </tr>
+  </table>
+
+  <h3>Location, specifically</h3>
+  <p>Tidel uses precise location because a lap time is meaningless without it: the app has to know
+    where the finish line is and when you crossed it, to within a few metres.</p>
+  <p><strong>Tidel does not request background location.</strong> On Android, recording runs in a
+    foreground service with a permanent notification so you can see it is running. On iOS, location
+    is used while the app is in use. If a future version needs background location, this page and
+    the app&rsquo;s permission prompts will say so before it is turned on.</p>
+
+  <h3>What Tidel deliberately does not do</h3>
+  <ul>
+    <li><strong>No advertising, and no advertising identifiers.</strong></li>
+    <li><strong>No third-party analytics, crash-reporting or attribution SDKs.</strong> There is no
+      Google Analytics, Firebase, Crashlytics, Sentry, Amplitude, Mixpanel, AppsFlyer or anything
+      similar, and no data goes to any company other than the two processors listed below. Tidel
+      does record its own error reports &mdash; the message, the file and the line number &mdash;
+      on Tidel&rsquo;s own server, so a crash nobody reports still gets fixed. They contain no lap
+      times, no positions, no names and no notes, and the same switch under More &rarr; Feedback
+      turns them off.</li>
+    <li><strong>No selling of data, to anyone, for any purpose.</strong></li>
+    <li><strong>No advertising identifier, and no hardware identifier.</strong> We never read the
+      IDFA, the Android advertising id, IMEI, MAC address or serial number, and we do not collect
+      your phone model. Usage events do carry an identifier the app generated at random for this
+      installation, plus platform, app version and language. It belongs to nobody but this copy of
+      Tidel, it disappears if you reinstall, and it is deleted when you delete your account.</li>
+    <li><strong>No public leaderboard you end up on without asking.</strong></li>
+  </ul>
+
+  <h2 id="lokalt">3. What never leaves your phone</h2>
+  <ul>
+    <li><strong>Your rider profile</strong> &mdash; age, weight and resting heart rate, if you enter
+      them. Used to estimate training load locally. Never uploaded.</li>
+    <li><strong>Your profile picture.</strong></li>
+    <li><strong>Camera frames</strong> from QR scanning.</li>
+    <li><strong>Local backups</strong> that the app writes to its own folder so an app update cannot
+      cost you your history. Be aware of one thing: these files contain your sessions, and therefore
+      heart rate if you have imported any. They live in the app&rsquo;s own documents folder, which
+      means <strong>they are included in an iCloud or Android device backup if you have that turned
+      on</strong> &mdash; and on iPhone it is on by default. If you would rather your heart rate
+      never reached iCloud, turn Tidel off in Settings &rarr; Apple ID &rarr; iCloud &rarr; iCloud
+      Backup. The manual export under More &rarr; Backup goes only where you choose to save it.</li>
+  </ul>
+
+  <h2 id="konto">4. Your account</h2>
+  <p>Tidel creates an <strong>anonymous account</strong> for you the first time it needs one. There
+    is no sign-up form, no email and no password. The account is what owns your sessions, and it is
+    what makes it possible to move to a new phone without losing them.</p>
+  <p>If you use the web version, you can attach an email address and a password to that same
+    account. Doing so does not create a second account and does not move your data &mdash; it is the
+    same account, now with a way to sign in.</p>
+
+  <h2 id="deling">5. Sharing, and who else processes data</h2>
+  <h3>What you share yourself</h3>
+  <p>You can send a session as a file or as a share code, and you can share a record with friends
+    inside the app. That happens only when you choose it, to the people you choose. Your sessions
+    are <strong>private by default</strong>.</p>
+
+  <h3>Processors, and where the data goes</h3>
+  <table>
+    <tr><th>Who</th><th>What for</th><th>Where, and on what safeguard</th></tr>
+    <tr>
+      <td><strong>Supabase Inc.</strong><br>(database, file storage, sign-in)</td>
+      <td>Stores your account, sessions, laps and raw GPS files on Tidel&rsquo;s behalf</td>
+      <td>Your data is stored in the <strong>European Union</strong> (Ireland) and is not
+        replicated outside it. Supabase Inc. is established in the United States, and its
+        operations staff may access the infrastructure from there. That access is covered by the
+        <strong>EU Standard Contractual Clauses</strong>, together with encryption in transit and
+        at rest.</td>
+    </tr>
+    <tr>
+      <td><strong>Esri Inc.</strong><br>(satellite imagery)</td>
+      <td>Serves the map tiles behind the track map</td>
+      <td>Tiles are fetched from Esri&rsquo;s servers in the <strong>United States</strong>. Tidel
+        sends only the coordinates of the map square you are looking at &mdash; never your account,
+        your name or your ride &mdash; but like any web request it carries your device&rsquo;s
+        <strong>IP address</strong>, which Esri may log. That is a transfer to a third country,
+        made on the basis of the <strong>EU Standard Contractual Clauses</strong>. Turn the
+        satellite background off in the app and the request is never made.</td>
+    </tr>
+  </table>
+  <p>Both are bound by a written data processing agreement. They may only process your data on
+    Tidel&rsquo;s documented instructions, may not use it for their own purposes, and are required
+    to give it the same or an equal level of protection as this policy promises. Neither may sell
+    it, share it onward, or use it for advertising or profiling. No other company receives your
+    data. Apple Health and Google Play are not processors for Tidel &mdash; Health is a source you
+    import from, and Play is a distribution channel.</p>
+  <p>We will disclose data to a public authority only where we are legally obliged to, and only to
+    the extent of that obligation.</p>
+
+  <h2 id="baner">6. The public track catalogue</h2>
+  <div class="kort ro">
+    <p>This is the one part that is genuinely public, so it is worth reading. Tidel keeps a shared
+      catalogue of motocross tracks: <strong>name, position, outline, finish line and sector
+      boundaries</strong>. Ride somewhere that is not in it yet and the track is added, so the next
+      rider finds it.</p>
+    <p><strong>Your ride is not part of that.</strong> What goes into the catalogue is the geometry
+      of the track &mdash; never your GPS trace, your lap times, your heart rate or your account.
+      One thing does travel with it: if you have entered a rider name, it is stored as a credit on
+      the tracks you add, and other riders can see it. Leave the rider name blank under
+      More &rarr; Rider and nothing identifying you is published at all. Deleting your account
+      removes the credit from every track you added.</p>
+    <p>Track geometry <strong>stays in the catalogue when you delete your account</strong>, with the
+      link to you removed. If one rider leaving erased the track, it would break it for everyone
+      else who rides there.</p>
+  </div>
+
+  <h2 id="sikkerhet">7. How the data is kept</h2>
+  <ul>
+    <li>Everything sent to or from the server travels over <strong>HTTPS/TLS</strong>.</li>
+    <li>Raw GPS files live in a <strong>private storage bucket</strong>. Access is bound to the
+      account that owns them &mdash; there is no public link to a session file.</li>
+    <li>The database enforces access <strong>per row, in the database itself</strong>, not in the
+      app. Your sessions are readable by your account and no other.</li>
+    <li>Once a session file is uploaded it is <strong>immutable</strong>: the server refuses changes
+      that would shrink or overwrite a recorded ride.</li>
+  </ul>
+
+  <h2 id="sletting">8. Retention and deletion</h2>
+  <p>Sessions are kept until you delete them, because the whole point of the app is comparing this
+    season to the last one. You can delete a single session at any time from inside the app.</p>
+  <h3>Deleting the whole account</h3>
+  <p>You can start this in the app under <strong>More &rarr; Your account &rarr; Delete my
+    account</strong>, or from <a href="/delete-account/">tidel.no/delete-account</a> if you no
+    longer have the app installed.</p>
+  <ul>
+    <li>The account is locked for writing immediately.</li>
+    <li>There is a <strong>7-day grace period</strong> during which you can undo it.</li>
+    <li>After that, the following is <strong>permanently deleted</strong>: your profile, all
+      sessions, laps and records, your settings, your friendships, and every raw GPS file you have
+      uploaded.</li>
+    <li><strong>What remains:</strong> public track geometry, with your name and account removed
+      from it, as described in section 6. Nothing else. Usage events tied to your installation are
+      deleted along with everything else, and any feedback you sent is stripped of the link to your
+      account.</li>
+  </ul>
+  <p>Deletion is real deletion, not deactivation.</p>
+
+  <h2 id="rettigheter">9. Your rights</h2>
+  <p>Under the GDPR you may request access to your data, correction, deletion, restriction, and a
+    copy in a portable format. Two of these you can do yourself, immediately: the app can export
+    your entire history as a file under More &rarr; Backup, and it can delete your account as
+    described above. For anything else, write to
+    <a href="mailto:post@tidel.no">post@tidel.no</a>.</p>
+  <p>The legal basis for processing is the performance of the service you asked for, and your
+    consent for optional items such as Apple Health access and usage statistics &mdash; both of
+    which you can withdraw at any time, in the app or in your phone&rsquo;s settings.</p>
+  <p>If you believe your data is handled wrongly you can complain to the Norwegian Data Protection
+    Authority (Datatilsynet).</p>
+
+  <h2 id="barn">10. Children</h2>
+  <p>Motocross riders are often young, and Tidel is usable by anyone who rides. The app does not ask
+    for a date of birth, does not profile users, shows no advertising, and has no public social
+    feed. It is not directed at children under 13, and if a parent or guardian wants an account
+    removed, one email to <a href="mailto:post@tidel.no">post@tidel.no</a> is enough.</p>
+
+  <h2 id="endringer">11. Changes</h2>
+  <p>If this policy changes, the date at the top changes with it. If a change actually affects what
+    is collected or where it goes, the app will say so rather than quietly updating a web page.</p>
+
+  <h2 id="kontakt">12. Contact</h2>
+  <p>Magnus Linnerud Støme &middot; Tidel &middot; Norway<br>
+    <a href="mailto:post@tidel.no">post@tidel.no</a></p>
+</main>
+
+<footer>
+  <div class="in">
+    <div class="rad">
+      <a href="/">Home</a><a href="/download/">Download</a><a href="/support/">Support</a><a href="/privacy/">Privacy</a>
+      <a href="/personvern/">Personvern</a><a href="/terms/">Terms</a>
+      <a href="/delete-account/">Delete account</a><a href="/contact/">Contact</a>
+    </div>
+    <div class="sig">
+      <span>&copy; 2026 Tidel</span><span>post@tidel.no</span><span>Imagery &copy; Esri</span>
+      <span class="sp">EVERY TENTH COUNTS.</span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

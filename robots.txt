@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Ikke indekser det som ikke er publikum sitt
+Disallow: /app/
+Disallow: /konsept/
+Disallow: /dev.html
+
+Sitemap: https://tidel.no/sitemap.xml

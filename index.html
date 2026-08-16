@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tidel — MX Performance Tracker</title>
+<meta name="description" content="GPS lap timing built for motocross. Tidel finds the track, the finish line and every lap on its own — then shows you where the time actually went.">
+<link rel="canonical" href="https://tidel.no/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://tidel.no/">
+<meta property="og:title" content="Tidel — MX Performance Tracker">
+<meta property="og:description" content="GPS lap timing built for motocross. See where the time went.">
+<meta property="og:image" content="https://tidel.no/assets/photo/hero-berm.jpg">
+<meta property="og:image:width" content="1600">
+<meta property="og:image:height" content="851">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#08080A">
+<link rel="icon" href="/assets/brand/web/favicon.svg" type="image/svg+xml">
+<link rel="preload" as="image" href="/assets/photo/hero-berm.jpg">
+<link rel="stylesheet" href="/css/tidel.css">
+<link rel="stylesheet" href="/css/forside.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"SoftwareApplication",
+ "name":"Tidel","alternateName":"Tidel — MX Performance Tracker",
+ "applicationCategory":"SportsApplication",
+ "operatingSystem":"iOS 15 or later, Android 7.0 or later",
+ "description":"GPS lap timing and line analysis for motocross riders.",
+ "url":"https://tidel.no/",
+ "author":{"@type":"Person","name":"Magnus Linnerud Støme"},
+ "offers":{"@type":"Offer","price":"0","priceCurrency":"NOK"}}
+</script>
+</head>
+<body>
+
+<!-- ══════════════ HERO ══════════════ -->
+<section class="hero">
+  <div class="ph"></div><div class="tt"></div>
+  <nav class="navTop">
+    <a class="brand" href="/"><span class="wmSet">TID<svg class="wm" viewBox="0 0 52 70" aria-hidden="true"><rect width="52" height="16"/><rect class="m" y="27" width="52" height="16"/><rect y="54" width="52" height="16"/></svg>L</span><small>MX Performance Tracker</small></a>
+    <div class="links">
+      <a href="#analysis">Analysis</a>
+      <a href="#progress">Progress</a>
+      <a href="#devices">Devices</a>
+      <a href="/support/">Support</a>
+    </div>
+    <div class="right"><a class="knapp g sm" href="/download/">Get Tidel</a></div>
+  </nav>
+
+  <div class="wrap">
+    <div class="heroGrid">
+      <div>
+        <div class="kick">MX Performance Tracker</div>
+        <h1 class="xxl" style="margin-top:20px">Ride.<br>Analyze.<br><span class="red">Improve.</span></h1>
+        <p class="sub">GPS lap timing built for motocross. Tidel finds the track, the finish line
+          and every lap on its own &mdash; then shows you where the time actually went.</p>
+        <div class="cta">
+          <a class="knapp p" href="/download/">Get Tidel</a>
+          <a class="knapp g" href="#analysis">See how it works</a>
+        </div>
+        <div class="stores" id="heroStores"></div>
+      </div>
+      <div class="heroPhone">
+        <img src="/assets/photo/app-hjem.jpg" width="390" height="844" alt="The Tidel app showing a session at Froland MX">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ 01 · WHERE THE TIME WENT ══════════════ -->
+<section class="pad" id="analysis">
+  <div class="wrap">
+    <div class="ix"><span class="no">01</span><span class="lb">Where the time went</span><span class="rl"></span></div>
+    <div class="split">
+      <div>
+        <h2 class="xl">The lap time tells<br>you what happened.<br><span class="red">Tidel tells you where.</span></h2>
+        <p class="txt" style="margin-top:24px">Your real line on satellite imagery, coloured by speed,
+          split into sectors along the racing line. One glance and the slow part of the track is
+          obvious.</p>
+        <div class="figRow" style="margin-top:38px">
+          <div class="fig"><div class="k">Lap length</div><div class="v num">1 557<span style="font-size:.42em"> m</span></div></div>
+          <div class="fig"><div class="k">Slowest point</div><div class="v num red">11<span style="font-size:.42em"> km/h</span></div></div>
+        </div>
+        <div class="legend"><span>Slow</span><span class="ramp"></span><span>Fast</span></div>
+        <div class="shot" style="margin-top:34px">
+          <img src="/assets/photo/track-pano.jpg" width="455" height="242" loading="lazy" alt="A motocross track at sunset">
+          <div class="cap">Froland MX</div>
+        </div>
+      </div>
+      <div>
+        <div class="sat" id="satKart"></div>
+        <div style="display:flex;justify-content:space-between;margin-top:12px;font-size:12px;color:var(--dim)">
+          <span>Froland MX &middot; lap 6 of 9 &middot; 22 July 2026</span><span>Imagery &copy; Esri</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ BAND · flyfoto ══════════════ -->
+<section class="band mid a">
+  <div class="ph"></div><div class="tt"></div>
+  <div class="wrap" style="text-align:center">
+    <div class="kick r">Every track you ride</div>
+    <h2 class="xl" style="margin-top:16px">Ride somewhere new.<br>The track creates itself.</h2>
+    <p class="txt" style="margin:22px auto 0;font-size:18px">Tidel recognises where you are, finds the
+      finish line, and adds the layout so the next session compares to this one.</p>
+  </div>
+</section>
+
+<!-- ══════════════ 02 · FIND YOUR TIME ══════════════ -->
+<section class="pad">
+  <div class="wrap">
+    <div class="ix"><span class="no">02</span><span class="lb">Find your time</span><span class="rl"></span></div>
+    <div class="split rev">
+      <div>
+        <h2 class="xl">You have already<br>ridden a faster lap.<br><span class="red">Just not all at once.</span></h2>
+        <p class="txt" style="margin-top:22px">Tidel takes your best time in each sector and stitches
+          them into one lap. That gap is time you have already put on the board.</p>
+        <div class="bars" style="margin-top:34px" id="sektStolper"></div>
+        <div class="shot" style="margin-top:32px">
+          <img src="/assets/photo/head-on.jpg" width="478" height="295" loading="lazy" alt="Rider throwing up dirt out of a corner">
+        </div>
+      </div>
+      <div style="border-left:1px solid var(--line);padding-left:clamp(22px,3.4vw,50px)">
+        <div class="fig" style="margin-bottom:30px"><div class="k">Personal best</div><div class="v num">2:14.71</div></div>
+        <div class="fig" style="margin-bottom:30px"><div class="k">Best sectors combined</div><div class="v num gold">2:09.86</div></div>
+        <div style="border-top:1px solid var(--line2);padding-top:24px">
+          <div style="font-family:var(--disp);font-weight:700;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--acc);margin-bottom:2px">Time available</div>
+          <div class="num" style="font-size:clamp(64px,9vw,136px)">4.85<span style="font-size:.26em;letter-spacing:.06em"> S</span></div>
+        </div>
+        <p class="txt sm" style="margin-top:22px;color:var(--dim)">A stitched lap is a calculation, not
+          a lap you rode. Tidel says so on the number, and drops any sector where the GPS dropped out
+          or you stopped.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="hr"></div>
+
+<!-- ══════════════ 03 · LAP AGAINST LAP ══════════════ -->
+<section class="pad">
+  <div class="wrap">
+    <div class="ix"><span class="no">03</span><span class="lb">Lap against lap</span><span class="rl"></span></div>
+    <h2 class="xl" style="max-width:16ch">Watch the delta build<br>through the corner.</h2>
+    <div class="graf" style="margin-top:42px" id="fartGraf"></div>
+    <div class="split even" style="margin-top:40px;align-items:stretch">
+      <div class="sitat" style="align-self:center">
+        <p>&ldquo;Most to gain in <b>Corner 7</b>: <b class="red">2.1 s</b> a lap against your own best
+          pass through there. Your minimum speed is 22 km/h at the median against 27 km/h on the best
+          pass &mdash; you are braking more than the corner asks for.&rdquo;</p>
+        <div class="src">Tidel, on this session</div>
+      </div>
+      <div class="shot">
+        <img src="/assets/photo/whip.jpg" width="484" height="295" loading="lazy" alt="Rider whipping the bike over a jump">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ BAND · progress ══════════════ -->
+<section class="band b" id="progress">
+  <div class="ph"></div><div class="tt"></div>
+  <div class="wrap">
+    <div class="kick r">Progress</div>
+    <h2 class="xl" style="margin-top:14px;max-width:15ch">Don&rsquo;t just record<br>your rides.<br><span class="red">See if you&rsquo;re getting faster.</span></h2>
+  </div>
+</section>
+
+<!-- ══════════════ 04 · SEASON ══════════════ -->
+<section class="pad">
+  <div class="wrap">
+    <div class="ix"><span class="no">04</span><span class="lb">A season, not a session</span><span class="rl"></span></div>
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:36px;flex-wrap:wrap">
+      <p class="txt" style="font-size:18px;max-width:52ch">Every session lands on the same axis, per
+        track. Lap times are never compared across tracks &mdash; a best lap here and a best lap there
+        are not the same number.</p>
+      <div class="fig" style="text-align:right">
+        <div class="k">Personal best, 2 May &rarr; 8 Aug</div>
+        <div class="v num" style="color:var(--gain)">&minus;22.94<span style="font-size:.34em"> S</span></div>
+      </div>
+    </div>
+    <div class="graf" style="margin-top:46px" id="sesongGraf"></div>
+  </div>
+</section>
+
+<div class="hr"></div>
+
+<!-- ══════════════ 05 · DEVICES ══════════════ -->
+<section class="pad" id="devices">
+  <div class="wrap">
+    <div class="ix"><span class="no">05</span><span class="lb">Works with your setup</span><span class="rl"></span></div>
+    <div class="split">
+      <div>
+        <h2 class="xl">Use the GPS<br>you already have.</h2>
+        <p class="txt" style="margin-top:22px">Tidel is the analysis. The GPS can come from whatever you
+          already ride with &mdash; and you can mix sources across a season without splitting your
+          history.</p>
+        <div class="mos par" style="margin-top:32px">
+          <div class="m"><img src="/assets/photo/bars-pov.jpg" width="293" height="162" loading="lazy" alt="View over the handlebars"></div>
+          <div class="m"><img src="/assets/photo/wheel.jpg" width="239" height="162" loading="lazy" alt="Front wheel and boot in motion"></div>
+        </div>
+      </div>
+      <div>
+        <div class="kilder">
+          <div class="kilde"><span class="tg">Built in</span><div class="n">iPhone</div><div class="d">Live lap timing while you ride.</div></div>
+          <div class="kilde"><span class="tg">Built in</span><div class="n">Android</div><div class="d">Live lap timing while you ride.</div></div>
+          <div class="kilde"><span class="tg">Import</span><div class="n">Apple Watch</div><div class="d">Route and heart rate, read from Apple Health.</div></div>
+          <div class="kilde"><span class="tg n2">Import</span><div class="n">Garmin &middot; Polar &middot; Suunto</div><div class="d">Via Apple Health, or a GPX file exported from the watch.</div></div>
+          <div class="kilde"><span class="tg n2">Bluetooth</span><div class="n">RaceBox</div><div class="d">25 Hz GNSS with G-force, for when you want more resolution.</div></div>
+          <div class="kilde"><span class="tg n2">Import</span><div class="n">GPX file</div><div class="d">From any app that can export one.</div></div>
+        </div>
+        <p class="kilderNote">Product names are used to identify compatibility only. Tidel is not
+          affiliated with, endorsed by or partnered with any of these companies. Watch support depends
+          on the watch being able to write to Apple Health or export a GPX file.</p>
+        <div class="shot" style="margin-top:26px">
+          <img src="/assets/photo/garage.jpg" width="484" height="266" loading="lazy" alt="Bike parked in a workshop at sunset">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ BAND · offline ══════════════ -->
+<section class="band c">
+  <div class="ph"></div><div class="tt"></div>
+  <div class="wrap">
+    <div class="ix" style="margin-bottom:18px"><span class="no">06</span><span class="lb">Built for the track</span></div>
+    <h2 class="xl" style="max-width:14ch">No signal.<br>No problem.</h2>
+    <p class="txt" style="margin-top:22px;font-size:18px">Most tracks have no coverage. Tidel records,
+      imports and analyses entirely on the phone, and syncs when you are back on a network.</p>
+  </div>
+</section>
+
+<!-- ══════════════ MOSAIKK ══════════════ -->
+<section class="pad" style="padding-bottom:0">
+  <div class="wrap">
+    <div class="mos">
+      <div class="m"><img src="/assets/photo/portrait.jpg" width="406" height="304" loading="lazy" alt="Rider in helmet and gear"></div>
+      <div class="m"><img src="/assets/photo/sunset-jump.jpg" width="267" height="252" loading="lazy" alt="Rider silhouetted against the sunset"></div>
+      <div class="m"><img src="/assets/photo/aerial-lake.jpg" width="476" height="335" loading="lazy" alt="Motocross track seen from above"></div>
+      <div class="m"><img src="/assets/photo/boot.jpg" width="518" height="266" loading="lazy" alt="Boot on the footpeg through a rut"></div>
+      <div class="m"><img src="/assets/photo/sunrays.jpg" width="323" height="242" loading="lazy" alt="Sunlight across an empty track"></div>
+      <div class="m"><img src="/assets/photo/plate-94.jpg" width="289" height="162" loading="lazy" alt="Number plate on the front of the bike"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ DOWNLOAD ══════════════ -->
+<section class="pad">
+  <div class="wrap" style="text-align:center">
+    <div class="kick r">Get Tidel</div>
+    <h2 class="xxl" style="margin-top:18px">Ready to find<br>your time?</h2>
+    <div class="stores" style="justify-content:center;margin-top:38px" id="footStores"></div>
+    <p class="txt sm" style="margin:24px auto 0;color:var(--dim)">Free while in beta. No account
+      needed to start.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="in" style="max-width:1320px;padding:0 40px">
+    <div class="rad">
+      <a href="/download/">Download</a><a href="/support/">Support</a><a href="/privacy/">Privacy</a>
+      <a href="/personvern/">Personvern</a><a href="/terms/">Terms</a>
+      <a href="/delete-account/">Delete account</a><a href="/contact/">Contact</a>
+    </div>
+    <div class="sig">
+      <span>&copy; 2026 Tidel &mdash; Magnus Linnerud Støme, Norway</span>
+      <span>post@tidel.no</span><span>Imagery &copy; Esri</span>
+      <span class="sp">EVERY TENTH COUNTS.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="/js/forside.js"></script>
+<script src="/js/butikk.js"></script>
+</body>
+</html>

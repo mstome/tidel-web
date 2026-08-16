@@ -1,0 +1,124 @@
+<!doctype html>
+<!-- ═══════════════════════════════════════════════════════════════════════════════
+     DENNE SIDA ER ET PLAY-KRAV, ikke pynt. Google stiller tre krav til den:
+       Functional   — den skal laste uten feil
+       Relevant     — veien til sletting skal være tydelig og lett å finne
+       Identifiable — den skal nevne appens eller utviklerens navn
+     URL-en legges inn i Play Console under App content → Data safety → Data deletion.
+     Den MÅ virke uten innlogging: brukeren har kanskje alt avinstallert appen.
+     Endres slettelogikken i SKY-SLETTING.sql eller edge-funksjonen, må denne teksten følge.
+     ═══════════════════════════════════════════════════════════════════════════════ -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Delete your Tidel account — Tidel</title>
+<meta name="description" content="How to delete your Tidel account and all data associated with it.">
+<link rel="icon" href="/assets/brand/web/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/css/tidel.css">
+</head>
+<body>
+
+<nav class="nav">
+  <a class="brand" href="/"><span class="wmSet">TID<svg class="wm" viewBox="0 0 52 70" aria-hidden="true"><rect width="52" height="16"/><rect class="m" y="27" width="52" height="16"/><rect y="54" width="52" height="16"/></svg>L</span><small>MX Performance Tracker</small></a>
+  <div class="links">
+    <a href="/support/">Support</a>
+    <a href="/privacy/">Privacy</a>
+    <a href="/terms/">Terms</a>
+    <a href="/contact/">Contact</a>
+  </div>
+</nav>
+
+<main class="doc">
+  <div class="kick">Account</div>
+  <h1>Delete your<br>Tidel account</h1>
+  <p class="lead">This page explains how to delete your account in the <strong>Tidel</strong> app
+    (MX Performance Tracker, developed by Magnus Linnerud Støme) and everything stored with it.</p>
+  <p class="meta">Last updated 16 August 2026</p>
+
+  <h2>Option 1 &mdash; in the app</h2>
+  <p>If you still have Tidel installed, this is the fastest way and it takes effect immediately.</p>
+  <ol style="color:#D2D2D8">
+    <li>Open <strong>Tidel</strong></li>
+    <li>Go to <strong>More</strong> (bottom right)</li>
+    <li>Scroll to <strong>Your account</strong></li>
+    <li>Tap <strong>Delete my account</strong> and confirm</li>
+  </ol>
+
+  <h2>Option 2 &mdash; by email</h2>
+  <p>If you have already uninstalled the app, or you cannot reach the button, send us a request and
+    we will delete the account for you.</p>
+  <p>Include your <strong>account code</strong> if you still have it &mdash; it is the 8-character
+    code shown in the app under <em>More &rarr; My share code</em>. Without it, tell us anything
+    that helps us find the right account, such as the rider name you used and roughly when you last
+    rode.</p>
+
+  <p style="margin:26px 0 10px">
+    <a class="btn primary" href="mailto:post@tidel.no?subject=Delete%20my%20Tidel%20account&amp;body=Please%20delete%20my%20Tidel%20account%20and%20all%20data%20associated%20with%20it.%0A%0AAccount%20code%20(More%20%E2%80%93%3E%20My%20share%20code)%3A%20%0ARider%20name%20used%20in%20the%20app%3A%20%0A%0AI%20understand%20this%20is%20permanent%20after%20the%207-day%20grace%20period.">Request deletion by email</a>
+  </p>
+  <p style="color:var(--dim);font-size:14px">The address is
+    <a href="mailto:post@tidel.no">post@tidel.no</a>. A person reads it. You get a written
+    confirmation when the deletion is done.</p>
+
+  <h2>What gets deleted</h2>
+  <p>All of this is <strong>permanently erased</strong> &mdash; not deactivated, not hidden:</p>
+  <ul>
+    <li>Your profile, rider name and account code</li>
+    <li>Every session, lap and record</li>
+    <li>Every raw GPS file you have uploaded, including heart rate and any external telemetry</li>
+    <li>Your settings and paired-device list</li>
+    <li>Your friend connections</li>
+    <li>Any feedback you sent from inside the app</li>
+    <li>Your sign-in, if you attached an email address to the account</li>
+  </ul>
+
+  <h2>What is kept, and why</h2>
+  <div class="kort ro">
+    <p><strong>Public track geometry.</strong> The name, position, outline, finish line and sector
+      boundaries of tracks in the shared catalogue stay in place &mdash; with your name and account
+      removed from them.</p>
+    <p>The reason is simple: if one rider leaving deleted the track, it would break for everyone
+      else who rides there. This is track information, not information about you. Your GPS traces,
+      lap times and identity are gone.</p>
+  </div>
+  <p>Anonymous usage events also remain, because they never carried a user id and cannot be traced
+    back to an account.</p>
+
+  <h2>How long it takes</h2>
+  <ul>
+    <li><strong>Immediately:</strong> the account is locked. Nothing more can be written to it.</li>
+    <li><strong>7 days:</strong> a grace period in which you can undo the deletion, in case you
+      changed your mind or someone else pressed the button. Deleting from the app lets you cancel
+      it there; if you asked by email, just reply to the confirmation.</li>
+    <li><strong>After 7 days:</strong> everything listed above is permanently erased from the
+      database and from file storage.</li>
+  </ul>
+  <p>If you ask by email, allow up to 30 days from your request in total &mdash; in practice it is
+    normally done within a couple of days, plus the grace period.</p>
+
+  <h2>Deleting only some of it</h2>
+  <p>You do not have to delete the whole account to get rid of one bad day. A single session can be
+    deleted inside the app, from the session list, and that removes its raw GPS file too.</p>
+  <p>You can also export everything first, under <strong>More &rarr; Backup</strong>, if you want a
+    copy before it goes.</p>
+
+  <h2>Questions</h2>
+  <p>Anything unclear, write to <a href="mailto:post@tidel.no">post@tidel.no</a>. See also the
+    <a href="/privacy/">Privacy Policy</a> for what is stored in the first place.</p>
+</main>
+
+<footer>
+  <div class="in">
+    <div class="rad">
+      <a href="/">Home</a><a href="/download/">Download</a><a href="/support/">Support</a><a href="/privacy/">Privacy</a>
+      <a href="/personvern/">Personvern</a><a href="/terms/">Terms</a>
+      <a href="/delete-account/">Delete account</a><a href="/contact/">Contact</a>
+    </div>
+    <div class="sig">
+      <span>&copy; 2026 Tidel</span><span>post@tidel.no</span>
+      <span class="sp">EVERY TENTH COUNTS.</span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
