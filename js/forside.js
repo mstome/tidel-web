@@ -34,6 +34,17 @@ function spdCol(f){f=Math.max(0,Math.min(1,f));
          Math.round(a[2]+(b[2]-a[2])*t)+')';}
 function sett(id,html){var e=document.getElementById(id);if(e)e.innerHTML=html;}
 
+/* Vignett over satellittbildet: kantene mørknes, midten staar igjen. Uten den
+   konkurrerer grus og skog i hjørnene med selve linja. Tegnes som gradient i SVG-en,
+   ikke som CSS-filter — et filter ville rastrert hele bildet og gjort det uskarpt. */
+function vignett(uid){
+  return '<defs><radialGradient id="'+uid+'v" cx="50%" cy="46%" r="72%">'+
+         '<stop offset="0" stop-color="#000" stop-opacity="0"/>'+
+         '<stop offset=".58" stop-color="#000" stop-opacity=".10"/>'+
+         '<stop offset="1" stop-color="#000" stop-opacity=".62"/></radialGradient></defs>'+
+         '<rect x="0" y="0" width="1000" height="1444" fill="url(#'+uid+'v)"/>';
+}
+
 var SS=1.80,SOX=-427.44,SOY=116;
 function sx(p){return p[0]*SS+SOX;} function sy(p){return p[1]*SS+SOY;}
 var tregI=0; for(var q=1;q<SPD_R6.length;q++) if(SPD_R6[q]<SPD_R6[tregI]) tregI=q;
@@ -46,9 +57,11 @@ function satSVG(){
           '<svg viewBox="0 0 1000 1444" preserveAspectRatio="xMidYMid slice" ' +
           'role="img" aria-label="Froland MX sett ovenfra, med GPS-linja fargelagt etter fart" ' +
           'style="width:100%;height:100%;display:block">';
+  s+=vignett('sat');
   var d='M'+sx(POLY[0]).toFixed(1)+','+sy(POLY[0]).toFixed(1);
   for(i=1;i<POLY.length;i++) d+='L'+sx(POLY[i]).toFixed(1)+','+sy(POLY[i]).toFixed(1);
   d+='Z';
+  s+='<path d="'+d+'" fill="none" stroke="rgba(0,0,0,.72)" stroke-width="22" stroke-linejoin="round" stroke-linecap="round" opacity=".55"/>';
   s+='<path d="'+d+'" fill="none" stroke="rgba(0,0,0,.72)" stroke-width="15" stroke-linejoin="round" stroke-linecap="round"/>';
   var mn=1e9,mx=-1e9;
   for(i=0;i<SPD_R6.length;i++){mn=Math.min(mn,SPD_R6[i]);mx=Math.max(mx,SPD_R6[i]);}
@@ -150,6 +163,7 @@ function bremseKart(){
      '<svg viewBox="0 0 1000 1444" preserveAspectRatio="xMidYMid slice" role="img" ' +
      'aria-label="To runder paa Froland MX, den raskeste fargelagt etter bremsing og gasspaadrag" ' +
      'style="width:100%;height:100%;display:block">';
+  s+=vignett('brems');
   var B = forskyvLinje(POLY, 13);
   var a = akselerasjon(SPD_PB, 1557);
 
@@ -192,8 +206,13 @@ function bremseKart(){
   return s;
 }
 
+/* Unik id per tegning. To grafer paa samme side kan ikke dele gradient-id —
+   den siste ville overstyrt den foerste, og begge fikk samme farge. */
+var idTeller=0;
+
 function linjeSVG(w,h,serier,opt){
   opt=opt||{};var i,k;
+  var uid='g'+(++idTeller);
   var mn=opt.min,mx=opt.max;
   if(mn===undefined||mx===undefined){
     var lo=1e18,hi=-1e18;
@@ -207,27 +226,80 @@ function linjeSVG(w,h,serier,opt){
   var pad=opt.pad||{l:44,r:14,t:16,b:32}, iw=w-pad.l-pad.r, ih=h-pad.t-pad.b;
   var X=function(f){return pad.l+f*iw;}, Y=function(v){return pad.t+ih-(v-mn)/(mx-mn)*ih;};
   var s='<svg viewBox="0 0 '+w+' '+h+'" role="img" aria-label="Fartskurve langs runden" style="width:100%;height:auto;display:block">';
+
+  /* Flatefyll under hovedkurven. Gir grafen tyngde nede og luft oppe — uten det
+     ser den ut som en strek paa et ternet ark. */
+  s+='<defs><linearGradient id="'+uid+'f" x1="0" y1="0" x2="0" y2="1">'+
+     '<stop offset="0" stop-color="'+(serier[0].c||'#fff')+'" stop-opacity=".26"/>'+
+     '<stop offset="1" stop-color="'+(serier[0].c||'#fff')+'" stop-opacity="0"/></linearGradient></defs>';
+
+  /* Sektorene som brede felt i stedet for to tynne streker: oeyet leser tre
+     avsnitt med én gang, i stedet for aa maatte foelge en stiplet linje. */
+  var fr=[0.3278,0.6667],nm=['S1','S2','S3'];
+  if(opt.sekt){
+    var kant=[0].concat(fr,[1]);
+    for(i=0;i<3;i++){
+      if(i%2) s+='<rect x="'+X(kant[i]).toFixed(1)+'" y="'+pad.t+'" width="'+(X(kant[i+1])-X(kant[i])).toFixed(1)+
+                 '" height="'+ih+'" fill="#FFFFFF" opacity=".030"/>';
+    }
+  }
   for(i=0;i<=3;i++){
     var yv=mn+(mx-mn)*i/3,y=Y(yv);
     s+='<line x1="'+pad.l+'" y1="'+y.toFixed(1)+'" x2="'+(w-pad.r)+'" y2="'+y.toFixed(1)+'" stroke="#1C1C22"/>';
     s+='<text x="'+(pad.l-9)+'" y="'+(y+4).toFixed(1)+'" fill="#5A5A63" font-size="11" text-anchor="end" font-family="-apple-system,sans-serif">'+Math.round(yv)+'</text>';
   }
   if(opt.sekt){
-    var fr=[0.3278,0.6667],nm=['S1','S2','S3'];
     for(i=0;i<fr.length;i++)
       s+='<line x1="'+X(fr[i]).toFixed(1)+'" y1="'+pad.t+'" x2="'+X(fr[i]).toFixed(1)+'" y2="'+(pad.t+ih)+
-         '" stroke="#33333B" stroke-dasharray="4 4"/>';
+         '" stroke="#3A3A44"/>';
     var mids=[fr[0]/2,(fr[0]+fr[1])/2,(fr[1]+1)/2];
     for(i=0;i<3;i++)
-      s+='<text x="'+X(mids[i]).toFixed(1)+'" y="'+(h-8)+'" fill="#6C6C74" font-size="12" text-anchor="middle" '+
+      s+='<text x="'+X(mids[i]).toFixed(1)+'" y="'+(h-8)+'" fill="#8A8A94" font-size="12" text-anchor="middle" '+
          'font-family="Barlow Condensed,sans-serif" font-weight="700" letter-spacing="2.4">'+nm[i]+'</text>';
   }
-  for(k=0;k<serier.length;k++){
+  /* Flata legges FOER alle kurvene. La den ligge over, ville den tonet ned
+     sammenlikningsrunden bak. */
+  if(!opt.ingenFlate){
+    var d0='';
+    for(i=0;i<serier[0].v.length;i++) d0+=(i?'L':'M')+X(i/(serier[0].v.length-1)).toFixed(1)+','+Y(serier[0].v[i]).toFixed(1);
+    s+='<path d="'+d0+'L'+X(1).toFixed(1)+','+(pad.t+ih)+'L'+X(0).toFixed(1)+','+(pad.t+ih)+
+       'Z" fill="url(#'+uid+'f)" stroke="none"/>';
+  }
+  /* bakerste serie foerst, saa hovedkurven havner oeverst */
+  for(k=serier.length-1;k>=0;k--){
     var vv=serier[k].v,d='';
     for(i=0;i<vv.length;i++) d+=(i?'L':'M')+X(i/(vv.length-1)).toFixed(1)+','+Y(vv[i]).toFixed(1);
+    /* Glorie: samme strek, bredere og gjennomsiktig. Gir dybde uten SVG-filter,
+       som ville rastrert grafen og gjort den uskarp paa skjermer med hoey tetthet. */
+    if(k===0 && !serier[k].dash)
+      s+='<path d="'+d+'" fill="none" stroke="'+serier[k].c+'" stroke-width="'+((serier[k].w||2.2)+5)+
+         '" stroke-linejoin="round" stroke-linecap="round" opacity=".16"/>';
     s+='<path d="'+d+'" fill="none" stroke="'+serier[k].c+'" stroke-width="'+(serier[k].w||2.2)+
        '" stroke-linejoin="round" stroke-linecap="round"'+
        (serier[k].dash?' stroke-dasharray="'+serier[k].dash+'"':'')+'/>';
+  }
+
+  /* Toppfart og tregeste punkt merkes av. Det er de to stedene en kjoerer ser etter,
+     og uten dem maa en gjette hvor paa runden kurven bunner ut. */
+  if(opt.merker){
+    var v0=serier[0].v, hiI=0, loI=0;
+    for(i=1;i<v0.length;i++){ if(v0[i]>v0[hiI])hiI=i; if(v0[i]<v0[loI])loI=i; }
+    /* Toppfarten ligger per definisjon helt oppe i ruta, saa en etikett over punktet
+       havner utenfor tegneflata — og paa mobil oppi tegnforklaringen. Etiketten snur
+       seg under punktet naar det ikke er plass over, og motsatt for bunnpunktet. */
+    var tak = pad.t + (opt.tegnforklaring && opt.stablet ? serier.length*17 + 6 : 14);
+    [[hiI,'#39FF5A','TOP'],[loI,'#FF1E28','SLOWEST']].forEach(function(m){
+      var px=X(m[0]/(v0.length-1)), py=Y(v0[m[0]]);
+      var dy = py-15 < tak ? 20 : -13;                 /* over hvis det er rom, ellers under */
+      if(py+dy > pad.t+ih-3) dy = -13;                 /* men aldri ned i sektornavna */
+      var ank = px<pad.l+52 ? 'start' : (px>w-pad.r-52 ? 'end' : 'middle');
+      var tx  = ank==='start' ? px-4 : (ank==='end' ? px+4 : px);
+      s+='<circle cx="'+px.toFixed(1)+'" cy="'+py.toFixed(1)+'" r="4.6" fill="'+m[1]+
+         '" stroke="#08080A" stroke-width="2"/>';
+      s+='<text x="'+tx.toFixed(1)+'" y="'+(py+dy).toFixed(1)+'" fill="'+m[1]+'" font-size="12.5" '+
+         'text-anchor="'+ank+'" font-family="Barlow Condensed,sans-serif" font-weight="700" letter-spacing="1.3" '+
+         'style="paint-order:stroke" stroke="#08080A" stroke-width="4">'+m[2]+' '+Math.round(v0[m[0]])+'</text>';
+    });
   }
   if(opt.tegnforklaring){
     /* Paa smal skjerm stables forklaringen over hverandre. Ved siden av hverandre
@@ -262,12 +334,23 @@ function sesongSVG(w,h,pts,opt){
   var pad={l:opt.l||16,r:opt.r||16,t:36,b:34},iw=w-pad.l-pad.r,ih=h-pad.t-pad.b;
   var X=function(i){return pad.l+i/(pts.length-1)*iw;},Y=function(v){return pad.t+ih-(v-mn)/(mx-mn)*ih;};
   var best=1e18;for(i=0;i<pts.length;i++)best=Math.min(best,pts[i][1]);
+  var uid='s'+(++idTeller);
   var s='<svg viewBox="0 0 '+w+' '+h+'" role="img" aria-label="Beste runde per oekt gjennom sesongen" style="width:100%;height:auto;display:block">';
+  s+='<defs><linearGradient id="'+uid+'f" x1="0" y1="0" x2="0" y2="1">'+
+     '<stop offset="0" stop-color="#E30613" stop-opacity=".22"/>'+
+     '<stop offset="1" stop-color="#E30613" stop-opacity="0"/></linearGradient></defs>';
+  var d='';for(i=0;i<pts.length;i++) d+=(i?'L':'M')+X(i).toFixed(1)+','+Y(pts[i][1]).toFixed(1);
+  s+='<path d="'+d+'L'+X(pts.length-1).toFixed(1)+','+(pad.t+ih)+'L'+X(0).toFixed(1)+','+(pad.t+ih)+
+     'Z" fill="url(#'+uid+'f)" stroke="none"/>';
   s+='<line x1="'+pad.l+'" y1="'+Y(best).toFixed(1)+'" x2="'+(w-pad.r)+'" y2="'+Y(best).toFixed(1)+
      '" stroke="#E30613" stroke-width="1.3" stroke-dasharray="5 4"/>';
-  s+='<text x="'+(w-pad.r)+'" y="'+(Y(best)-10).toFixed(1)+'" fill="#E30613" text-anchor="end" '+
-     'font-family="Barlow Condensed,sans-serif" font-weight="700" font-size="'+(opt.fs||14)+'" letter-spacing="2">PB '+fmtT(best)+'</text>';
-  var d='';for(i=0;i<pts.length;i++) d+=(i?'L':'M')+X(i).toFixed(1)+','+Y(pts[i][1]).toFixed(1);
+  /* PB-merket staar nede til venstre, UNDER den stiplede linja. Til hoeyre laa det
+     oppaa tidsverdien over beste punkt, og over linja traff det nest beste oekt paa
+     smal skjerm. Under linja er det tomt: alle tidsverdiene staar over sine punkter. */
+  s+='<text x="'+pad.l+'" y="'+(Y(best)+17).toFixed(1)+'" fill="#E30613" text-anchor="start" '+
+     'font-family="Barlow Condensed,sans-serif" font-weight="700" font-size="'+(opt.fs||14)+'" letter-spacing="2" '+
+     'style="paint-order:stroke" stroke="#08080A" stroke-width="4">PB '+fmtT(best)+'</text>';
+  s+='<path d="'+d+'" fill="none" stroke="#D8D8DC" stroke-width="7" stroke-linejoin="round" stroke-linecap="round" opacity=".13"/>';
   s+='<path d="'+d+'" fill="none" stroke="#D8D8DC" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>';
   for(i=0;i<pts.length;i++){
     var b=pts[i][1]===best;
@@ -318,10 +401,12 @@ function stolper(rows){
     if(w < 240) return;
     var smal = w < 560;
 
+    /* Hovedserien MAA staa foerst: det er den som faar flatefyll, glorie og
+       topp/bunn-merker, og den som tegnes oeverst. */
     sett('fartGraf', linjeSVG(w, smal ? 250 : Math.round(w*0.266), [
-      {v:SPD_R6,c:'#F5F5F7',w:2.0,dash:'7 5',n:'LAP 6 — 3:32.04'},
-      {v:SPD_PB,c:'#FF2438',w:2.8,n:'YOUR BEST — 2:14.71'}
-    ], {sekt:true, min:0, tegnforklaring:true, stablet:smal,
+      {v:SPD_PB,c:'#FF2438',w:2.8,n:'YOUR BEST — 2:14.71'},
+      {v:SPD_R6,c:'#F5F5F7',w:2.0,dash:'7 5',n:'LAP 6 — 3:32.04'}
+    ], {sekt:true, min:0, tegnforklaring:true, stablet:smal, merker:true,
         pad:{l: smal?34:44, r: smal?12:14, t: smal?46:16, b: smal?30:32}}));
 
     var w2 = Math.round(sg.clientWidth);
