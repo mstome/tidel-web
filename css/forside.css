@@ -79,6 +79,9 @@ h1,h2,h3{letter-spacing:-.005em}
 .hero .stores{margin-top:24px}
 .heroPhone{width:clamp(178px,17vw,236px);border:9px solid #17171a;border-radius:34px;
   overflow:hidden;background:#000;box-shadow:0 50px 90px -30px rgba(0,0,0,.95)}
+/* UTEN denne blir bildet klemt: bredden styres av ramma, men height-attributtet
+   (844) blir staaende, og telefonen strekkes til nesten dobbel hoeyde. */
+.heroPhone img{display:block;width:100%;height:auto}
 
 /* ── fotoband ── */
 .band{position:relative;min-height:min(76vh,640px);display:flex;align-items:center;overflow:hidden}
@@ -99,18 +102,28 @@ h1,h2,h3{letter-spacing:-.005em}
 .split{display:grid;grid-template-columns:5fr 7fr;gap:clamp(28px,4.4vw,66px);align-items:center}
 .split.rev{grid-template-columns:7fr 5fr}
 .split.even{grid-template-columns:1fr 1fr}
+/* Kildebildene er 400-520 px brede. Uten taket her ble de blaast opp 1,4x i en
+   684 px kolonne, og da forsvinner detaljene. */
 .shot{position:relative;overflow:hidden;background:#0C0C0E;border:1px solid var(--line);
-  aspect-ratio:16/9}
+  aspect-ratio:16/9;max-width:560px}
 .shot img{width:100%;height:100%;object-fit:cover;filter:contrast(1.04) saturate(.92)}
 .shot .cap{position:absolute;left:0;right:0;bottom:0;padding:14px 16px;
   background:linear-gradient(0deg,rgba(6,6,8,.9),transparent);
   font-family:var(--disp);font-weight:700;font-size:12px;letter-spacing:.2em;
   text-transform:uppercase;color:#D6D6DC}
 
-/* ── satellittkart ── */
+/* ── satellittkart ──
+   Satellittbildet ligger som CSS-bakgrunn, ikke som <image> inne i SVG-en. Grunnen:
+   et SVG-filter paa et rasterbilde blir rasterisert av nettleseren i filterets eget
+   rutenett, og resultatet ble en graa groet naar SVG-en samtidig skaleres med "slice".
+   Nedtoningen gjoeres derfor med CSS. Begge lagene dekker samme boks fra samme
+   kildeforhold (1000x1444), saa GPS-linja treffer banen noeyaktig som foer. */
 .sat{position:relative;border:1px solid var(--line2);background:#000;overflow:hidden;
   aspect-ratio:1000/1290}
-.sat svg{display:block;width:100%;height:100%}
+.satBg{position:absolute;inset:0;background:url(/assets/photo/froland-satellitt.jpg) center/cover;
+  filter:saturate(.55) brightness(.74)}
+.satBg::after{content:'';position:absolute;inset:0;background:rgba(8,8,10,.30)}
+.sat svg{position:absolute;inset:0;display:block;width:100%;height:100%}
 .legend{display:flex;align-items:center;gap:10px;margin-top:14px;font-size:11.5px;color:var(--dim);
   letter-spacing:.08em;text-transform:uppercase;font-family:var(--disp);font-weight:700}
 .legend .ramp{width:120px;height:6px;
@@ -149,10 +162,14 @@ h1,h2,h3{letter-spacing:-.005em}
 .kilderNote{font-size:12.5px;color:var(--dim);margin-top:18px;max-width:74ch;line-height:1.55}
 
 /* ── mosaikk ── */
-.mos{display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:262px;gap:12px}
+/* Samme grunn: 1240 px delt paa tre ga 405 px celler, og det minste bildet (267 px)
+   ble strukket 1,5x. 1040 px gir 339 px celler og maks 1,27x. */
+.mos{display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:238px;gap:12px;
+  max-width:1040px;margin-left:auto;margin-right:auto}
 .mos .m{overflow:hidden;background:#0C0C0E}
 .mos .m img{width:100%;height:100%;object-fit:cover;filter:contrast(1.04) saturate(.9)}
-.mos.par{grid-template-columns:repeat(2,1fr);grid-auto-rows:150px}
+/* Detaljbildene er bare 239-293 px brede. Uten taket sprakk de paa nettbrettbredde. */
+.mos.par{grid-template-columns:repeat(2,1fr);grid-auto-rows:150px;max-width:520px}
 
 /* ── /download ── */
 .dlHead{padding:130px 0 56px;border-bottom:1px solid var(--line);position:relative;overflow:hidden}
@@ -177,12 +194,14 @@ h1,h2,h3{letter-spacing:-.005em}
   .kilder{grid-template-columns:1fr 1fr}
   .dlGrid{grid-template-columns:1fr}
   .wrap{padding:0 24px}
-  .mos{grid-template-columns:repeat(2,1fr);grid-auto-rows:200px}
+  /* BEHOLD tre kolonner. Faerre kolonner = bredere celler = mer oppskalering,
+     og kildebildene er bare 267-518 px brede. */
+  .mos{grid-template-columns:repeat(3,1fr);grid-auto-rows:180px}
 }
 @media (max-width:620px){
   .wrap{padding:0 18px}
   .kilder{grid-template-columns:1fr}
-  .mos{grid-template-columns:1fr;grid-auto-rows:210px}
+  .mos{grid-template-columns:repeat(2,1fr);grid-auto-rows:150px}
   .knapp{font-size:15px;padding:14px 22px}
   .hero{min-height:auto}
   .hero .wrap{padding-top:132px;padding-bottom:44px}

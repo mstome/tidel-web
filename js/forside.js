@@ -33,14 +33,12 @@ var tregI=0; for(var q=1;q<SPD_R6.length;q++) if(SPD_R6[q]<SPD_R6[tregI]) tregI=
 var tregP=POLY[Math.round(tregI/(SPD_R6.length-1)*(POLY.length-1))];
 
 function satSVG(){
-  var i,s='<svg viewBox="0 0 1000 1444" preserveAspectRatio="xMidYMid slice" ' +
+  /* Selve satellittbildet ligger i .satBg (CSS-bakgrunn). SVG-en her er bare vektor,
+     med gjennomsiktig bunn — se kommentaren i css/forside.css. */
+  var i,s='<div class="satBg"></div>' +
+          '<svg viewBox="0 0 1000 1444" preserveAspectRatio="xMidYMid slice" ' +
           'role="img" aria-label="Froland MX sett ovenfra, med GPS-linja fargelagt etter fart" ' +
           'style="width:100%;height:100%;display:block">';
-  s+='<defs><filter id="dk"><feColorMatrix type="saturate" values="0.55"/>'+
-     '<feComponentTransfer><feFuncR type="linear" slope="0.72"/><feFuncG type="linear" slope="0.72"/>'+
-     '<feFuncB type="linear" slope="0.74"/></feComponentTransfer></filter></defs>';
-  s+='<image href="/assets/photo/froland-satellitt.jpg" x="0" y="0" width="1000" height="1444" filter="url(#dk)"/>';
-  s+='<rect width="1000" height="1444" fill="rgba(8,8,10,.30)"/>';
   var d='M'+sx(POLY[0]).toFixed(1)+','+sy(POLY[0]).toFixed(1);
   for(i=1;i<POLY.length;i++) d+='L'+sx(POLY[i]).toFixed(1)+','+sy(POLY[i]).toFixed(1);
   d+='Z';
