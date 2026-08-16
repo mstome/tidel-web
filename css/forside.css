@@ -2,7 +2,9 @@
    Bygger paa css/tidel.css (tokens, ordmerke, bunn). Alt her er det forsiden
    trenger ekstra: hero, fotoband, mosaikk, diagrammer og butikkknapper. */
 
-h1,h2,h3{letter-spacing:-.005em}
+/* text-wrap:balance lar nettleseren fordele ordene jevnt over linjene i stedet for aa
+   dytte siste ord alene ned. Gjelder bare korte blokker som overskrifter. */
+h1,h2,h3{letter-spacing:-.005em;text-wrap:balance}
 .xxl{font-family:var(--disp);font-weight:700;text-transform:uppercase;
   font-size:clamp(52px,8.6vw,140px);line-height:.83;letter-spacing:-.03em;margin:0}
 .xl{font-family:var(--disp);font-weight:700;text-transform:uppercase;
@@ -199,6 +201,9 @@ h1,h2,h3{letter-spacing:-.005em}
   .mos{grid-template-columns:repeat(3,1fr);grid-auto-rows:180px}
 }
 @media (max-width:620px){
+  /* De hardkodede <br>-ene i seksjonsoverskriftene er satt for desktop. Paa smal skjerm
+     tvinger de fram linjer med ett ord. Vi slaar dem av og lar nettleseren bryte selv. */
+  .xl br{display:none}
   .wrap{padding:0 18px}
   .kilder{grid-template-columns:1fr}
   .mos{grid-template-columns:repeat(2,1fr);grid-auto-rows:150px}

@@ -23,8 +23,12 @@ a{color:inherit}
 img{display:block;max-width:100%}
 
 /* ── ordmerket: tre streker, midtstreken rød — samme teknikk som i appen ── */
-.wmSet{display:inline-block;transform:skewX(-9deg);transform-origin:0 100%;padding-right:.10em;
-  font-family:var(--disp);font-weight:700;letter-spacing:.03em;line-height:1}
+/* white-space:nowrap er IKKE pynt. Ordmerket er tre noder — "TID", en SVG, og "L" —
+   og uten dette har nettleseren lov til aa brekke linja mellom dem. Paa smal skjerm
+   havnet L-en paa egen linje under merket. */
+.wmSet{display:inline-block;white-space:nowrap;transform:skewX(-9deg);transform-origin:0 100%;
+  padding-right:.10em;font-family:var(--disp);font-weight:700;letter-spacing:.03em;line-height:1}
+.wm{flex:none}
 .wm{display:inline-block;width:.52em;height:.70em;margin:0 .14em 0 .04em}
 .wm rect{fill:currentColor}
 .wm rect.m{fill:var(--acc)}
