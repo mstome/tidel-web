@@ -101,6 +101,97 @@ function satSVG(){
   return s;
 }
 
+/* ── brems og gass ────────────────────────────────────────────────────────────────
+   Akselerasjon langs runden. Fartsserien er samplet paa DISTANSE, ikke tid, saa
+   a = v * dv/ds. Glattet over +-2 proever, ellers blir GPS-stoeyen til falske
+   bremsepunkter. Samme signatur som appens "Brems/gass"-modus. */
+function akselerasjon(fart, meter){
+  var n=fart.length, ds=meter/(n-1), a=new Array(n), i;
+  for(i=0;i<n;i++){
+    var i0=Math.max(0,i-2), i1=Math.min(n-1,i+2);
+    var v0=fart[i0]/3.6, v1=fart[i1]/3.6, v=fart[i]/3.6;
+    a[i]= v * (v1-v0) / (ds*(i1-i0));
+  }
+  return a;
+}
+function bremseFarge(a){
+  if(a < -1.4) return '#FF1E28';   /* brems  */
+  if(a >  0.9) return '#39FF5A';   /* gass   */
+  return '#6E6E78';                /* jevn fart */
+}
+
+/* En alternativ linje gjennom samme bane: forskjoevet sidelengs der banen svinger,
+   slik en videre inngang ser ut. Brukes til aa vise LINJEVALG side om side. */
+function forskyvLinje(poly, maks){
+  var n=poly.length, ut=[], i;
+  for(i=0;i<n;i++){
+    var p0=poly[(i-3+n)%n], p1=poly[i], p2=poly[(i+3)%n];
+    var v1x=p1[0]-p0[0], v1y=p1[1]-p0[1];
+    var v2x=p2[0]-p1[0], v2y=p2[1]-p1[1];
+    var kryss=v1x*v2y-v1y*v2x;
+    var l1=Math.hypot(v1x,v1y)||1, l2=Math.hypot(v2x,v2y)||1;
+    var kurv=Math.max(-1,Math.min(1, kryss/(l1*l2)));      /* -1..1, 0 paa rettstrekk */
+    var nx=-v2y/l2, ny=v2x/l2;
+    var d=kurv*maks;
+    ut.push([p1[0]+nx*d, p1[1]+ny*d]);
+  }
+  /* glatt, ellers hakker den */
+  var g=[];
+  for(i=0;i<n;i++){
+    var a=ut[(i-1+n)%n], b=ut[i], c=ut[(i+1)%n];
+    g.push([(a[0]+2*b[0]+c[0])/4, (a[1]+2*b[1]+c[1])/4]);
+  }
+  return g;
+}
+
+/* Stort kart: to linjer mot hverandre, den raskeste fargelagt etter brems og gass. */
+function bremseKart(){
+  var i,s='<div class="satBg"></div>' +
+     '<svg viewBox="0 0 1000 1444" preserveAspectRatio="xMidYMid slice" role="img" ' +
+     'aria-label="To runder paa Froland MX, den raskeste fargelagt etter bremsing og gasspaadrag" ' +
+     'style="width:100%;height:100%;display:block">';
+  var B = forskyvLinje(POLY, 13);
+  var a = akselerasjon(SPD_PB, 1557);
+
+  /* den langsommere linja foerst, som stiplet skygge */
+  var d='M'+sx(B[0]).toFixed(1)+','+sy(B[0]).toFixed(1);
+  for(i=1;i<B.length;i++) d+='L'+sx(B[i]).toFixed(1)+','+sy(B[i]).toFixed(1);
+  d+='Z';
+  s+='<path d="'+d+'" fill="none" stroke="rgba(0,0,0,.6)" stroke-width="12" stroke-linejoin="round"/>';
+  s+='<path d="'+d+'" fill="none" stroke="#D8D8DC" stroke-width="4" stroke-dasharray="14 10" '+
+     'stroke-linejoin="round" opacity=".85"/>';
+
+  /* casing under hovedlinja */
+  var dA='M'+sx(POLY[0]).toFixed(1)+','+sy(POLY[0]).toFixed(1);
+  for(i=1;i<POLY.length;i++) dA+='L'+sx(POLY[i]).toFixed(1)+','+sy(POLY[i]).toFixed(1);
+  dA+='Z';
+  s+='<path d="'+dA+'" fill="none" stroke="rgba(0,0,0,.78)" stroke-width="17" stroke-linejoin="round" stroke-linecap="round"/>';
+
+  /* hovedlinja, segment for segment i brems/gass-farger */
+  for(i=0;i<POLY.length;i++){
+    var j=(i+1)%POLY.length;
+    var ai=a[Math.round(i/(POLY.length-1)*(a.length-1))];
+    s+='<line x1="'+sx(POLY[i]).toFixed(1)+'" y1="'+sy(POLY[i]).toFixed(1)+
+       '" x2="'+sx(POLY[j]).toFixed(1)+'" y2="'+sy(POLY[j]).toFixed(1)+
+       '" stroke="'+bremseFarge(ai)+'" stroke-width="10" stroke-linecap="round"/>';
+  }
+
+  /* hardeste oppbremsing paa runden — merkes */
+  var verst=0; for(i=1;i<a.length;i++) if(a[i]<a[verst]) verst=i;
+  var vp=POLY[Math.round(verst/(a.length-1)*(POLY.length-1))];
+  var vx=sx(vp), vy=sy(vp);
+  s+='<circle cx="'+vx.toFixed(1)+'" cy="'+vy.toFixed(1)+'" r="17" fill="none" stroke="#FF1E28" stroke-width="4"/>';
+  s+='<line x1="'+(vx-17).toFixed(1)+'" y1="'+vy.toFixed(1)+'" x2="'+(vx-86).toFixed(1)+'" y2="'+(vy-52).toFixed(1)+'" stroke="#FF1E28" stroke-width="3"/>';
+  s+='<text x="'+(vx-94).toFixed(1)+'" y="'+(vy-58).toFixed(1)+'" text-anchor="end" fill="#F5F5F7" '+
+     'font-family="Barlow Condensed,sans-serif" font-weight="700" font-size="36" letter-spacing="1" '+
+     'style="paint-order:stroke" stroke="rgba(0,0,0,.85)" stroke-width="6">'+Math.abs(a[verst]).toFixed(1)+' m/s&#178;</text>';
+  s+='<text x="'+(vx-94).toFixed(1)+'" y="'+(vy-30).toFixed(1)+'" text-anchor="end" fill="#FF1E28" '+
+     'font-family="Barlow Condensed,sans-serif" font-weight="700" font-size="21" letter-spacing="2.6" '+
+     'style="paint-order:stroke" stroke="rgba(0,0,0,.85)" stroke-width="5">HARDEST BRAKING</text>';
+  s+='</svg>';
+  return s;
+}
+
 function linjeSVG(w,h,serier,opt){
   opt=opt||{};var i,k;
   var mn=opt.min,mx=opt.max;
@@ -204,6 +295,15 @@ function stolper(rows){
 /* ── tegn ── */
 (function(){
   sett('satKart', satSVG());
+  sett('bremseKart', bremseKart());
+  /* samme utregning som fargelegger kartet — tallene kan ikke komme i utakt */
+  (function(){
+    var a=akselerasjon(SPD_PB,1557), v=0, i;
+    for(i=1;i<a.length;i++) if(a[i]<a[v]) v=i;
+    var gass=0; for(i=0;i<a.length;i++) if(a[i]>0.9) gass++;
+    sett('bremsTall', Math.abs(a[v]).toFixed(1));
+    sett('gassTall', Math.round(gass/a.length*100));
+  })();
   sett('sektStolper', stolper([['S1',42.82],['S2',42.68],['S3',44.36]]));
 
   /* Grafene MAA tegnes i containerens egen pikselbredde. Tegner vi dem i 1240 og lar

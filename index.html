@@ -17,8 +17,8 @@
 <meta name="theme-color" content="#08080A">
 <link rel="icon" href="/assets/brand/web/favicon.svg" type="image/svg+xml">
 <link rel="preload" as="image" href="/assets/photo/hero-berm.jpg">
-<link rel="stylesheet" href="/css/tidel.css">
-<link rel="stylesheet" href="/css/forside.css">
+<link rel="stylesheet" href="/css/tidel.css?v=2608162042">
+<link rel="stylesheet" href="/css/forside.css?v=2608162042">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"SoftwareApplication",
  "name":"Tidel","alternateName":"Tidel — MX Performance Tracker",
@@ -141,20 +141,40 @@
 <!-- ══════════════ 03 · LAP AGAINST LAP ══════════════ -->
 <section class="pad">
   <div class="wrap">
-    <div class="ix"><span class="no">03</span><span class="lb">Lap against lap</span><span class="rl"></span></div>
-    <h2 class="xl" style="max-width:16ch">Watch the delta build<br>through the corner.</h2>
-    <div class="graf" style="margin-top:42px" id="fartGraf"></div>
-    <div class="split even" style="margin-top:40px;align-items:stretch">
-      <div class="sitat" style="align-self:center">
-        <p>&ldquo;Most to gain in <b>Corner 7</b>: <b class="red">2.1 s</b> a lap against your own best
-          pass through there. Your minimum speed is 22 km/h at the median against 27 km/h on the best
-          pass &mdash; you are braking more than the corner asks for.&rdquo;</p>
-        <div class="src">Tidel, on this session</div>
+    <div class="ix"><span class="no">03</span><span class="lb">Line and braking</span><span class="rl"></span></div>
+    <div class="split rev" style="align-items:start">
+      <div>
+        <div class="sat" id="bremseKart" style="aspect-ratio:1000/1160"></div>
+        <div class="legend" style="margin-top:14px;flex-wrap:wrap;gap:16px">
+          <span><i style="background:#FF1E28"></i> Braking</span>
+          <span><i style="background:#6E6E78"></i> Steady</span>
+          <span><i style="background:#39FF5A"></i> On the throttle</span>
+          <span><i style="background:#D8D8DC;height:2px"></i> The other lap</span>
+        </div>
       </div>
-      <div class="shot">
-        <img src="/assets/photo/whip.jpg" width="484" height="295" loading="lazy" alt="Rider whipping the bike over a jump">
+      <div>
+        <h2 class="xl">Two laps.<br>Two lines.<br><span class="red">One is quicker.</span></h2>
+        <p class="txt" style="margin-top:22px">Tidel colours the lap by what your right hand was
+          doing &mdash; red where you were slowing, green where you were driving out. Lay the other
+          lap over it and the difference in line stops being a feeling.</p>
+        <div class="figRow" style="margin-top:34px">
+          <!-- verdien settes av js/forside.js fra den SAMME utregningen som fargelegger
+               kartet, saa tallet her og merket paa kartet aldri kan sprike -->
+          <div class="fig"><div class="k">Hardest braking</div>
+            <div class="v num red"><span id="bremsTall">&ndash;</span><span style="font-size:.36em"> m/s&#178;</span></div></div>
+          <div class="fig"><div class="k">On the throttle</div>
+            <div class="v num" style="color:var(--gain)"><span id="gassTall">&ndash;</span><span style="font-size:.36em"> %</span></div></div>
+        </div>
+        <div class="shot" style="margin-top:30px">
+          <img src="/assets/photo/whip.jpg" width="484" height="295" loading="lazy" alt="Rider whipping the bike over a jump">
+        </div>
       </div>
     </div>
+
+    <h3 class="lg" style="margin-top:clamp(48px,6vw,80px)">Speed, by distance &mdash; not by time</h3>
+    <p class="txt" style="margin-top:12px;max-width:64ch">Both laps are resampled along the lap, so
+      the same corner sits at the same place on the axis no matter how fast you went through it.</p>
+    <div class="graf" style="margin-top:26px" id="fartGraf"></div>
   </div>
 </section>
 
@@ -254,7 +274,9 @@
   <div class="wrap" style="text-align:center">
     <img class="sticker" src="/assets/brand/tidel-sticker.png" width="760" height="331"
          loading="lazy" alt="Tidel — MX Performance Tracker">
-    <h2 class="xxl" style="margin-top:26px">Ready to find<br>your time?</h2>
+    <!-- "tidel" ER det norske ordet for tenth. Merkevaren heter EVERY TENTH COUNTS.
+         "your time" kastet bort hele poenget med navnet. -->
+    <h2 class="xxl" style="margin-top:26px">Go find<br>your <span class="red">tenths</span>.</h2>
     <div class="stores" style="justify-content:center;margin-top:38px" id="footStores"></div>
     <p class="txt sm" style="margin:24px auto 0;color:var(--dim)">Free while in beta. No account
       needed to start.</p>
@@ -276,7 +298,7 @@
   </div>
 </footer>
 
-<script src="/js/forside.js"></script>
-<script src="/js/butikk.js"></script>
+<script src="/js/forside.js?v=2608162042"></script>
+<script src="/js/butikk.js?v=2608162042"></script>
 </body>
 </html>

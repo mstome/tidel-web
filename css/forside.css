@@ -130,6 +130,8 @@ h1,h2,h3{letter-spacing:-.005em;text-wrap:balance}
   letter-spacing:.08em;text-transform:uppercase;font-family:var(--disp);font-weight:700}
 .legend .ramp{width:120px;height:6px;
   background:linear-gradient(90deg,#E84C3D,#F5C242,#45D06C)}
+.legend span{display:inline-flex;align-items:center;gap:7px}
+.legend i{width:18px;height:6px;display:inline-block;flex:none}
 
 /* Merket. Sticker-varianten med hvit kontur baerer seg selv paa moerk bunn, saa den
    trenger ingen ramme. Vist paa maks 380 px av en 760 px kilde = skarp ogsaa paa retina. */
