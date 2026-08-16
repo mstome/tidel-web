@@ -131,6 +131,10 @@ h1,h2,h3{letter-spacing:-.005em;text-wrap:balance}
 .legend .ramp{width:120px;height:6px;
   background:linear-gradient(90deg,#E84C3D,#F5C242,#45D06C)}
 
+/* Merket. Sticker-varianten med hvit kontur baerer seg selv paa moerk bunn, saa den
+   trenger ingen ramme. Vist paa maks 380 px av en 760 px kilde = skarp ogsaa paa retina. */
+.sticker{width:min(380px,72vw);height:auto;margin:0 auto;filter:drop-shadow(0 18px 30px rgba(0,0,0,.55))}
+
 .figRow{display:flex;gap:clamp(24px,4.4vw,62px);flex-wrap:wrap;align-items:flex-end}
 .fig .k{font-family:var(--disp);font-weight:700;font-size:12px;letter-spacing:.2em;
   text-transform:uppercase;color:var(--dim);margin-bottom:6px}
