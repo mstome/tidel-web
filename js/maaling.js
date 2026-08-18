@@ -22,7 +22,7 @@
 
 (function () {
 
-  var TOKEN = '';          // <-- lim inn nøkkelen fra Cloudflare her
+  var TOKEN = '75c4185e77ed48f491fa32a14671dce9';   // Cloudflare Web Analytics, tidel.no
 
   if (!TOKEN) return;      // ikke satt opp ennå: gjør ingenting
 
