@@ -16,9 +16,11 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#08080A">
 <link rel="icon" href="/assets/brand/web/favicon.svg" type="image/svg+xml">
-<link rel="preload" as="image" href="/assets/photo/hero-berm.jpg">
-<link rel="stylesheet" href="/css/tidel.css?v=2608162050">
-<link rel="stylesheet" href="/css/forside.css?v=2608162050">
+<link rel="preload" as="image" href="/assets/site/hero-v4.jpg">
+<!-- Forsida laster KUN sin egen sidekapslede stilfil. css/tidel.css og
+     css/forside.css er uroert og betjener fortsatt de juridiske sidene
+     og /download/ slik de alltid har gjort. -->
+<link rel="stylesheet" href="/css/forside-v2.css?v=2608181340">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"SoftwareApplication",
  "name":"Tidel","alternateName":"Tidel — MX Performance Tracker",
@@ -30,277 +32,294 @@
  "offers":{"@type":"Offer","price":"0","priceCurrency":"NOK"}}
 </script>
 </head>
-<body>
+<body class="fp2">
+<main>
 
 <!-- ══════════════ HERO ══════════════ -->
-<section class="hero">
-  <div class="ph"></div><div class="tt"></div>
-  <nav class="navTop">
-    <a class="brand" href="/"><span class="wmSet">TID<svg class="wm" viewBox="0 0 52 70" aria-hidden="true"><rect width="52" height="16"/><rect class="m" y="27" width="52" height="16"/><rect y="54" width="52" height="16"/></svg>L</span><small>MX Performance Tracker</small></a>
-    <div class="links">
-      <a href="#analysis">Analysis</a>
+<section class="hero" id="top">
+  <div class="heroMedia" aria-hidden="true">
+    <img src="/assets/site/hero-v4.jpg" alt="">
+  </div>
+
+  <nav class="nav shell" aria-label="Main navigation">
+    <a class="brand" href="#top" aria-label="Tidel home">
+      <img src="/assets/site/sticker.png" alt="">
+      <span>TIDEL</span>
+    </a>
+    <div class="navLinks">
       <a href="#progress">Progress</a>
+      <a href="#analysis">Analysis</a>
       <a href="#devices">Devices</a>
-      <a href="/support/">Support</a>
     </div>
-    <div class="right"><a class="knapp g sm" href="/download/">Get Tidel</a></div>
+    <a class="button buttonSmall" href="/download/">GET TIDEL <span aria-hidden="true">↗</span></a>
   </nav>
 
-  <div class="wrap">
-    <div class="heroGrid">
-      <div>
-        <div class="kick">MX Performance Tracker</div>
-        <!-- "Ride. Analyze. Improve." kunne staatt paa et hvilket som helst
-             treningsprodukt. Dette sier hva Tidel faktisk finner ut for deg. -->
-        <h1 class="xxl" style="margin-top:20px">You&rsquo;re not slow.<br>You&rsquo;re slow<br><span class="red">somewhere.</span></h1>
-        <p class="sub">GPS lap timing built for motocross. Tidel finds the track, the finish line
-          and every lap on its own &mdash; then shows you where the time actually went.</p>
-        <div class="cta">
-          <a class="knapp p" href="/download/">Get Tidel</a>
-          <a class="knapp g" href="#analysis">See how it works</a>
-        </div>
-        <div class="stores" id="heroStores"></div>
-      </div>
-      <div class="heroPhone">
-        <img src="/assets/photo/app-hjem.jpg" width="390" height="844" alt="The Tidel app showing a session at Froland MX">
-      </div>
+  <div class="heroContent shell">
+    <p class="eyebrow">Motocross progression, measured</p>
+    <h1>RIDE TODAY.<br><span>GET FASTER</span><br>ALL SEASON.</h1>
+    <img class="heroLogo" src="/assets/site/sticker.png" alt="Tidel — MX Performance Tracker" width="760" height="331">
+    <p class="heroCopy">Tidel automatically finds the track, the finish line and every lap&mdash;then
+      connects your rides into proof of progress.</p>
+    <div class="heroActions">
+      <a class="button" href="/download/">START TRACKING <span aria-hidden="true">↗</span></a>
+      <a class="textLink" href="#progress">SEE A SEASON UNFOLD <span aria-hidden="true">↓</span></a>
+    </div>
+    <!-- Butikkknappene fylles av js/butikk.js. Den fila er ikke roert:
+         den er det eneste stedet butikkstatus og butikk-URL-er settes. -->
+    <div class="stores" id="heroStores"></div>
+  </div>
+
+  <div class="heroProof shell">
+    <div><span>Track</span><strong>FROLAND MX</strong></div>
+    <div><span>02 May</span><strong>2:59.29</strong></div>
+    <div><span>08 Aug</span><strong>2:14.71</strong></div>
+    <div class="proofHighlight"><span>Season progress</span><strong>&minus;44.58 SEC</strong></div>
+  </div>
+</section>
+
+<!-- ══════════════ 01 · MANIFEST ══════════════ -->
+<section class="manifesto">
+  <div class="shell manifestoGrid">
+    <p class="sectionIndex">01 / The difference</p>
+    <div>
+      <h2>A LAP IS A RESULT.<br><span>A SEASON IS PROGRESS.</span></h2>
+      <p>Most timing apps tell you what happened once. Tidel connects every ride at the same track,
+        so you can see whether the work is actually working.</p>
+    </div>
+    <div class="manifestoStamp" aria-label="Progress is the product">
+      <span>The product is</span>
+      <strong>PROGRESS</strong>
+      <i>↗</i>
     </div>
   </div>
 </section>
 
-<!-- ══════════════ 01 · WHERE THE TIME WENT ══════════════ -->
-<section class="pad" id="analysis">
-  <div class="wrap">
-    <div class="ix"><span class="no">01</span><span class="lb">Where the time went</span><span class="rl"></span></div>
-    <div class="split">
+<!-- ══════════════ 02 · SESONGEN ══════════════ -->
+<section class="progressSection" id="progress">
+  <div class="shell">
+    <header class="sectionHeader">
       <div>
-        <h2 class="xl">The lap time tells<br>you what happened.<br><span class="red">Tidel tells you where.</span></h2>
-        <p class="txt" style="margin-top:24px">Your real line on satellite imagery, coloured by speed,
-          split into sectors along the racing line. One glance and the slow part of the track is
-          obvious.</p>
-        <div class="figRow" style="margin-top:38px">
-          <div class="fig"><div class="k">Lap length</div><div class="v num">1 557<span style="font-size:.42em"> m</span></div></div>
-          <div class="fig"><div class="k">Slowest point</div><div class="v num red">11<span style="font-size:.42em"> km/h</span></div></div>
-        </div>
-        <div class="legend"><span>Slow</span><span class="ramp"></span><span>Fast</span></div>
-        <div class="shot" style="margin-top:34px">
-          <img src="/assets/photo/track-pano.jpg" width="455" height="242" loading="lazy" alt="A motocross track at sunset">
-          <div class="cap">Froland MX</div>
-        </div>
+        <p class="sectionIndex">02 / Your season</p>
+        <h2>THE FULL STORY,<br>NOT ONE FAST LAP.</h2>
       </div>
-      <div>
-        <div class="sat" id="satKart"></div>
-        <div style="display:flex;justify-content:space-between;margin-top:12px;font-size:12px;color:var(--dim)">
-          <span>Froland MX &middot; lap 6 of 9 &middot; 22 July 2026</span><span>Imagery &copy; Esri</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+      <p>Bad days stay in the data. Breakthroughs do too. That is how four rides become a
+        direction&mdash;not a highlight reel.</p>
+    </header>
 
-<!-- ══════════════ BAND · flyfoto ══════════════ -->
-<section class="band mid a">
-  <div class="ph"></div><div class="tt"></div>
-  <div class="wrap" style="text-align:center">
-    <div class="kick r">Every track you ride</div>
-    <h2 class="xl" style="margin-top:16px">Ride somewhere new.<br>The track creates itself.</h2>
-    <p class="txt" style="margin:22px auto 0;font-size:18px">Tidel recognises where you are, finds the
-      finish line, and adds the layout so the next session compares to this one.</p>
-  </div>
-</section>
-
-<!-- ══════════════ 02 · FIND YOUR TIME ══════════════ -->
-<section class="pad">
-  <div class="wrap">
-    <div class="ix"><span class="no">02</span><span class="lb">Find your time</span><span class="rl"></span></div>
-    <div class="split rev">
-      <div>
-        <h2 class="xl">You have already<br>ridden a faster lap.<br><span class="red">Just not all at once.</span></h2>
-        <p class="txt" style="margin-top:22px">Tidel takes your best time in each sector and stitches
-          them into one lap. That gap is time you have already put on the board.</p>
-        <div class="bars" style="margin-top:34px" id="sektStolper"></div>
-        <div class="shot" style="margin-top:32px">
-          <img src="/assets/photo/head-on.jpg" width="478" height="295" loading="lazy" alt="Rider throwing up dirt out of a corner">
-        </div>
+    <div class="progressPanel">
+      <div class="panelTopline">
+        <span>FROLAND MX / SEASON 2026</span>
+        <span class="liveMark"><i></i> 4 RIDES CONNECTED</span>
       </div>
-      <div style="border-left:1px solid var(--line);padding-left:clamp(22px,3.4vw,50px)">
-        <div class="fig" style="margin-bottom:30px"><div class="k">Personal best</div><div class="v num">2:14.71</div></div>
-        <div class="fig" style="margin-bottom:30px"><div class="k">Best sectors combined</div><div class="v num gold">2:09.86</div></div>
-        <div style="border-top:1px solid var(--line2);padding-top:24px">
-          <div style="font-family:var(--disp);font-weight:700;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--acc);margin-bottom:2px">Time available</div>
-          <div class="num" style="font-size:clamp(64px,9vw,136px)">4.85<span style="font-size:.26em;letter-spacing:.06em"> S</span></div>
-        </div>
-        <p class="txt sm" style="margin-top:22px;color:var(--dim)">A stitched lap is a calculation, not
-          a lap you rode. Tidel says so on the number, and drops any sector where the GPS dropped out
-          or you stopped.</p>
-      </div>
-    </div>
-  </div>
-</section>
 
-<div class="hr"></div>
-
-<!-- ══════════════ 03 · LAP AGAINST LAP ══════════════ -->
-<section class="pad">
-  <div class="wrap">
-    <div class="ix"><span class="no">03</span><span class="lb">Line and braking</span><span class="rl"></span></div>
-    <div class="split rev" style="align-items:start">
-      <div>
-        <div class="sat" id="bremseKart" style="aspect-ratio:1000/1160"></div>
-        <div class="legend" style="margin-top:14px;flex-wrap:wrap;gap:16px">
-          <span><i style="background:#FF1E28"></i> Braking</span>
-          <span><i style="background:#6E6E78"></i> Steady</span>
-          <span><i style="background:#39FF5A"></i> On the throttle</span>
-          <span><i style="background:#D8D8DC;height:2px"></i> The other lap</span>
-        </div>
+      <div class="progressReadout" aria-live="polite">
+        <div><span class="dataLabel">Selected session</span><strong id="pgDato">08 AUG</strong></div>
+        <div><span class="dataLabel">Best lap</span><strong id="pgTid">2:14.71</strong></div>
+        <div><span class="dataLabel">Vs. first ride</span><strong id="pgDelta" class="redText">&minus;44.58 S</strong></div>
       </div>
-      <div>
-        <h2 class="xl">Two laps.<br>Two lines.<br><span class="red">One is quicker.</span></h2>
-        <p class="txt" style="margin-top:22px">Tidel colours the lap by what your right hand was
-          doing &mdash; red where you were slowing, green where you were driving out. Lay the other
-          lap over it and the difference in line stops being a feeling.</p>
-        <div class="figRow" style="margin-top:34px">
-          <!-- verdien settes av js/forside.js fra den SAMME utregningen som fargelegger
-               kartet, saa tallet her og merket paa kartet aldri kan sprike -->
-          <div class="fig"><div class="k">Hardest braking</div>
-            <div class="v num red"><span id="bremsTall">&ndash;</span><span style="font-size:.36em"> m/s&#178;</span></div></div>
-          <div class="fig"><div class="k">On the throttle</div>
-            <div class="v num" style="color:var(--gain)"><span id="gassTall">&ndash;</span><span style="font-size:.36em"> %</span></div></div>
-        </div>
-        <div class="shot" style="margin-top:30px">
-          <img src="/assets/photo/whip.jpg" width="484" height="295" loading="lazy" alt="Rider whipping the bike over a jump">
-        </div>
+
+      <div class="graphWrap" aria-label="Lap time progression across four rides at Froland MX">
+        <svg viewBox="0 0 1000 290" role="img" aria-hidden="true" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="area" x1="0" x2="0" y1="0" y2="1">
+              <stop offset="0" stop-color="#e30613" stop-opacity=".28"></stop>
+              <stop offset="1" stop-color="#e30613" stop-opacity="0"></stop>
+            </linearGradient>
+          </defs>
+          <line x1="0" y1="40" x2="1000" y2="40" class="gridLine"></line>
+          <line x1="0" y1="105" x2="1000" y2="105" class="gridLine"></line>
+          <line x1="0" y1="170" x2="1000" y2="170" class="gridLine"></line>
+          <line x1="0" y1="235" x2="1000" y2="235" class="gridLine"></line>
+          <polygon points="80,260 80,60 360,132 640,118 920,220 920,260" fill="url(#area)"></polygon>
+          <polyline points="80,60 360,132 640,118 920,220" class="progressLine"></polyline>
+          <circle cx="80"  cy="60"  r="6"  class="graphDot" data-i="0"></circle>
+          <circle cx="360" cy="132" r="6"  class="graphDot" data-i="1"></circle>
+          <circle cx="640" cy="118" r="6"  class="graphDot" data-i="2"></circle>
+          <circle cx="920" cy="220" r="10" class="graphDot active" data-i="3"></circle>
+        </svg>
+        <span class="axisLabel">LAP TIME ↓</span>
+      </div>
+
+      <div class="sessionTabs">
+        <button type="button" class="sessionTab" aria-pressed="false" data-i="0"><span>02 MAY</span><strong>2:59.29</strong></button>
+        <button type="button" class="sessionTab" aria-pressed="false" data-i="1"><span>08 JUN</span><strong>2:36.84</strong></button>
+        <button type="button" class="sessionTab" aria-pressed="false" data-i="2"><span>22 JUL</span><strong>2:41.22</strong></button>
+        <button type="button" class="sessionTab active" aria-pressed="true" data-i="3"><span>08 AUG</span><strong>2:14.71</strong></button>
       </div>
     </div>
 
-    <h3 class="lg" style="margin-top:clamp(48px,6vw,80px)">Speed, by distance &mdash; not by time</h3>
-    <p class="txt" style="margin-top:12px;max-width:64ch">Both laps are resampled along the lap, so
-      the same corner sits at the same place on the axis no matter how fast you went through it.</p>
-    <div class="graf" style="margin-top:26px" id="fartGraf"></div>
+    <figure class="progressImage">
+      <img src="/assets/site/progress-v3.jpg" loading="lazy" width="1672" height="941"
+           alt="Aerial view of four motocross rides across a winding forest circuit">
+      <figcaption>
+        <span>FOUR RIDES / ONE TRACK / A CLEAR DIRECTION</span>
+        <strong>&minus;44.58 S</strong>
+      </figcaption>
+    </figure>
   </div>
 </section>
 
-<!-- ══════════════ BAND · progress ══════════════ -->
-<section class="band b" id="progress">
-  <div class="ph"></div><div class="tt"></div>
-  <div class="wrap">
-    <div class="kick r">Progress</div>
-    <h2 class="xl" style="margin-top:14px;max-width:15ch">Don&rsquo;t just record<br>your rides.<br><span class="red">See if you&rsquo;re getting faster.</span></h2>
-  </div>
-</section>
-
-<!-- ══════════════ 04 · SEASON ══════════════ -->
-<section class="pad">
-  <div class="wrap">
-    <div class="ix"><span class="no">04</span><span class="lb">A season, not a session</span><span class="rl"></span></div>
-    <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:36px;flex-wrap:wrap">
-      <p class="txt" style="font-size:18px;max-width:52ch">Every session lands on the same axis, per
-        track. Lap times are never compared across tracks &mdash; a best lap here and a best lap there
-        are not the same number.</p>
-      <div class="fig" style="text-align:right">
-        <div class="k">Best lap, 2 May &rarr; 8 Aug</div>
-        <div class="v num" style="color:var(--gain)">&minus;44.58<span style="font-size:.34em"> S</span></div>
-      </div>
-    </div>
-    <div class="graf" style="margin-top:46px" id="sesongGraf"></div>
-    <p class="txt sm" style="margin-top:20px;color:var(--dim);max-width:70ch">Four sessions, one
-      track, one finish line &mdash; every lap on this graph is measured the same way. 22 July was
-      a bad day, and Tidel leaves it in.</p>
-  </div>
-</section>
-
-<div class="hr"></div>
-
-<!-- ══════════════ 05 · DEVICES ══════════════ -->
-<section class="pad" id="devices">
-  <div class="wrap">
-    <div class="ix"><span class="no">05</span><span class="lb">Works with your setup</span><span class="rl"></span></div>
-    <div class="split">
+<!-- ══════════════ 03 · ANALYSE ══════════════ -->
+<section class="analysisSection" id="analysis">
+  <div class="shell">
+    <header class="sectionHeader">
       <div>
-        <h2 class="xl">Use the GPS<br>you already have.</h2>
-        <p class="txt" style="margin-top:22px">Tidel is the analysis. The GPS can come from whatever you
-          already ride with &mdash; and you can mix sources across a season without splitting your
-          history.</p>
-        <div class="mos par" style="margin-top:32px">
-          <div class="m"><img src="/assets/photo/bars-pov.jpg" width="293" height="162" loading="lazy" alt="View over the handlebars"></div>
-          <div class="m"><img src="/assets/photo/wheel.jpg" width="239" height="162" loading="lazy" alt="Front wheel and boot in motion"></div>
+        <p class="sectionIndex">03 / Find the why</p>
+        <h2>DON&rsquo;T JUST SEE<br>THAT YOU&rsquo;RE FASTER.</h2>
+      </div>
+      <p>Compare pace, racing line and consistency from the same track. Find the corner that
+        changed&mdash;and the one that still costs you.</p>
+    </header>
+
+    <figure class="analysisHero">
+      <img src="/assets/site/analysis-v2.jpg" loading="lazy" width="1672" height="941"
+           alt="Motocross rider compared against a ghost lap with racing lines">
+      <figcaption><span>SELECTED LAP</span><i></i> <span>REFERENCE LAP</span></figcaption>
+      <div class="analysisHeroCopy">
+        <span>TURN 07 / FROLAND MX</span>
+        <strong>THE LINE<br>SEPARATES HERE.</strong>
+      </div>
+    </figure>
+
+    <div class="sectorModule">
+      <div class="sectorBreakdown">
+        <div class="sectorTopline">
+          <span>FROLAND MX / LAP 06 VS. LAP 11</span>
+          <span>LOWER IS FASTER</span>
+        </div>
+        <div class="sectorHeadline">
+          <span class="dataLabel">Lap delta</span>
+          <strong>&minus;1.90 S</strong>
+          <p>Three gains. Two losses. One clear place to work next.</p>
+        </div>
+        <div class="sectorRows" aria-label="Time gained or lost in five sectors">
+          <div class="sectorRow"><span>S01</span><div class="sectorRail"><i class="gain" style="width:44%"></i></div><strong class="gainText">&minus;0.86 S</strong></div>
+          <div class="sectorRow"><span>S02</span><div class="sectorRail"><i class="loss" style="width:18%"></i></div><strong class="lossText">+0.21 S</strong></div>
+          <div class="sectorRow"><span>S03</span><div class="sectorRail"><i class="gain" style="width:72%"></i></div><strong class="gainText">&minus;1.44 S</strong></div>
+          <div class="sectorRow"><span>S04</span><div class="sectorRail"><i class="gain" style="width:29%"></i></div><strong class="gainText">&minus;0.39 S</strong></div>
+          <div class="sectorRow"><span>S05</span><div class="sectorRail"><i class="loss" style="width:36%"></i></div><strong class="lossText">+0.58 S</strong></div>
+        </div>
+        <div class="sectorLegend">
+          <span><i class="gain"></i> TIME GAINED</span>
+          <span><i class="loss"></i> TIME LOST</span>
         </div>
       </div>
-      <div>
-        <div class="kilder">
-          <div class="kilde"><span class="tg">Built in</span><div class="n">iPhone</div><div class="d">Live lap timing while you ride.</div></div>
-          <div class="kilde"><span class="tg">Built in</span><div class="n">Android</div><div class="d">Live lap timing while you ride.</div></div>
-          <div class="kilde"><span class="tg">Import</span><div class="n">Apple Watch</div><div class="d">Route and heart rate, read from Apple Health.</div></div>
-          <div class="kilde"><span class="tg n2">Import</span><div class="n">Garmin &middot; Polar &middot; Suunto</div><div class="d">Via Apple Health, or a GPX file exported from the watch.</div></div>
-          <div class="kilde"><span class="tg n2">Bluetooth</span><div class="n">RaceBox</div><div class="d">25 Hz GNSS with G-force, for when you want more resolution.</div></div>
-          <div class="kilde"><span class="tg n2">Import</span><div class="n">GPX file</div><div class="d">From any app that can export one.</div></div>
+
+      <div class="sectorData">
+        <div class="analysisTabs" role="group" aria-label="Choose analysis view">
+          <button type="button" class="analysisTab active" aria-pressed="true"  data-a="0">TIME DELTA</button>
+          <button type="button" class="analysisTab"        aria-pressed="false" data-a="1">RACING LINE</button>
+          <button type="button" class="analysisTab"        aria-pressed="false" data-a="2">PACE</button>
         </div>
-        <p class="kilderNote">Product names are used to identify compatibility only. Tidel is not
-          affiliated with, endorsed by or partnered with any of these companies. Watch support depends
-          on the watch being able to write to Apple Health or export a GPX file.</p>
-        <div class="shot" style="margin-top:26px">
-          <img src="/assets/photo/garage.jpg" width="484" height="266" loading="lazy" alt="Bike parked in a workshop at sunset">
+        <div class="analysisReadout" aria-live="polite">
+          <span class="dataLabel" id="anLabel">Time delta</span>
+          <strong id="anValue">4.85 S</strong>
+          <h3 id="anTitle">Time still on the track</h3>
+          <p id="anCopy">Tidel combines your best sectors to show what your next clean lap could be.</p>
+        </div>
+        <div class="analysisStatRow">
+          <span>BEST LAP <strong>2:14.71</strong></span>
+          <span>BEST SECTORS <strong>2:09.86</strong></span>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ══════════════ BAND · offline ══════════════ -->
-<section class="band c">
-  <div class="ph"></div><div class="tt"></div>
-  <div class="wrap">
-    <div class="ix" style="margin-bottom:18px"><span class="no">06</span><span class="lb">Built for the track</span></div>
-    <h2 class="xl" style="max-width:14ch">No signal.<br>No problem.</h2>
-    <p class="txt" style="margin-top:22px;font-size:18px">Most tracks have no coverage. Tidel records,
-      imports and analyses entirely on the phone, and syncs when you are back on a network.</p>
-  </div>
-</section>
-
-<!-- ══════════════ MOSAIKK ══════════════ -->
-<section class="pad" style="padding-bottom:0">
-  <div class="wrap">
-    <div class="mos">
-      <div class="m"><img src="/assets/photo/portrait.jpg" width="406" height="304" loading="lazy" alt="Rider in helmet and gear"></div>
-      <div class="m"><img src="/assets/photo/sunset-jump.jpg" width="267" height="252" loading="lazy" alt="Rider silhouetted against the sunset"></div>
-      <div class="m"><img src="/assets/photo/aerial-lake.jpg" width="476" height="335" loading="lazy" alt="Motocross track seen from above"></div>
-      <div class="m"><img src="/assets/photo/boot.jpg" width="518" height="266" loading="lazy" alt="Boot on the footpeg through a rut"></div>
-      <div class="m"><img src="/assets/photo/sunrays.jpg" width="323" height="242" loading="lazy" alt="Sunlight across an empty track"></div>
-      <div class="m"><img src="/assets/photo/plate-94.jpg" width="289" height="162" loading="lazy" alt="Number plate on the front of the bike"></div>
+<!-- ══════════════ 04 · PROSESS ══════════════ -->
+<section class="processSection">
+  <div class="shell">
+    <p class="sectionIndex">04 / Zero friction</p>
+    <div class="processGrid">
+      <article><span>01</span><h3>RIDE</h3>
+        <p>Start moving. Tidel recognises the track and finds each lap automatically.</p></article>
+      <article><span>02</span><h3>CONNECT</h3>
+        <p>Every session joins your history for that track&mdash;without mixing incomparable circuits.</p></article>
+      <article><span>03</span><h3>PROGRESS</h3>
+        <p>Return with one clear target and watch the trend change across the season.</p></article>
     </div>
   </div>
 </section>
 
-<!-- ══════════════ DOWNLOAD ══════════════ -->
-<section class="pad">
-  <div class="wrap" style="text-align:center">
-    <img class="sticker" src="/assets/brand/tidel-sticker.png" width="760" height="331"
-         loading="lazy" alt="Tidel — MX Performance Tracker">
-    <!-- "tidel" ER det norske ordet for tenth. Merkevaren heter EVERY TENTH COUNTS.
-         "your time" kastet bort hele poenget med navnet. -->
-    <h2 class="xxl" style="margin-top:26px">Go find<br>your <span class="red">tenths</span>.</h2>
-    <div class="stores" style="justify-content:center;margin-top:38px" id="footStores"></div>
-    <p class="txt sm" style="margin:24px auto 0;color:var(--dim)">Free while in beta. No account
-      needed to start.</p>
+<!-- ══════════════ 05 · ENHETER ══════════════ -->
+<section class="devicesSection" id="devices">
+  <div class="devicesBackdrop"></div>
+  <div class="shell devicesGrid">
+    <div class="deviceCopy">
+      <p class="sectionIndex">05 / Bring what you have</p>
+      <h2>YOUR RIDE.<br>YOUR DEVICE.<br><span>ONE HISTORY.</span></h2>
+      <p>Track live from your phone, import a watch file, or connect high-frequency GPS.
+        Tidel keeps the season in one place.</p>
+      <div class="deviceList">
+        <span>IPHONE</span><span>ANDROID</span><span>APPLE WATCH</span><span>GARMIN</span>
+        <span>POLAR</span><span>SUUNTO</span><span>GPX</span><span>RACEBOX 25 HZ</span>
+      </div>
+      <p class="deviceNote">Product names identify compatibility only. Tidel is not affiliated with,
+        endorsed by or partnered with any of these companies.</p>
+    </div>
+
+    <div class="phoneStage">
+      <div class="phoneGlow"></div>
+      <div class="phone">
+        <div class="phoneBar"></div>
+        <img src="/assets/site/app-home.jpg" loading="lazy" width="390" height="844"
+             alt="Tidel app showing motocross sessions and progress">
+      </div>
+      <div class="phoneNote noteTop"><span>LIVE OR IMPORTED</span><strong>EVERY RIDE COUNTS</strong></div>
+      <div class="phoneNote noteBottom"><span>NO SIGNAL?</span><strong>KEEP RIDING</strong></div>
+    </div>
   </div>
 </section>
+
+<!-- ══════════════ 06 · OFFLINE ══════════════ -->
+<section class="offlineSection">
+  <div class="shell offlineGrid">
+    <div>
+      <p class="sectionIndex">06 / Built for the track</p>
+      <h2>NO SIGNAL.<br><span>NO PROBLEM.</span></h2>
+    </div>
+    <p>Tidel records while you ride and syncs when the connection returns. Because the best tracks
+      rarely come with perfect reception.</p>
+    <div class="offlineStat"><span>Connection required</span><strong>0%</strong></div>
+  </div>
+</section>
+
+<!-- ══════════════ AVSLUTNING ══════════════ -->
+<section class="finalCta">
+  <div class="shell finalGrid">
+    <div class="finalMark"><img src="/assets/site/sticker.png" loading="lazy" width="760" height="331" alt="Tidel logo"></div>
+    <div>
+      <p class="eyebrow">The next ride starts the trend</p>
+      <h2>STOP GUESSING.<br><span>START PROGRESSING.</span></h2>
+      <div class="stores" id="footStores"></div>
+    </div>
+    <a class="button finalButton" href="/download/">GET TIDEL <span aria-hidden="true">↗</span></a>
+  </div>
+</section>
+
+</main>
 
 <footer>
-  <div class="in" style="max-width:1320px;padding:0 40px">
-    <div class="rad">
-      <a href="/download/">Download</a><a href="/support/">Support</a><a href="/privacy/">Privacy</a>
-      <a href="/personvern/">Personvern</a><a href="/terms/">Terms</a>
-      <a href="/delete-account/">Delete account</a><a href="/contact/">Contact</a>
-    </div>
-    <div class="sig">
-      <span>&copy; 2026 Tidel &mdash; Magnus Linnerud Støme, Norway</span>
-      <span>post@tidel.no</span><span>Imagery &copy; Esri</span>
-      <span class="sp">EVERY TENTH COUNTS.</span>
-    </div>
+  <div class="shell footerGrid">
+    <a class="brand" href="#top"><img src="/assets/site/sticker.png" loading="lazy" width="760" height="331" alt=""><span>TIDEL</span></a>
+    <p>MX PERFORMANCE TRACKER</p>
+    <!-- UENDREDE JURIDISKE LENKER. Adressene er noeyaktig de samme som foer
+         redesignet, og de samme som staar i App Store Connect og Play Console. -->
+    <nav class="footerLinks" aria-label="Legal and support">
+      <a href="/download/">Download</a>
+      <a href="/support/">Support</a>
+      <a href="/privacy/">Privacy</a>
+      <a href="/personvern/">Personvern</a>
+      <a href="/terms/">Terms</a>
+      <a href="/delete-account/">Delete account</a>
+      <a href="/contact/">Contact</a>
+    </nav>
+    <p class="footerMeta">© 2026 Tidel — Magnus Linnerud Støme, Norway ·
+      <a href="mailto:post@tidel.no">post@tidel.no</a></p>
   </div>
 </footer>
 
-<script src="/js/forside.js?v=2608162050"></script>
-<script src="/js/butikk.js?v=2608162050"></script>
+<script src="/js/forside.js?v=2608181340"></script>
+<script src="/js/butikk.js?v=2608181340"></script>
 </body>
 </html>
