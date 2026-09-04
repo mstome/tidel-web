@@ -45,7 +45,16 @@
        siste bytene ligge i meta.ubruktBytes - som allerede er dokumentert som
        «framtidige felt ignoreres bevisst». Formatversjonen bumpes derfor IKKE:
        en versjonsheving ville fått gamle klienter til å avvise koden helt. */
-    KONTO: 16
+    KONTO: 16,
+    /* VARIANT (SOSIALT-1, batch 4): tiden i koden er kjørt på en VARIANTLØYPE
+       (auto-satt målstrek / kortløype), ikke på banens fullbane. Feltet bærer INGEN
+       byte — bitet i flagget ER verdien — så en gammel klient leser koden nøyaktig
+       som før: den ser en bit den ikke kjenner, det finnes ingen ekstra byte å
+       snuble i, og formatversjonen trenger derfor ikke heves (samme resonnement som
+       KONTO over). Uten dette feltet ble en kortløypetid fra en kompis lagt inn som
+       fullbanerekord hos mottakeren — .mxrecord-fila og skyveien bar flagget, bare
+       delekoden gjorde det ikke. */
+    VARIANT: 32
   };
 
   // Sekunder fra unix-epoke til 2000-01-01T00:00:00Z
@@ -683,6 +692,7 @@
     if (harTid) flagg |= FLAGG.BESTETID;
     if (harDato) flagg |= FLAGG.DATO;
     if (harKonto) flagg |= FLAGG.KONTO;
+    if (d.variant === true) flagg |= FLAGG.VARIANT;   // ren bit, ingen nyttelast
     w.u8(flagg);
 
     w.tekst(d.rytter);
@@ -897,7 +907,10 @@
             rytter: r.tekst(),
             baneId: r.tekst(),
             baneNavn: r.tekst(),
-            lat: null, lon: null, dato: null, bestetidMs: null, spor: null, konto: null
+            lat: null, lon: null, dato: null, bestetidMs: null, spor: null, konto: null,
+            /* SOSIALT-1: variantløypa. Ren bit i flagget - eldre koder mangler bitet og
+               gir false, som er riktig fallback (de var alle fullbane-koder). */
+            variant: !!(flagg & FLAGG.VARIANT)
           };
           if (flagg & FLAGG.POSISJON) {
             data.lat = r.i32() / 1e6;
