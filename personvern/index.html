@@ -8,7 +8,7 @@
 <title>Personvernerklæring — Tidel</title>
 <meta name="description" content="Hva Tidel samler inn, hva som blir liggende på telefonen, hvem som behandler det, og hvordan du sletter alt.">
 <link rel="icon" href="/assets/brand/web/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="/css/tidel.css?v=2609042015">
+<link rel="stylesheet" href="/css/tidel.css?v=2609090223">
 </head>
 <body>
 
@@ -27,14 +27,16 @@
   <h1>Personvern&shy;erklæring</h1>
   <p class="lead">Tidel er en rundetidtaker for motocross. Den registrerer hvor du kjører, for å
     kunne fortelle deg hvor fort du kjørte. Her står det nøyaktig hva det betyr for dataene dine.</p>
-  <p class="meta">Sist oppdatert 4. september 2026 &middot; gjelder Tidel for iOS og Android
+  <p class="meta">Sist oppdatert 5. september 2026 &middot; gjelder Tidel for iOS og Android
     &middot; English version: <a href="/privacy/">privacy</a></p>
 
   <div class="kort">
     <p><strong>Kort fortalt.</strong> Øktene dine er private som standard, og ingen andre ser dem.
-      Det finnes ingen reklame, ingen sporing og ingen tredjeparts analyseverktøy i appen i det hele
-      tatt. Tidel lagrer øktene dine på sin egen server slik at de overlever en ny telefon &mdash;
-      og du kan slette alt sammen, permanent, når som helst.</p>
+      Det ene som deles av seg selv, er <strong>beste rundetid på banens liste</strong> &mdash; den
+      står på som standard, og du slår den av for én økt i gjennomgangen eller for alle under
+      Mer &rarr; Personvern (punkt 5). Det finnes ingen reklame, ingen sporing og ingen tredjeparts
+      analyseverktøy i appen i det hele tatt. Tidel lagrer øktene dine på sin egen server slik at de
+      overlever en ny telefon &mdash; og du kan slette alt sammen, permanent, når som helst.</p>
   </div>
 
   <h2>1. Hvem er ansvarlig</h2>
@@ -139,7 +141,7 @@
     <li><strong>Ingen reklame, og ingen reklame-identifikatorer.</strong></li>
     <li><strong>Ingen tredjeparts analyse-, krasj- eller attribusjonsverktøy.</strong> Det finnes
       ikke Google Analytics, Firebase, Crashlytics, Sentry, Amplitude, Mixpanel, AppsFlyer eller
-      noe liknende, og ingen data går til andre selskaper enn de to databehandlerne under. Tidel
+      noe liknende, og ingen data går til andre selskaper enn de tre databehandlerne under. Tidel
       registrerer derimot sine egne feilmeldinger &mdash; meldingen, fila og linjenummeret &mdash;
       på Tidels egen server, slik at en krasj ingen melder fra om likevel blir fikset. De inneholder
       ingen rundetider, ingen posisjoner, ingen navn og ingen notater, og samme bryter under
@@ -151,7 +153,10 @@
       tilfeldig for denne installasjonen, pluss plattform, appversjon og språk. Den tilhører ingen
       andre enn dette eksemplaret av Tidel, den forsvinner hvis du installerer på nytt, og den
       slettes når du sletter kontoen.</li>
-    <li><strong>Ingen offentlig resultatliste du havner på uten å be om det.</strong></li>
+    <li><strong>Ingen offentlig resultatliste utenom banens egen &mdash; og den kan du slå av.</strong>
+      Beste rundetid på en bane deles på banens liste som standard. Du slår den av for én økt i
+      gjennomgangen av økta, eller for alle under <strong>Mer &rarr; Personvern</strong>. Selve
+      økta er fortsatt privat. Se punkt 5.</li>
   </ul>
 
   <h2>3. Hva som aldri forlater telefonen</h2>
@@ -182,7 +187,19 @@
   <h3>Det du deler selv</h3>
   <p>Du kan sende en økt som fil eller som delekode, og du kan dele en rekord med venner inne i
     appen. Det skjer bare når du velger det, til dem du velger. Øktene dine er
-    <strong>private som standard</strong>.</p>
+    <strong>private som standard</strong>. Unntaket &mdash; det ene som deles uten at du gjør noe
+    &mdash; er beste rundetid på banens liste, som står rett under.</p>
+
+  <h3>Beste rundetid på banens liste</h3>
+  <p>Din beste rundetid på en bane deles på banens liste <strong>som standard</strong>. Når du
+    gjennomgår en økt i appen, står bryteren &laquo;Del beste runde på banens liste&raquo; på.
+    Slår du den av for den økta, kommer tida ikke på lista, og en tid som alt lå der, fjernes ved
+    neste synkronisering. Du kan alltid åpne økta igjen og endre valget. Om du står med fullt navn
+    eller bare forbokstav, styrer du under <strong>Mer &rarr; Personvern</strong>
+    (&laquo;Vis fullt navn på lister&raquo;, på som standard); vil du ikke dele rundetider i det hele
+    tatt, slår du av &laquo;Del rekordene mine&raquo; samme sted. Det som deles på lista, er tida,
+    datoen og kjørelinja i selve runden &mdash; aldri pulsen din, aldri hele økta og aldri posisjon
+    utenfor runden. Selve økta er fortsatt privat som standard.</p>
 
   <h3>Treningssamlinger</h3>
   <p>Blir du med i en treningssamling, ser treneren for akkurat den samlingen navnet ditt, gruppen
@@ -227,8 +244,17 @@
         standardavtaler (SCC)</strong>. Slår du av satellittbakgrunnen i appen, sendes forespørselen
         aldri.</td>
     </tr>
+    <tr>
+      <td><strong>GitHub Inc.</strong><br>(statisk filhosting)</td>
+      <td>Serverer <code>versjon.json</code>, som appen sjekker for en nyere beta</td>
+      <td>Filen hentes fra GitHub Pages i <strong>USA</strong>, høyst <strong>én gang per
+        døgn</strong>. Forespørselen bærer ingen konto, ingen identifikator og ingen
+        rundetider &mdash; bare enhetens <strong>IP-adresse</strong>, som GitHub kan logge som
+        del av vanlig serverdrift. Det er en overføring til tredjeland, gjort på grunnlag av
+        <strong>EUs standardavtaler (SCC)</strong>.</td>
+    </tr>
   </table>
-  <p>Begge er bundet av en skriftlig databehandleravtale. De kan bare behandle dataene dine etter
+  <p>Alle tre er bundet av en skriftlig databehandleravtale. De kan bare behandle dataene dine etter
     Tidels dokumenterte instrukser, kan ikke bruke dem til egne formål, og er forpliktet til å gi
     dem samme eller tilsvarende beskyttelse som denne erklæringen lover. Ingen av dem kan selge
     dem, dele dem videre eller bruke dem til reklame eller profilering. Ingen andre selskaper
@@ -307,6 +333,11 @@
     fødselsdato, profilerer ikke brukere, viser ingen reklame og har ingen offentlig sosial strøm.
     Den er ikke rettet mot barn under 13 år, og ønsker en forelder eller foresatt en konto fjernet,
     holder én e-post til <a href="mailto:post@tidel.no">post@tidel.no</a>.</p>
+  <p><strong>Én ting bør en forelder vite:</strong> beste rundetid på en bane deles på banens
+    liste som standard, sammen med navnet som står i appen (punkt 5). Det slås av for én økt i
+    gjennomgangen av økta, eller for alle under <strong>Mer &rarr; Personvern</strong> &mdash;
+    der velger du også om det skal stå fullt navn eller bare forbokstav. Ingen andre deler av økta
+    deles: ikke sporet, ikke pulsen, ikke posisjon utenfor selve runden.</p>
   <p><strong>Treningssamlinger i pilotfasen er for voksne deltakere.</strong> Egen støtte for
     foresatt-samtykke må være på plass før samlinger brukes av barn og unge, og Tidel sier tydelig
     fra i appen når det endrer seg.</p>

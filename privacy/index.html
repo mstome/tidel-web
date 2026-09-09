@@ -15,7 +15,7 @@
 <title>Privacy Policy — Tidel</title>
 <meta name="description" content="What Tidel collects, what stays on your phone, who processes it, and how to delete it.">
 <link rel="icon" href="/assets/brand/web/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="/css/tidel.css?v=2609042015">
+<link rel="stylesheet" href="/css/tidel.css?v=2609090223">
 </head>
 <body>
 
@@ -34,14 +34,17 @@
   <h1>Privacy Policy</h1>
   <p class="lead">Tidel is a motocross lap timer. It records where you ride, so it can tell you
     how fast you rode. This page says exactly what that means for your data.</p>
-  <p class="meta">Last updated 4 September 2026 &middot; applies to the Tidel app for iOS and Android
+  <p class="meta">Last updated 5 September 2026 &middot; applies to the Tidel app for iOS and Android
     &middot; Norwegian version: <a href="/personvern/">personvern</a></p>
 
   <div class="kort">
     <p><strong>The short version.</strong> Your sessions are private by default and nobody else can
-      see them. There are no ads, no trackers and no third-party analytics in the app at all.
-      Tidel does store your sessions on its own server so they survive a new phone &mdash; and you
-      can delete all of it, permanently, at any time.</p>
+      see them. The one thing that is shared on its own is your <strong>best lap time on the
+      track&rsquo;s list</strong> &mdash; that is on by default, and you turn it off for one session
+      while reviewing it, or for good under More &rarr; Privacy (section 5). There are no ads, no
+      trackers and no third-party analytics in the app at all. Tidel does store your sessions on its
+      own server so they survive a new phone &mdash; and you can delete all of it, permanently, at
+      any time.</p>
   </div>
 
   <div class="toc">
@@ -165,7 +168,7 @@
     <li><strong>No advertising, and no advertising identifiers.</strong></li>
     <li><strong>No third-party analytics, crash-reporting or attribution SDKs.</strong> There is no
       Google Analytics, Firebase, Crashlytics, Sentry, Amplitude, Mixpanel, AppsFlyer or anything
-      similar, and no data goes to any company other than the two processors listed below. Tidel
+      similar, and no data goes to any company other than the three processors listed below. Tidel
       does record its own error reports &mdash; the message, the file and the line number &mdash;
       on Tidel&rsquo;s own server, so a crash nobody reports still gets fixed. They contain no lap
       times, no positions, no names and no notes, and the same switch under More &rarr; Feedback
@@ -176,7 +179,10 @@
       your phone model. Usage events do carry an identifier the app generated at random for this
       installation, plus platform, app version and language. It belongs to nobody but this copy of
       Tidel, it disappears if you reinstall, and it is deleted when you delete your account.</li>
-    <li><strong>No public leaderboard you end up on without asking.</strong></li>
+    <li><strong>No public leaderboard other than the track&rsquo;s own &mdash; and you can turn that
+      off.</strong> Your best lap time on a track is shared on that track&rsquo;s list by default.
+      You turn it off for one session while reviewing that session, or for good under
+      <strong>More &rarr; Privacy</strong>. The session itself stays private. See section 5.</li>
   </ul>
 
   <h2 id="lokalt">3. What never leaves your phone</h2>
@@ -206,7 +212,20 @@
   <h3>What you share yourself</h3>
   <p>You can send a session as a file or as a share code, and you can share a record with friends
     inside the app. That happens only when you choose it, to the people you choose. Your sessions
-    are <strong>private by default</strong>.</p>
+    are <strong>private by default</strong>. The one exception &mdash; the one thing shared without
+    you doing anything &mdash; is the best lap time on the track&rsquo;s list, right below.</p>
+
+  <h3>Your best lap on the track&rsquo;s list</h3>
+  <p>Your best lap time on a track is shared on that track&rsquo;s list <strong>by default</strong>.
+    When you review a session in the app, the switch &ldquo;Share my best lap on the track&rsquo;s
+    list&rdquo; is on. Turn it off for that session and the time does not appear on the list; a time
+    already there is removed on the next sync. You can always open the session again and change your
+    mind. Whether you appear with your full name or just an initial is controlled under
+    <strong>More &rarr; Privacy</strong> (&ldquo;Show full name on lists&rdquo;, on by default); if
+    you do not want to share lap times at all, turn off &ldquo;Share my records&rdquo; in the same
+    place. What is shared on the list is the time, the date and the racing line of that one lap
+    &mdash; never your heart rate, never a whole session and never location outside the lap. The
+    session itself remains private by default.</p>
 
   <h3>Training sessions (coach events)</h3>
   <p>If you join a training session, the coach of that session sees your name, your group and your
@@ -252,10 +271,19 @@
         made on the basis of the <strong>EU Standard Contractual Clauses</strong>. Turn the
         satellite background off in the app and the request is never made.</td>
     </tr>
+    <tr>
+      <td><strong>GitHub Inc.</strong><br>(static file hosting)</td>
+      <td>Serves <code>versjon.json</code>, which the app checks for a newer beta</td>
+      <td>The file is fetched from GitHub Pages in the <strong>United States</strong>, at most
+        <strong>once a day</strong>. The request carries no account, no identifier and no lap
+        times &mdash; only your device&rsquo;s <strong>IP address</strong>, which GitHub may log
+        as part of ordinary server operation. That is a transfer to a third country, made on the
+        basis of the <strong>EU Standard Contractual Clauses</strong>.</td>
+    </tr>
   </table>
-  <p>Both are bound by a written data processing agreement. They may only process your data on
+  <p>All three are bound by a written data processing agreement. They may only process your data on
     Tidel&rsquo;s documented instructions, may not use it for their own purposes, and are required
-    to give it the same or an equal level of protection as this policy promises. Neither may sell
+    to give it the same or an equal level of protection as this policy promises. None may sell
     it, share it onward, or use it for advertising or profiling. No other company receives your
     data. Apple Health and Google Play are not processors for Tidel &mdash; Health is a source you
     import from, and Play is a distribution channel.</p>
@@ -335,6 +363,12 @@
     for a date of birth, does not profile users, shows no advertising, and has no public social
     feed. It is not directed at children under 13, and if a parent or guardian wants an account
     removed, one email to <a href="mailto:post@tidel.no">post@tidel.no</a> is enough.</p>
+  <p><strong>One thing a parent should know:</strong> the best lap time on a track is shared on
+    that track&rsquo;s list by default, along with the name entered in the app (section 5). It is
+    turned off for a single session while reviewing that session, or for good under
+    <strong>More &rarr; Privacy</strong> &mdash; which is also where you choose full name or just
+    an initial. Nothing else from the session is shared: not the track log, not heart rate, and no
+    position outside the lap itself.</p>
   <p><strong>Training sessions are for adult participants during the pilot phase.</strong> Proper
     support for guardian consent must be in place before they are used by children and young riders,
     and Tidel will say so clearly in the app when that changes.</p>

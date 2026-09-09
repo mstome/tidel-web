@@ -1,3 +1,30 @@
+# ═════════════════════════════════════════════════════════════════════════════════
+#  LES DETTE FOERST: GitHub Pages LESER IKKE denne fila.
+#
+#  Formatet er Cloudflare Pages sitt og Netlify sitt. tidel.no publiseres til GitHub
+#  Pages (se SLIK-PUBLISERER-DU.md), og Pages har ingen maate aa sette egne headere
+#  paa i det hele tatt. Granskningen 8. september 2026 (WEB-01) hentet ti ordinaere
+#  sider fra tidel.no: alle svarte 200, og INGEN av de fem headerne under var med.
+#
+#  Det er derfor feil aa lese innholdet her som aktiv beskyttelse. Det GitHub Pages
+#  faktisk sender, er blant annet «Cache-Control: max-age=600» - som er hele grunnen
+#  til at web\publiser.ps1 stempler css- og js-adressene med ?v=<tidspunkt>.
+#
+#  HVA SOM DA KAN GJOERES:
+#    * Referrer-Policy kan settes i markup: <meta name="referrer" content="..."> .
+#      Den staar i omdirigeringssidene (WEB-02), som er sidene som faktisk sender
+#      en bruker videre. Sidene har ingen felles mal, saa de oevrige maa eventuelt
+#      faa metaen én og én - en eierbeslutning, ikke noe en agent skal gjoere bredt.
+#    * Content-Security-Policy settes MED VILJE IKKE i markup. En CSP i <meta> naar
+#      ikke frame-ancestors (den eneste formen som erstatter X-Frame-Options), og en
+#      for stram regel svartelegger sida uten en eneste synlig feilmelding.
+#    * De oevrige fire kan bare komme fra en vert eller proxy som setter headere.
+#
+#  FILA BEHOLDES: den er riktig den dagen sida flyttes til Cloudflare Pages eller
+#  Netlify, og den dokumenterer hvilke headere vi mener sida SKAL ha. Verifiser
+#  responsene med curl -I etter en eventuell flytting - ikke anta at de kom med.
+# ═════════════════════════════════════════════════════════════════════════════════
+
 /*
   X-Content-Type-Options: nosniff
   X-Frame-Options: SAMEORIGIN

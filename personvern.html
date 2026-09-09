@@ -1,0 +1,42 @@
+<!doctype html>
+<!-- OMDIRIGERING (WEB-02, granskningen 8. september 2026)
+
+     web/_redirects lover at /personvern.html sendes videre til /personvern/. Det formatet leses BARE
+     av Cloudflare Pages og Netlify. tidel.no ligger paa GitHub Pages, som ignorerer
+     fila fullstendig — og granskningen maalte 404 paa adressene 8. september. De
+     staar i Play Console-utkastene og er dessuten adresser folk gjetter seg fram til.
+
+     En statisk vert kan bare gjoere dette paa én maate: en ekte fil som sender
+     nettleseren videre selv. Denne fila skal derfor ALDRI slettes saa lenge linja
+     staar i _redirects — web/publiser.ps1 stopper publiseringen om den mangler. -->
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Flyttet — Tidel</title>
+<meta http-equiv="refresh" content="0; url=/personvern/">
+<link rel="canonical" href="https://tidel.no/personvern/">
+<!-- noindex,follow: Google skal foelge lenka til den ekte sida, men aldri
+     indeksere denne som et duplikat av den. -->
+<meta name="robots" content="noindex,follow">
+<!-- WEB-01: web/_headers leveres ikke av GitHub Pages. Referrer-Policy er den ENE
+     av de fem headerne som ogsaa kan settes i markup, og den gjelder nettopp den
+     videresendingen denne sida gjoer. Content-Security-Policy settes med vilje
+     IKKE her: en CSP i markup naar ikke frame-ancestors, og en for stram regel
+     svartelegger sida uten en eneste synlig feilmelding. -->
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<style>
+  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+       background:#08080A;color:#E9ECF1;padding:24px;text-align:center;
+       font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
+  a{color:#E30613}
+</style>
+</head>
+<body>
+<p>Denne adressen har flyttet til <a href="/personvern/">tidel.no/personvern/</a>.</p>
+<!-- replace() og ikke href=: den som trykker «tilbake» skal komme til sida han kom
+     fra, ikke bli sendt hit paa nytt i en loekke. Sida virker uten JavaScript ogsaa
+     — meta-refreshen over gjoer jobben alene, og lenka staar der for begge deler. -->
+<script>location.replace("/personvern/");</script>
+</body>
+</html>
