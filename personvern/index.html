@@ -1,14 +1,24 @@
 <!doctype html>
-<!-- Norsk versjon av /privacy/. MÅ holdes i synk med den engelske — Google og Apple
-     kan lese begge, og et avvik mellom dem er like ille som et avvik mot appen. -->
+<!-- ═══════════════════════════════════════════════════════════════════════════════
+     SKREVET FRA DATAKARTET docs/DATAKART.md (R6, 23. oktober 2026), ikke mot en mal.
+     Hver setning som sier noe om data, har en kommentar <!- - D12 - -> med raden i kartet
+     den bygger på, og tools/datakart/lag-tekst.mjs --sjekk (og tests/web.html seksjon 17)
+     leser hver slik setning mot raden: ingen setning får si noe annet om ja/nei enn kartet.
+     Tabellen i punkt 2 LAGES av lag-tekst.mjs mellom markørene KART:TABELL. Rediger den aldri
+     for hånd: endre kartet, og kjør   node tools/datakart/lag-tekst.mjs
+     Norsk utgave av /privacy/. Begge må si det samme: sjekken krever de samme radene i de
+     samme delene på begge språk. Endres datapraksisen, endres kartet først, så teksten.
+     Runde 2 (23. okt): punkt 3 heter «Det som ikke går til Tidels server», D22 (enhetsregisteret) står i
+     punkt 2, og et områdemerke (D1-D50) teller ikke som omtale av en rad.
+     ═══════════════════════════════════════════════════════════════════════════════ -->
 <html lang="nb">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Personvernerklæring — Tidel</title>
-<meta name="description" content="Hva Tidel samler inn, hva som blir liggende på telefonen, hvem som behandler det, og hvordan du sletter alt.">
+<meta name="description" content="Hva Tidel samler inn, hva som deles uten at du gjør noe, hvem som behandler det, og hva som slettes med kontoen.">
 <link rel="icon" href="/assets/brand/web/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="/css/tidel.css?v=2609090223">
+<link rel="stylesheet" href="/css/tidel.css?v=2611171133">
 </head>
 <body>
 
@@ -25,329 +35,402 @@
 <main class="doc">
   <div class="kick">Personvern</div>
   <h1>Personvern&shy;erklæring</h1>
-  <p class="lead">Tidel er en rundetidtaker for motocross. Den registrerer hvor du kjører, for å
-    kunne fortelle deg hvor fort du kjørte. Her står det nøyaktig hva det betyr for dataene dine.</p>
-  <p class="meta">Sist oppdatert 5. september 2026 &middot; gjelder Tidel for iOS og Android
+  <p class="lead">Tidel er en rundetidtaker for motocross: den registrerer hvor du kjører, for å fortelle
+    hvor fort du kjørte. Her står det hva det betyr for dataene dine.</p>
+  <p class="meta">Sist oppdatert 16. november 2026 &middot; gjelder Tidel for iOS og Android
     &middot; English version: <a href="/privacy/">privacy</a></p>
 
-  <div class="kort">
-    <p><strong>Kort fortalt.</strong> Øktene dine er private som standard, og ingen andre ser dem.
-      Det ene som deles av seg selv, er <strong>beste rundetid på banens liste</strong> &mdash; den
-      står på som standard, og du slår den av for én økt i gjennomgangen eller for alle under
-      Mer &rarr; Personvern (punkt 5). Det finnes ingen reklame, ingen sporing og ingen tredjeparts
-      analyseverktøy i appen i det hele tatt. Tidel lagrer øktene dine på sin egen server slik at de
-      overlever en ny telefon &mdash; og du kan slette alt sammen, permanent, når som helst.</p>
+  <div class="kort" data-kart>
+    <p><!-- D5 D6 --><strong>Kort fortalt:</strong> øktene dine, med spor og puls, er private som standard.
+      <!-- D8 D12 D14 -->Tre ting blir likevel synlige for andre enn deg: beste rundetid på banens liste med navnet
+      ditt (punkt 5), en ny bane du kjører, med navnet ditt som kreditering (punkt 6), og kjøringen din på
+      selve banen, uten navn og konto, i den felles modellen av banen (punkt 7).
+      <!-- D8 D14 -->Beste rundetid slår du av under Mer &rarr; Personvern, der du også reserverer deg mot
+      banemodellen.
+      <!-- D24 -->Bruksstatistikken står på fra start og slås av under Mer &rarr; Tilbakemelding (punkt 2).
+      <!-- D35 D38 D48 -->Ingen reklame, og ingen analyseverktøy fra andre selskaper i appen (punkt 5).
+      <!-- D1 D5 D6 -->Kontoen og øktene ligger på Tidels server; punkt 9 sier hva som slettes med kontoen, og
+      hva som ikke gjør det.</p>
   </div>
 
-  <h2>1. Hvem er ansvarlig</h2>
+  <h2 id="hvem">1. Hvem er ansvarlig</h2>
   <p>Appen er <strong>Tidel</strong>. Utvikler og behandlingsansvarlig er
     <strong>Magnus Linnerud Støme</strong>, Norge. Kontakt:
     <a href="mailto:post@tidel.no">post@tidel.no</a>.</p>
 
-  <h2>2. Hva Tidel samler inn, og hvorfor</h2>
-  <p>«Sendes til server» betyr Tidels egen sky, som finnes for at historikken din skal overleve en
-    mistet eller byttet telefon. Ingenting i tabellen selges, og ingenting brukes til reklame.</p>
+  <h2 id="hva" data-kart>2. Hva Tidel samler inn</h2>
+  <p><!-- D1-D52 -->Tabellen kommer fra datakartet Tidel fører over alt appen og tidel.no samler.
+    <!-- D1-D52 -->Ingenting selges, og ingenting brukes til reklame.</p>
 
-  <table>
-    <tr><th>Data</th><th>Hvorfor</th><th>Sendes til server</th></tr>
-    <tr>
-      <td><strong>Nøyaktig posisjon (GPS)</strong><br>Posisjon, fart og tidspunkt langs kjøringen</td>
-      <td>Måle rundetider, tegne linja di på kartet og kjenne igjen hvilken bane du er på</td>
-      <td class="ja">Ja &mdash; komprimert, i en privat fil bare kontoen din kan åpne</td>
-    </tr>
-    <tr>
-      <td><strong>Runde- og øktdata</strong><br>Rundetider, seksjonstider, distanse, fart, navn,
-        notat, sykkel, føre</td>
-      <td>Selve analysen</td>
-      <td class="ja">Ja</td>
-    </tr>
-    <tr>
-      <td><strong>Puls</strong> (iOS)</td>
-      <td>Vises per runde og i analysen. Leses fra Apple Helse for økter du allerede har tatt opp
-        med klokka</td>
-      <td class="ja">Ja &mdash; i samme private øktfil</td>
-    </tr>
-    <tr>
-      <td><strong>Treningsøkter fra Apple Helse</strong> (iOS)<br>Økt, rute, puls, distanse</td>
-      <td>Gjøre en økt du tok opp med klokka om til rundedata</td>
-      <td class="ja">Ja, når den er importert som økt</td>
-    </tr>
-    <tr>
-      <td><strong>Telemetri fra ekstern GPS</strong><br>RaceBox: posisjon 25 ganger i sekundet,
-        høyde, nøyaktighet, satellitter, retning, G-krefter, gyro</td>
-      <td>Høyere oppløsning når du bruker ekstern mottaker</td>
-      <td class="ja">Ja, som del av økta</td>
-    </tr>
-    <tr>
-      <td><strong>Identiteten til ekstern enhet</strong><br>Modell, serienummer og Bluetooth-id på
-        en tilkoblet RaceBox</td>
-      <td>Kjenne igjen boksen mellom økter, og merke hvilken enhet som tok opp hva</td>
-      <td class="ja">Ja, i dine egne innstillinger</td>
-    </tr>
-    <tr>
-      <td><strong>Ryttenavn</strong> (valgfritt)</td>
-      <td>Vises på dine egne øktkort og i det du selv velger å dele</td>
-      <td class="ja">Ja, hvis du fyller det inn</td>
-    </tr>
-    <tr>
-      <td><strong>Kontoidentifikator</strong><br>En tilfeldig id, pluss en 8-tegns delekode</td>
-      <td>Eie dataene dine, og la en kompis legge deg til</td>
-      <td class="ja">Ja</td>
-    </tr>
-    <tr>
-      <td><strong>E-postadresse</strong></td>
-      <td>Bare hvis du logger inn på nettversjonen. Appen spør aldri om en</td>
-      <td class="ja">Ja, hvis du oppgir en</td>
-    </tr>
-    <tr>
-      <td><strong>Bruksstatistikk</strong><br>Et hendelsesnavn fra en fast liste (f.eks. «en import
-        ble ferdig»), et tall eller en feilkode, pluss appversjon, plattform, språk og en tilfeldig
-        identifikator for din installasjon</td>
-      <td>Finne ut hva som ryker, og på hvilken plattform. Hendelsene inneholder aldri rundetider,
-        posisjoner, navn, banenavn eller notater. De er <strong>ikke koblet til kontoen din</strong>
-        &mdash; ingen bruker-id lagres med dem &mdash; men de er knyttet til en tilfeldig
-        identifikator for installasjonen din, slik at én krasj på én telefon kan skilles fra hundre
-        krasj overalt. Det gjør dem pseudonyme, ikke anonyme, og vi behandler dem som
-        personopplysninger. Slå dem av under Mer &rarr; Tilbakemelding, så sendes ingenting</td>
-      <td class="ja">Ja, uten identiteten din</td>
-    </tr>
-    <tr>
-      <td><strong>Tilbakemelding du sender</strong><br>Teksten du skriver, kategorien du valgte, en
-        valgfri kontaktadresse, øktdata du krysser av for å legge ved, pluss appversjon, plattform
-        og språk</td>
-      <td>Svare deg og fikse det du meldte fra om. Sendes kun når du trykker Send under
-        Mer &rarr; Tilbakemelding. I motsetning til bruksstatistikk <strong>er</strong> denne koblet
-        til kontoen din, så vi kan se hva som faktisk skjedde på den &mdash; ikke skriv inn andres
-        personopplysninger i meldingen</td>
-      <td class="ja">Ja, når du sender den</td>
-    </tr>
-    <tr>
-      <td><strong>Kamera</strong></td>
-      <td>Skanne en kompis' QR-delekode. Bildene leses i minnet og lagres aldri</td>
-      <td class="nei">Nei &mdash; ingen steder, aldri</td>
-    </tr>
-  </table>
+<!-- KART:TABELL -->
+<table class="kart">
+<caption>Hver rad er en lenke til punktet som sier mer. «Deles uten at du gjør noe»: går ut uten et valg i øyeblikket, også med en bryter du kan slå av. «Slettes med kontoen»: punkt 9.</caption>
+<colgroup><col style="width:50%"><col style="width:25%"><col style="width:25%"></colgroup>
+<tr><th>Hva</th><th>Deles uten at du gjør noe</th><th>Slettes med kontoen</th></tr>
+<tr data-rad="D1"><td><a href="#konto"><strong>Konto-id og delekode</strong></a></td><td class="nei">Nei</td><td>Ja</td></tr>
+<tr data-rad="D2"><td><a href="#konto"><strong>E-post og passord</strong></a></td><td class="nei">Nei</td><td>Ja</td></tr>
+<tr data-rad="D3"><td><a href="#konto"><strong>Rytternavn og klasse</strong></a></td><td class="ja">Ja</td><td>Ja</td></tr>
+<tr data-rad="D4"><td><a href="#deling"><strong>Profilbilde</strong></a></td><td class="ja">Ja</td><td>Ja</td></tr>
+<tr data-rad="D5"><td><a href="#deling"><strong>Økta</strong></a></td><td class="nei">Nei</td><td>Ja</td></tr>
+<tr data-rad="D6"><td><a href="#deling"><strong>GPS-sporet</strong></a></td><td>Delvis</td><td>Ja</td></tr>
+<tr data-rad="D7"><td><a href="#deling"><strong>Rundetidene</strong></a></td><td class="ja">Ja</td><td>Ja</td></tr>
+<tr data-rad="D8"><td><a href="#deling"><strong>Beste runde på banens liste</strong></a></td><td class="ja">Ja</td><td>Ja</td></tr>
+<tr data-rad="D9"><td><a href="#deling"><strong>Puls</strong></a></td><td class="nei">Nei</td><td>Ja</td></tr>
+<tr data-rad="D10"><td><a href="#hva"><strong>Alder, vekt og hvilepuls</strong></a></td><td class="nei">Nei</td><td>Ja</td></tr>
+<tr data-rad="D11"><td><a href="#hva"><strong>Innstillingene som synkes</strong></a></td><td class="nei">Nei</td><td>Ja</td></tr>
+<tr data-rad="D12"><td><a href="#baner"><strong>Baner du legger til</strong></a></td><td class="ja">Ja</td><td>Delvis</td></tr>
+<tr data-rad="D13"><td><a href="#baner"><strong>Streker, oppsett og baneinfo</strong></a></td><td class="ja">Ja</td><td>Delvis</td></tr>
+<tr data-rad="D14"><td><a href="#banemodell"><strong>Bakkeprofiler</strong></a></td><td class="ja">Ja</td><td>Ja</td></tr>
+<tr data-rad="D15"><td><a href="#banemodell"><strong>Banemodellen</strong></a></td><td class="ja">Ja</td><td>Nei</td></tr>
+<tr data-rad="D16"><td><a href="#deling"><strong>Venner og kompislenker</strong></a></td><td class="nei">Nei</td><td>Ja</td></tr>
+<tr data-rad="D17"><td><a href="#deling"><strong>Det vennene ser</strong></a></td><td class="ja">Ja</td><td>Ja</td></tr>
+<tr data-rad="D18"><td><a href="#deling"><strong>Økter du deler med venner</strong></a></td><td class="nei">Nei</td><td>Delvis</td></tr>
+<tr data-rad="D19"><td><a href="#deling"><strong>Delte kort og lenker</strong></a></td><td class="nei">Nei</td><td>Nei</td></tr>
+<tr data-rad="D20"><td><a href="#deling"><strong>Reaksjoner og banedager</strong></a></td><td class="nei">Nei</td><td>Ja</td></tr>
+<tr data-rad="D21"><td><a href="#deling"><strong>Treningssamlinger</strong></a></td><td class="nei">Nei</td><td>Delvis</td></tr>
+<tr data-rad="D22"><td><a href="#hva"><strong>Sensor og serienummer</strong></a></td><td class="nei">Nei</td><td>Ja</td></tr>
+<tr data-rad="D23"><td><a href="#hva"><strong>Installasjons-id</strong></a></td><td class="ja">Ja</td><td>Delvis</td></tr>
+<tr data-rad="D24"><td><a href="#hva"><strong>Bruksstatistikk</strong></a></td><td class="ja">Ja</td><td>Delvis</td></tr>
+<tr data-rad="D25"><td><a href="#hva"><strong>Feilmeldinger fra appen</strong></a></td><td class="ja">Ja</td><td>Delvis</td></tr>
+<tr data-rad="D26"><td><a href="#hva"><strong>«Hva stoppet deg?»</strong></a></td><td class="ja">Ja</td><td>Delvis</td></tr>
+<tr data-rad="D27"><td><a href="#hva"><strong>Tilbakemeldinger</strong></a></td><td class="nei">Nei</td><td>Delvis</td></tr>
+<tr data-rad="D28"><td><a href="#konto"><strong>«Hvor hørte du om Tidel?»</strong></a></td><td class="nei">Nei</td><td>Ja</td></tr>
+<tr data-rad="D29"><td><a href="#konto"><strong>Samtykke til nytt på e-post</strong></a></td><td class="nei">Nei</td><td>Ja</td></tr>
+<tr data-rad="D30"><td><a href="#konto"><strong>«Senere»-telleren</strong></a></td><td class="ja">Ja</td><td>Ja</td></tr>
+<tr data-rad="D31"><td><a href="#konto"><strong>Tidel Pro</strong></a></td><td class="ja">Ja</td><td>Delvis</td></tr>
+<tr data-rad="D32"><td><a href="#sletting"><strong>Ventelista på tidel.no</strong></a></td><td class="nei">Nei</td><td>Ikke knyttet til kontoen</td></tr>
+<tr data-rad="D33"><td><a href="#lokalt"><strong>Sikkerhetskopien</strong></a></td><td class="nei">Nei</td><td>Nei</td></tr>
+<tr data-rad="D34"><td><a href="#konto"><strong>E-postloggen</strong></a></td><td class="ja">Ja</td><td>Ja</td></tr>
+<tr data-rad="D35"><td><a href="#deling"><strong>IP-adressen</strong></a></td><td class="ja">Ja</td><td>Delvis</td></tr>
+<tr data-rad="D36"><td><a href="#hva"><strong>Kjørevei i Utforsk</strong></a></td><td class="ja">Ja</td><td>Ikke knyttet til kontoen</td></tr>
+<tr data-rad="D37"><td><a href="#hva"><strong>Posisjonen under opptak</strong></a></td><td class="nei">Nei</td><td>Ja</td></tr>
+<tr data-rad="D38"><td><a href="#deling"><strong>Kart og flybilder</strong></a></td><td class="ja">Ja</td><td>Nei</td></tr>
+<tr data-rad="D39"><td><a href="#deling"><strong>Garmin-kobling</strong></a></td><td class="nei">Nei</td><td>Ja</td></tr>
+<tr data-rad="D40"><td><a href="#deling"><strong>Polar-kobling</strong></a></td><td class="nei">Nei</td><td>Ja</td></tr>
+<tr data-rad="D41"><td><a href="#deling"><strong>Apple Helse og Health Connect</strong></a></td><td class="nei">Nei</td><td>Ja</td></tr>
+<tr data-rad="D42"><td><a href="#banemodell"><strong>Analysetilgangen</strong></a></td><td class="ja">Ja</td><td>Ja</td></tr>
+<tr data-rad="D43"><td><a href="#sletting"><strong>Slettekvitteringen</strong></a></td><td class="ja">Ja</td><td>Nei</td></tr>
+<tr data-rad="D44"><td><a href="#sletting"><strong>Slette-enhetene</strong></a></td><td class="ja">Ja</td><td>Ja</td></tr>
+<tr data-rad="D45"><td><a href="#hva"><strong>Drift-e-posten til eieren</strong></a></td><td class="ja">Ja</td><td>Nei</td></tr>
+<tr data-rad="D46"><td><a href="#sletting"><strong>Døgntak mot misbruk</strong></a></td><td class="ja">Ja</td><td>Nei</td></tr>
+<tr data-rad="D47"><td><a href="#deling"><strong>Besøkstellingen på tidel.no</strong></a></td><td class="ja">Ja</td><td>Ikke knyttet til kontoen</td></tr>
+<tr data-rad="D48"><td><a href="#deling"><strong>Versjonssjekken</strong></a></td><td class="ja">Ja</td><td>Ikke knyttet til kontoen</td></tr>
+<tr data-rad="D49"><td><a href="#lokalt"><strong>Kameraet</strong></a></td><td class="nei">Nei</td><td>Nei</td></tr>
+<tr data-rad="D50"><td><a href="#lokalt"><strong>Vennebildet du setter selv</strong></a></td><td class="nei">Nei</td><td>Nei</td></tr>
+<tr data-rad="D51"><td><a href="#lokalt"><strong>Kartflisene du har sett</strong></a></td><td class="nei">Nei</td><td>Nei</td></tr>
+<tr data-rad="D52"><td><a href="#lokalt"><strong>Seksjonspass fra trening</strong></a></td><td class="nei">Nei</td><td>Nei</td></tr>
+</table>
+<!-- /KART:TABELL -->
 
-  <h3>Om posisjon spesielt</h3>
-  <p>Tidel bruker nøyaktig posisjon fordi en rundetid er meningsløs uten: appen må vite hvor
-    målstreken er og når du krysset den, på noen få meter.</p>
-  <p><strong>Tidel ber ikke om posisjon i bakgrunnen.</strong> På Android kjører opptak i en
-    forgrunnstjeneste med et fast varsel, slik at du ser at den går. På iOS brukes posisjon mens
-    appen er i bruk. Skulle en framtidig versjon trenge bakgrunnsposisjon, vil både denne siden og
-    tillatelsesdialogen i appen si fra før det slås på.</p>
+  <h3>Posisjonen</h3>
+  <p><!-- D37 -->Posisjonen brukes under opptak og blir til sporet: på Android i en forgrunnstjeneste med
+    et fast varsel, på iPhone «når appen er i bruk», som også dekker opptak med låst skjerm.
+    <!-- D36 -->Kjøreveien i Utforsk sender posisjonen din avrundet til 0,02° og banens posisjon til
+    openrouteservice når tjenesten er slått på.</p>
 
-  <h3>Hva Tidel bevisst ikke gjør</h3>
+  <h3>Tallene dine og innstillingene</h3>
+  <p><!-- D10 D11 -->Alder, vekt, hvilepuls og innstillingene lagres med kontoen når Skysynk er på, som den
+    er til du slår den av, så du får dem tilbake på en ny telefon.
+    <!-- D22 -->Enhetsregisteret (RaceBox og pulsbelte, med serienummer) følger innstillingene; fra Tidel 1.21 står
+    bare modell, fastvare, datarate og montering på økta, og RaceBox-avtrykket med serienummer blir på telefonen.</p>
+
+  <h3>Bruksstatistikk og tilbakemelding</h3>
+  <p><!-- D23 -->Hver installasjon får en tilfeldig installasjons-id, som står på bruksstatistikken,
+    øktene, banene du legger til og tilbakemeldingene.
+    <!-- D24 -->Bruksstatistikken er faste hendelsesnavn med små tall, appversjon, plattform, språk og
+    tidspunkt, uten konto-id, og aldri rundetider, posisjon eller navn.
+    <!-- D24 -->Den står på fra start, og slås av under Mer &rarr; Tilbakemelding («Bruksstatistikk»)
+    eller i velkomsten.
+    <!-- D25 -->Appens egne feilmeldinger (tekst, filnavn og linje) sendes med samme bryter.
+    <!-- D26 -->«Hva stoppet deg?» spørres én gang, først når Tidel åpner for alle, etter sju dager uten egen økt, aldri under opptak; svaret sendes som bruksstatistikk.
+    <!-- D27 -->Tilbakemeldinger sender du selv under Mer &rarr; Tilbakemelding, med valgfri
+    kontaktadresse, vedlegg du velger, appversjon, installasjons-id, og fra Tidel 1.21 konto-id når
+    appen er logget inn.
+    <!-- D45 -->Eieren får dagens tall og nye tilbakemeldinger på e-post, med teksten og kontaktadressen du
+    skrev; Resend sender e-posten, og den slettes ikke med kontoen.</p>
+
+  <h3>Hva Tidel ikke gjør</h3>
   <ul>
-    <li><strong>Ingen reklame, og ingen reklame-identifikatorer.</strong></li>
-    <li><strong>Ingen tredjeparts analyse-, krasj- eller attribusjonsverktøy.</strong> Det finnes
-      ikke Google Analytics, Firebase, Crashlytics, Sentry, Amplitude, Mixpanel, AppsFlyer eller
-      noe liknende, og ingen data går til andre selskaper enn de tre databehandlerne under. Tidel
-      registrerer derimot sine egne feilmeldinger &mdash; meldingen, fila og linjenummeret &mdash;
-      på Tidels egen server, slik at en krasj ingen melder fra om likevel blir fikset. De inneholder
-      ingen rundetider, ingen posisjoner, ingen navn og ingen notater, og samme bryter under
-      Mer &rarr; Tilbakemelding slår dem av.</li>
-    <li><strong>Ingen salg av data, til noen, til noe formål.</strong></li>
-    <li><strong>Ingen reklame-identifikator, og ingen maskinvare-identifikator.</strong> Vi leser
-      aldri IDFA, Androids reklame-id, IMEI, MAC-adresse eller serienummer, og vi samler ikke inn
-      telefonmodellen din. Bruksstatistikken bærer derimot en identifikator appen selv lagde
-      tilfeldig for denne installasjonen, pluss plattform, appversjon og språk. Den tilhører ingen
-      andre enn dette eksemplaret av Tidel, den forsvinner hvis du installerer på nytt, og den
-      slettes når du sletter kontoen.</li>
-    <li><strong>Ingen offentlig resultatliste utenom banens egen &mdash; og den kan du slå av.</strong>
-      Beste rundetid på en bane deles på banens liste som standard. Du slår den av for én økt i
-      gjennomgangen av økta, eller for alle under <strong>Mer &rarr; Personvern</strong>. Selve
-      økta er fortsatt privat. Se punkt 5.</li>
+    <li><!-- D23 -->Ingen reklame-id og ingen maskinvare-id fra telefonen; installasjons-id-en lager appen
+      selv.</li>
+    <li><!-- D8 -->Ingen offentlig resultatliste utenom banens egen, som du kan slå av (punkt 5).</li>
   </ul>
 
-  <h2>3. Hva som aldri forlater telefonen</h2>
+  <h2 id="lokalt" data-kart>3. Det som ikke går til Tidels server</h2>
   <ul>
-    <li><strong>Rytterprofilen din</strong> &mdash; alder, vekt og hvilepuls, hvis du fyller dem
-      inn. Brukes til å anslå belastning lokalt. Lastes aldri opp.</li>
-    <li><strong>Profilbildet ditt.</strong></li>
-    <li><strong>Kamerabilder</strong> fra QR-skanning.</li>
-    <li><strong>Lokale sikkerhetskopier</strong> som appen skriver i sin egen mappe, slik at en
-      oppdatering ikke kan koste deg historikken. Vær klar over én ting: disse filene inneholder
-      øktene dine, og dermed puls hvis du har importert noe. De ligger i appens egen dokumentmappe,
-      som betyr at <strong>de blir med i en iCloud- eller Android-sikkerhetskopi hvis du har det
-      slått på</strong> &mdash; og på iPhone er det på som standard. Vil du helst at pulsen din
-      aldri når iCloud, slå av Tidel under Innstillinger &rarr; Apple-ID &rarr; iCloud &rarr;
-      iCloud-sikkerhetskopi. Den manuelle eksporten under Mer &rarr; Sikkerhetskopi går kun dit du
-      selv velger å lagre den.</li>
+    <li><!-- D33 -->Sikkerhetskopien i appens egen mappe har alt på telefonen: økter med spor og puls,
+      innstillinger, enhetsregisteret med serienummer, vennebilder og konto-id, aldri innloggingen.
+      <!-- D33 -->På iPhone følger mappa med iCloud-sikkerhetskopien når den er på (Apples standard); slå
+      av Tidel der om pulsen aldri skal dit.
+      <!-- D33 -->På Android er Googles automatiske sikkerhetskopi slått av for Tidel.
+      <!-- D33 -->Eksporten av én økt (.mxsession) går uten fastvare og Helse-id, og fra Tidel 1.21 uten
+      RaceBox-serienummeret.</li>
+    <li><!-- D50 -->Et bilde du setter på en venn, ligger bare på telefonen og i sikkerhetskopien.</li>
+    <li><!-- D51 -->Kartflisene du har sett (høyst 30 dager, så kartet vises uten dekning) og <!-- D52 -->seksjonspass fra trening ligger bare på telefonen.</li>
+    <li><!-- D49 -->Kameraet leser QR-koder i minnet; ingenting lagres eller sendes.</li>
   </ul>
 
-  <h2>4. Kontoen din</h2>
-  <p>Tidel oppretter en <strong>anonym konto</strong> for deg første gang den trenger en. Det finnes
-    ingen registrering, ingen e-post og intet passord. Kontoen er det som eier øktene dine, og det
-    er den som gjør det mulig å bytte telefon uten å miste dem.</p>
-  <p>Bruker du nettversjonen, kan du koble en e-postadresse og et passord til nettopp den kontoen.
-    Det oppretter ikke en ny konto og flytter ingen data &mdash; det er den samme kontoen, nå med en
-    måte å logge inn på.</p>
+  <h2 id="konto" data-kart>4. Kontoen din</h2>
+  <p><!-- D1 -->Kontoen er en tilfeldig id og en delekode på 8 tegn, pluss plattform og appversjon; den
+    eier øktene dine.
+    <!-- D1 -->Delekoden ser bare den du viser eller sender den til; id-en ser vennene.
+    <!-- D2 -->I betaen er kontoen anonym til du knytter en e-postadresse; når Tidel åpner for alle, må
+    kontoen ha e-post og passord.
+    <!-- D2 -->Passordet lagres bare som hash hos Supabase, og vennene ser aldri adressen.
+    <!-- D34 -->Når e-post knyttes eller byttes, passord settes eller kontoen kobles til nettversjonen,
+    lagres tidspunkt, adressen og en kort kode av IP-adressen, som kan regnes tilbake for IPv4.</p>
+  <p><!-- D3 -->Rytternavnet er påkrevd og kan være et kallenavn; klassen er valgfri, og vennene ser begge.
+    <!-- D3 -->Navnet følger beste runde til banens liste og legges som kreditering på baner du legger til,
+    begge på som standard (punkt 5 og 6).
+    <!-- D3 -->I dag må navnet være ledig i hele Tidel, og appen sjekker det mot serveren før kontoen
+    finnes; serveroppdateringen som fjerner kravet, er skrevet, men ikke lagt ut.</p>
+  <p><!-- D28 -->«Hvor hørte du om Tidel?» kommer med registreringen: ett av sju faste svar, lagret som en
+    kode på kontoen.
+    <!-- D29 -->«Send meg nytt fra Tidel» står tomt til du krysser av selv; vi lagrer når du sa ja, hvilken
+    tekst, og når du trakk det under Mer &rarr; Personvern.
+    <!-- D29 -->Ingen slik e-post er sendt ennå.
+    <!-- D30 -->Trykker du «Senere» når appen ber om e-post, teller serveren hvor mange ganger, bare tallet.
+    <!-- D31 -->Kjøper du Tidel Pro, lagrer vi om kontoen har Pro, kilde, butikk, til når, fornyelse, og
+    når det ble kjøpt, betalt og stoppet; kortet blir hos Apple eller Google.
+    <!-- D31 -->RevenueCat, som formidler kjøpet, får kontoens id.
+    <!-- D31 -->Sletter du kontoen, slettes det vi har lagret om Tidel Pro, ikke kjøpet hos RevenueCat og
+    butikken; abonnementet løper til du sier det opp i butikken.
+    <!-- D31 -->Livstid er et engangskjøp, uten noe abonnement å si opp.
+    <!-- D1 D2 -->Sletter du kontoen, slettes profilen og innloggingen; punkt 9 sier når.</p>
 
-  <h2>5. Deling, og hvem andre som behandler data</h2>
+  <h2 id="deling" data-kart>5. Deling, og hvem andre som behandler data</h2>
   <h3>Det du deler selv</h3>
-  <p>Du kan sende en økt som fil eller som delekode, og du kan dele en rekord med venner inne i
-    appen. Det skjer bare når du velger det, til dem du velger. Øktene dine er
-    <strong>private som standard</strong>. Unntaket &mdash; det ene som deles uten at du gjør noe
-    &mdash; er beste rundetid på banens liste, som står rett under.</p>
+  <p><!-- D5 D18 -->En økt er privat til du slår på «Del økta med venner» for den økta.
+    <!-- D6 -->GPS-sporet ligger i en privat fil som bare kontoen din, og vennene du deler økta med, kan
+    åpne.
+    <!-- D18 D9 -->Deler du, får vennene hele økta: runder, tider, GPS-sporet, pulsen, enhetens modell og
+    fastvare, installasjons-id-en og kildenavnet fra Helse (ofte klokkas navn).
+    <!-- D18 D22 -->Fra Tidel 1.21 går øktene uten RaceBox-serienummeret; økter lastet opp med en eldre versjon
+    har det i skyen, også for vennene du deler med, til ryddingen er kjørt.
+    <!-- D18 -->Vennens telefon lagrer en kopi til vennens app neste gang henter fra skyen etter at du har sluttet
+    å dele eller slettet økta eller kontoen; en fil vennen har eksportert, blir hos vennen.
+    <!-- D19 -->Deler du en runde som lenke eller QR (tidel.no/r/), ligger tidene, banen og kjørelinja i
+    selve lenka etter #, som ingen server ser; navnet ditt er aldri med.
+    <!-- D16 -->Kompislenka tidel.no/v/ bærer delekoden og navnet ditt etter #; tidel.no ser bare at sida
+    ble åpnet.
+    <!-- D16 D17 -->Så snart dere er venner, ser vennen navn, klasse, profilbilde, hjemmebanens navn, når
+    du sist åpnet appen, rekordene dine med kjørelinje og banedagene dine med notat.
+    <!-- D17 -->«Del rekordene mine» av holder rekordene unna vennene også.
+    <!-- D4 -->Profilbildet går til vennene i 128 piksler så snart du setter det; 256 piksler lagres med
+    innstillingene på kontoen.
+    <!-- D20 -->Reaksjoner og banedager legger du inn selv, og vennene ser dem til du sletter dem.</p>
 
   <h3>Beste rundetid på banens liste</h3>
-  <p>Din beste rundetid på en bane deles på banens liste <strong>som standard</strong>. Når du
-    gjennomgår en økt i appen, står bryteren &laquo;Del beste runde på banens liste&raquo; på.
-    Slår du den av for den økta, kommer tida ikke på lista, og en tid som alt lå der, fjernes ved
-    neste synkronisering. Du kan alltid åpne økta igjen og endre valget. Om du står med fullt navn
-    eller bare forbokstav, styrer du under <strong>Mer &rarr; Personvern</strong>
-    (&laquo;Vis fullt navn på lister&raquo;, på som standard); vil du ikke dele rundetider i det hele
-    tatt, slår du av &laquo;Del rekordene mine&raquo; samme sted. Det som deles på lista, er tida,
-    datoen og kjørelinja i selve runden &mdash; aldri pulsen din, aldri hele økta og aldri posisjon
-    utenfor runden. Selve økta er fortsatt privat som standard.</p>
+  <p><!-- D8 -->Din beste runde på en bane deles på banens liste som standard: tid, dato, navnet ditt
+    eller forbokstaven, kjørelinja i runden og om streken var godkjent.
+    <!-- D8 -->Lista er åpen for alle, også uten konto.
+    <!-- D8 D7 -->Du slår det av for én økt i gjennomgangen («Del beste runde på banens liste») eller for
+    alle under <strong>Mer &rarr; Personvern</strong> («Del rekordene mine»); en tid som alt lå der,
+    fjernes.
+    <!-- D8 -->«Vis fullt navn på lister» samme sted velger fullt navn eller forbokstav.
+    <!-- D8 D9 -->Pulsen, hele økta og posisjon utenfor runden deles aldri på lista.</p>
 
   <h3>Treningssamlinger</h3>
-  <p>Blir du med i en treningssamling, ser treneren for akkurat den samlingen navnet ditt, gruppen
-    din og oppmøtet ditt. Velger du selv telefonopptak for et heat, ser treneren rundetidene dine
-    fra det heatet &mdash; antall runder, tidene, eventuelle seksjonstider og fart, og
-    datakvaliteten. Treneren ser aldri GPS-sporet ditt, pulsen din eller de andre øktene dine, og
-    kan ikke åpne aktiviteten din. Velger du i tillegg <strong>«Telefon + kartlinje»</strong>,
-    deles en forenklet kartlinje av din beste runde i heatet &mdash; den ser treneren og de andre
-    som deltar i samme samling, aldri noen utenfor. Du kan når som helst trekke deg fra samlingen,
-    trekke tilbake et resultat eller en kartlinje; da forsvinner det også hos treneren.
-    <strong>«Deltar uten opptak» er alltid et fullverdig valg.</strong></p>
-  <p>Bruker du en klokke eller en annen GPS-enhet i stedet for telefonen, er det nøyaktig de samme
-    opplysningene som deles; vi merker bare tallene med hvor de kom fra. Klokka må du alltid starte
-    selv &mdash; Tidel starter aldri utstyret ditt for deg.</p>
+  <p><!-- D21 -->I en treningssamling ser treneren navnet ditt, gruppen og oppmøtet, og med telefonopptak
+    for et heat også rundetidene dine fra heatet med seksjonstider, fart og datakvalitet.
+    <!-- D21 -->Treneren ser aldri GPS-sporet ditt, pulsen din eller de andre øktene dine.
+    <!-- D21 -->Velger du «Telefon + kartlinje», deles en forenklet kartlinje av din beste runde i heatet
+    med treneren og de andre i samme samling, aldri noen utenfor.
+    <!-- D21 -->Gruppens resultatliste er av som standard; er den på, ser deltakerne i gruppen hverandres
+    navn, rundetider og seksjonstider.
+    <!-- D21 -->Du kan trekke deg eller trekke tilbake et resultat eller en kartlinje når som helst, og
+    «Deltar uten opptak» er alltid et fullverdig valg.
+    <!-- D21 -->En klokke deler nøyaktig det samme, og den starter du alltid selv.</p>
 
-  <h3>Gruppens resultatliste</h3>
-  <p>Treneren kan velge å slippe deltakerne inn i resultatlisten for sin egen gruppe. Er den skrudd
-    på &mdash; den er <strong>av som standard</strong> &mdash; ser du navn, rundetider og
-    seksjonstider for de andre som kjørte heatet i gruppen din, og de ser dine. Det er de samme
-    tallene treneren ser: runder, tider, seksjonstider, snittfart og rundelengde &mdash; aldri
-    GPS-spor og aldri puls. Er den av, ser du bare anonyme tall: hvor mange som har data, medianen,
-    den beste tiden i heatet og din egen plassering, uten navn.</p>
+  <h3>Klokker og Helse</h3>
+  <p><!-- D41 -->Fra Apple Helse eller Health Connect får Tidel økta med rute, puls, distanse, kildens navn
+    (ofte klokkas) og Helse-id, lagret som en vanlig økt.
+    <!-- D39 -->Kobler du en Garmin-klokke, lagrer vi klokkas id, modell, paringskode og øktene den sender;
+    Garmin får ingenting.
+    <!-- D40 -->Kobler du Polar, får Polar kontoens id, og Tidel lagrer Polar-bruker-id-en og tilgangen
+    (bare på serveren); kobler du fra, ber Tidel Polar slette koblingen.</p>
 
-  <h3>Databehandlere, og hvor dataene går</h3>
+  <h3>Andre som får data</h3>
   <table>
-    <tr><th>Hvem</th><th>Til hva</th><th>Hvor, og på hvilket grunnlag</th></tr>
-    <tr>
-      <td><strong>Supabase Inc.</strong><br>(database, fillagring, innlogging)</td>
-      <td>Lagrer konto, økter, runder og råsporfiler på Tidels vegne</td>
-      <td>Dataene dine lagres i <strong>EU</strong> (Irland) og replikeres ikke ut av det.
-        Supabase Inc. er etablert i USA, og driftspersonalet deres kan få tilgang til
-        infrastrukturen derfra. Den tilgangen er dekket av <strong>EUs standardavtaler
-        (SCC)</strong>, sammen med kryptering under overføring og i hvile.</td>
-    </tr>
-    <tr>
-      <td><strong>Esri Inc.</strong><br>(satellittbilder)</td>
-      <td>Leverer kartflisene bak banekartet</td>
-      <td>Flisene hentes fra Esris servere i <strong>USA</strong>. Tidel sender kun koordinatene
-        til kartruta du ser på &mdash; aldri kontoen din, navnet ditt eller kjøringen din &mdash;
-        men som enhver nettforespørsel bærer den enhetens <strong>IP-adresse</strong>, som Esri kan
-        logge. Det er en overføring til tredjeland, gjort på grunnlag av <strong>EUs
-        standardavtaler (SCC)</strong>. Slår du av satellittbakgrunnen i appen, sendes forespørselen
-        aldri.</td>
-    </tr>
-    <tr>
-      <td><strong>GitHub Inc.</strong><br>(statisk filhosting)</td>
-      <td>Serverer <code>versjon.json</code>, som appen sjekker for en nyere beta</td>
-      <td>Filen hentes fra GitHub Pages i <strong>USA</strong>, høyst <strong>én gang per
-        døgn</strong>. Forespørselen bærer ingen konto, ingen identifikator og ingen
-        rundetider &mdash; bare enhetens <strong>IP-adresse</strong>, som GitHub kan logge som
-        del av vanlig serverdrift. Det er en overføring til tredjeland, gjort på grunnlag av
-        <strong>EUs standardavtaler (SCC)</strong>.</td>
-    </tr>
+    <tr><th>Hvem</th><th>Hva de får</th></tr>
+    <tr><td><!-- D1 D5 D6 --><strong>Supabase</strong><br>(base, lagring, innlogging)</td>
+      <td>Lagrer konto, økter, runder og sporfiler i EU (Irland); støtte fra USA under EUs
+        standardavtaler.</td></tr>
+    <tr><td><!-- D38 D35 --><strong>Esri</strong><br>(satellittbilder)</td>
+      <td>Får IP-adressen og hvilket kartområde du ser på, aldri kontoen eller kjøringen.</td></tr>
+    <tr><td><!-- D48 D35 --><strong>GitHub</strong><br>(tidel.no)</td>
+      <td>Appen henter versjon.json fra GitHub Pages én gang i døgnet; GitHub ser IP-adressen og
+        tidspunktet.</td></tr>
+    <tr><td><!-- D47 D16 D19 --><strong>Cloudflare</strong><br>(besøkstelling)</td>
+      <td>Teller besøk på forsida, /download/, /r/, /v/ og banesidene uten informasjonskapsler.</td></tr>
+    <tr><td><!-- D2 D29 D32 D45 --><strong>Resend</strong><br>(e-post)</td>
+      <td>Sender e-postene fra no-reply@tidel.no: koder og passordbytte, ventelista, nytt fra Tidel
+        når du har sagt ja, og tilbakemeldingene til eieren, med tekst og kontaktadresse.</td></tr>
+    <tr><td><!-- D31 --><strong>RevenueCat</strong><br>(kjøp)</td>
+      <td>Får kontoens id og kjøpet når Tidel Pro kan kjøpes.</td></tr>
+    <tr><td><!-- D36 --><strong>openrouteservice</strong><br>(kjørevei)</td>
+      <td>Får posisjonen din avrundet til 0,02° og banens posisjon, når tjenesten er slått på.</td></tr>
+    <tr><td><!-- D40 D1 --><strong>Polar</strong></td>
+      <td>Får kontoens id når du kobler Polar.</td></tr>
+    <tr><td><!-- D41 D39 D33 --><strong>Apple, Google, Garmin</strong></td>
+      <td>Er kilder du henter fra, ikke mottakere; iCloud får sikkerhetskopien når iCloud-kopi er
+        på.</td></tr>
   </table>
-  <p>Alle tre er bundet av en skriftlig databehandleravtale. De kan bare behandle dataene dine etter
-    Tidels dokumenterte instrukser, kan ikke bruke dem til egne formål, og er forpliktet til å gi
-    dem samme eller tilsvarende beskyttelse som denne erklæringen lover. Ingen av dem kan selge
-    dem, dele dem videre eller bruke dem til reklame eller profilering. Ingen andre selskaper
-    mottar dataene dine. Apple Helse og Google Play er ikke databehandlere for Tidel &mdash; Helse
-    er en kilde du importerer fra, og Play er en distribusjonskanal.</p>
-  <p>Vi utleverer data til offentlig myndighet kun der vi er rettslig forpliktet til det, og bare så
-    langt plikten rekker.</p>
+  <p><!-- D35 -->IP-adressen lagres ikke som adresse hos Tidel, bare som korte koder (e-postloggen,
+    kjørevei-kvoten, døgntakene); tjenestene over logger den selv.
+    <!-- D1 D32 D47 -->Supabase, Resend og Cloudflare behandler data etter Tidels instruks; ingen får selge
+    dem eller bruke dem til reklame.</p>
 
-  <h2>6. Den felles banekatalogen</h2>
+  <h2 id="baner" data-kart>6. Den felles banekatalogen</h2>
   <div class="kort ro">
-    <p>Dette er den ene delen som faktisk er offentlig, så den er verdt å lese. Tidel har en delt
-      katalog over motocrossbaner: <strong>navn, posisjon, omriss, målstrek og
-      seksjonsgrenser</strong>. Kjører du et sted som ikke er der fra før, legges banen til, slik at
-      neste rytter finner den.</p>
-    <p><strong>Kjøringen din er ikke en del av det.</strong> Det som havner i katalogen er banens
-      geometri &mdash; aldri GPS-sporet ditt, rundetidene dine, pulsen din eller kontoen din. Én
-      ting følger likevel med: har du fylt inn et ryttenavn, lagres det som en kreditering på banene
-      du legger til, og andre ryttere ser det. La ryttenavnet stå tomt under Mer &rarr; Rytter, så
-      publiseres ingenting som identifiserer deg. Sletter du kontoen, fjernes krediteringen fra alle
-      banene du la til.</p>
-    <p>Banegeometrien <strong>blir stående i katalogen når du sletter kontoen</strong>, med koblingen
-      til deg fjernet. Hvis én rytter som slutter slettet banen, ville den blitt ødelagt for alle
-      andre som kjører der.</p>
+    <p><!-- D12 -->Tidel har en felles katalog over baner: navn, posisjon, land, kommune og klubb, omriss,
+      målstrek og seksjonsgrenser.
+      <!-- D12 -->Kjører du en kjent registerbane som ikke er der, går den til katalogen med navnet ditt som
+      kreditering første gang en økt der lastes opp eller du gjennomgår en økt der, setter en målstrek, lagrer et
+      oppsett eller døper banen, også når «Synkroniser øktene mine» er av; fra Tidel 1.21 går et nytt sted først når du
+      har lagret arket «Nytt sted» med navn og «Del stedet med alle» på (eldre versjoner sender stedet når banen
+      blir til, om bryteren ikke er slått av); lagret du arket sist med bryteren av, går ingen av dem.
+      <!-- D12 -->Omrisset kan være linja fra din beste runde, høyst 120 punkter.
+      <!-- D12 -->Andre ser banen når den ikke er skjult: en kjent registerbane straks, ellers etter tre
+      økter på to dager; krediteringen kan leses av alle, også uten konto.
+      <!-- D13 -->Målstreken du setter, strekforslag, oppsettet du kjører på og baneinfo du skriver, sendes
+      med økta og vises for alle; forslagene og hvem som skrev, ser bare Tidel.
+      <!-- D12 D13 -->Sletter du kontoen, blir banen, streken og infoen stående, med navnet ditt og
+      konto-id-en fjernet der de står med nøkkel; installasjons-id-en på banen og pseudonymet på
+      strekforslag blir.</p>
   </div>
 
-  <h2>7. Hvordan dataene oppbevares</h2>
+  <h2 id="banemodell" data-kart>7. Banemodellen: bakken, hoppene og linjene</h2>
+  <div class="kort ro">
+    <p><!-- D15 -->Bakken, hoppene og sporene er de samme for alle, så Tidel bygger en felles modell av hver
+      bane av alles kjøring.
+      <!-- D42 D14 -->Det som brukes, er den delen av øktene dine som ligger på selve banen mens du kjører:
+      posisjon, høyde, fart, retning, G-krefter og nøyaktighet, bare på felles baner der minst tre
+      førere har kjørt.
+      <!-- D42 -->Før noe brukes, fjernes kontoen din (byttet med en kode per bane som bare serverens nøkkel
+      kan føre tilbake), navnet, pulsen, klokkeslettet, enheten og alt utenfor selve banen.</p>
+    <p><!-- D15 -->Den ferdige modellen er offentlig: bakken og sporene som et gjennomsnitt av mange
+      passeringer, bare der minst tre førere har kjørt, og for et hopp med minst tre førere median lengde,
+      lufttid og fart inn, antall passeringer og førere, og tettheten i grove nivåer.
+      <!-- D14 -->Under hvert hopp får andre føreres app bakkeprofilen fra hver passering, som viser hvor den passeringen tok av og landet og linja der,
+      bare for innloggede der minst tre andre førere med bidraget på har profiler innen 8 m, uten navn, konto, dato og klokkeslett, med nye koder
+      for hvert oppslag.
+      <!-- D14 -->Fra Tidel 1.21 sender appen bakkeprofiler bare fra dine egne opptak; en venn med eldre app kan
+      sende fra en økt du deler; de, og profiler etter kontoer slettet før 16. november 2026, ryddes når
+      serveroppdateringen for det er lagt ut.
+      <!-- D42 -->Utdragene før sammenslåingen er pseudonymisert, brukes bare av Tidel gjennom en låst, logget analysetilgang, og deles ikke med noen.</p>
+    <p><!-- D15 -->Modellen viser hvor banens hopp og kuler står, og nummeret hvert hopp har regnet fra
+      målstreken.
+      <!-- D15 -->For hvert sted står bare stedet, retningen og om det er hopp eller kul, og for et hopp om
+      avsprangene ligger samlet.
+      <!-- D15 -->Fart, lengde, landing og hvor mange som har kjørt der, står bare for hopp med minst tre førere,
+      og tallet for hvor ofte noen blir på bakken, står aldri.
+      <!-- D15 -->Et sted kommer med når minst tre passeringer har hatt luft der.
+      <!-- D15 -->Hvert hopp kan få en hopptype (bord, dobbel, step-up) og en landingssone.
+      <!-- D15 -->De regnes bare av terrenget, laserskanningen og delene av modellen der minst tre førere har kjørt,
+      og aldri av hvor noen har landet.
+      <!-- D15 -->Baner uten nok kjøring kan få en 3D-modell laget bare av Kartverkets laserskanning, med
+      satellittbildet oppå; den har ingen kjøring fra noen, og sier hvilket år skanningen er fra.</p>
+    <p><!-- D14 -->Du kan reservere deg: slå av «Bidra til banemodellen» under <strong>Mer &rarr;
+      Personvern</strong>, så brukes ingen av øktene dine, heller ikke de gamle, og du ser fortsatt
+      modellen.
+      <!-- D14 -->Bryteren står på fra start, og finnes fra Tidel 1.17; med en eldre versjon oppdaterer du
+      appen eller skriver til <a href="mailto:post@tidel.no">post@tidel.no</a> med koden under
+      Mer &rarr; Min delekode.
+      <!-- D14 D42 -->Sletter du kontoen, slettes bakkeprofilene dine sammen med den, og en slettet konto
+      bidrar aldri til banemodellen.
+      <!-- D15 -->Det som alt er regnet inn i en ferdig modell, er et gjennomsnitt uten kobling til deg, og
+      blir stående.
+      <!-- D15 D38 -->Terrenget kommer fra Kartverkets åpne høydedata, og bakgrunnen er banekartets
+      satellittbilde (Esri, punkt 5).</p>
+  </div>
+
+  <h2 id="sikkerhet" data-kart>8. Hvordan dataene oppbevares</h2>
   <ul>
-    <li>Alt som sendes til og fra serveren går over <strong>HTTPS/TLS</strong>.</li>
-    <li>Råsporfilene ligger i en <strong>privat lagringsbøtte</strong>. Tilgang er bundet til kontoen
-      som eier dem &mdash; det finnes ingen offentlig lenke til en øktfil.</li>
-    <li>Databasen håndhever tilgang <strong>per rad, i databasen selv</strong>, ikke i appen. Øktene
-      dine er lesbare for din konto og ingen annen.</li>
-    <li>Når en øktfil først er lastet opp, er den <strong>uforanderlig</strong>: serveren nekter
-      endringer som ville krympe eller overskrive en registrert kjøring.</li>
+    <li><!-- D35 -->Alt som sendes til og fra serveren, går over HTTPS.</li>
+    <li><!-- D6 -->Sporfilene ligger i en privat lagringsbøtte, bundet til kontoen som eier dem, uten
+      offentlig lenke; unntaket er den låste analysetilgangen i punkt 7.</li>
+    <li><!-- D5 -->Basen håndhever tilgang per rad, i basen selv: øktene dine er lesbare for din konto, og
+      for vennene bare når du deler.</li>
+    <li><!-- D23 D24 -->Bruksstatistikken kan ingen app eller fører lese, bare Tidel gjennom basen.</li>
   </ul>
 
-  <h2>8. Lagringstid og sletting</h2>
-  <p>Økter beholdes til du sletter dem, fordi hele poenget med appen er å sammenligne denne sesongen
-    med forrige. Du kan slette en enkelt økt når som helst inne i appen.</p>
+  <h2 id="sletting" data-kart>9. Hvor lenge, og sletting</h2>
+  <p><!-- D5 D7 -->Økter beholdes til du sletter dem; en slettet økt merkes slettet i basen med rundene og
+    rekorden, uten at raden ryddes bort.
+    <!-- D6 -->Fra Tidel 1.21 sletter appen sporfila til en slettet økt; en fil den ikke slettet, er uleselig for
+    alle og fjernes av nattjobben.
+    </p>
+
   <h3>Slette hele kontoen</h3>
-  <p>Du starter det i appen under <strong>Mer &rarr; Kontoen din &rarr; Slett kontoen min</strong>,
-    eller fra <a href="/delete-account/">tidel.no/delete-account</a> hvis du ikke lenger har appen
-    installert.</p>
-  <ul>
-    <li>Kontoen låses for skriving med én gang.</li>
-    <li>Det er en <strong>angrefrist på 7 døgn</strong> der du kan ombestemme deg.</li>
-    <li>Deretter slettes følgende <strong>permanent</strong>: profilen din, alle økter, runder og
-      rekorder, innstillingene dine, vennskapene dine, og hver eneste råsporfil du har lastet opp.</li>
-    <li><strong>Det som blir stående:</strong> offentlig banegeometri, med navnet og kontoen din
-      fjernet fra den, som beskrevet i punkt 6. Ingenting annet. Bruksstatistikk knyttet til
-      installasjonen din slettes sammen med alt det andre, og tilbakemeldinger du har sendt får
-      koblingen til kontoen din fjernet.</li>
-  </ul>
-  <p>Sletting er ekte sletting, ikke deaktivering.</p>
-  <h3>Treningssamlinger</h3>
-  <p>Trekker du deg fra en samling, eller trekker tilbake et resultat eller en kartlinje, forsvinner
-    det <strong>straks</strong> hos treneren og i gruppens resultatliste. Sletter treneren
-    samlingen, eller sletter du kontoen din, følger det med i slettingen som er beskrevet over.
-    Øktene dine i appen berøres ikke av dette: en samling kan aldri slette, endre eller åpne en
-    aktivitet du eier. <em>Hvor lenge en samling og det som er delt i den blir stående når ingen
-    trekker seg, er ennå ikke fastsatt. Vi oppdaterer dette punktet &mdash; og datoen øverst
-    &mdash; så snart det er bestemt.</em></p>
+  <p><!-- D1 -->Du starter det under <strong>Mer &rarr; Kontoen din &rarr; Slett kontoen min</strong>, eller
+    fra <a href="/delete-account/">tidel.no/delete-account</a> uten appen.
+    <!-- D1 D2 -->Kontoen låses straks, og du har 7 døgn angrefrist.
+    <!-- D1 D44 -->Fra Tidel 1.21 sender telefonen da også installasjons-id-en sin, så bruksstatistikken
+    fra den slettes med kontoen.
+    <!-- D1 D2 -->Natten etter fristen fullfører en nattjobb slettingen, også om appen er avinstallert; du kan
+    også fullføre den med knappen «Fullfør slettingen nå» i appen.
+    <!-- D23 D24 D25 D26 -->Bruksstatistikk, feilmeldinger og svaret på «Hva stoppet deg?» har ingen
+    konto-id, bare installasjons-id; når kontoen slettes, slettes de for telefonene vi vet er dine.
+    <!-- D23 D24 D27 -->Det er telefonene som lastet opp øktene og banene dine eller sendte tilbakemelding
+    med kontoen, og fra Tidel 1.21 telefonen du sletter fra; har en annen konto også brukt telefonen, blir
+    statistikken fra den stående.
+    <!-- D27 -->Tilbakemeldinger slettes med kontoen når de er sendt med den (fra Tidel 1.21), og ellers når
+    de kom fra en av de samme telefonene; fra en telefon en annen konto også har brukt, blir de stående med
+    kontaktadressen.
+    <!-- D43 -->Når kontoen slettes, skrives en kvittering med et saltet pseudonym av konto-id-en og
+    tellinger; den har ingen id og blir stående.
+    </p>
 
-  <h2>9. Rettighetene dine</h2>
-  <p>Etter personvernforordningen kan du be om innsyn, retting, sletting, begrensning og en kopi i et
-    format du kan ta med deg. To av dem kan du gjøre selv, med én gang: appen kan eksportere hele
-    historikken din som fil under Mer &rarr; Sikkerhetskopi, og den kan slette kontoen som beskrevet
-    over. For alt annet, skriv til <a href="mailto:post@tidel.no">post@tidel.no</a>.</p>
-  <p>Behandlingsgrunnlaget er å levere tjenesten du har bedt om, og samtykke for det valgfrie
-    &mdash; som tilgang til Apple Helse og bruksstatistikk &mdash; som du kan trekke tilbake når som
-    helst, i appen eller i telefonens innstillinger.</p>
-  <p>Mener du at dataene dine behandles feil, kan du klage til <strong>Datatilsynet</strong>.</p>
+  <h3>Hvor lenge det ligger</h3>
+  <p><!-- D24 D25 D26 -->Bruksstatistikken ryddes ikke i dag; nattjobben som sletter den etter 90 døgn,
+    står av.
+    <!-- D21 -->Treningssamlinger ryddes ikke i dag, og hvor lenge en samling og det som er delt i den blir
+    stående når ingen trekker seg, er ennå ikke fastsatt.
+    <!-- D21 -->Trekker du deg, eller trekker tilbake et resultat eller en kartlinje, forsvinner det straks
+    hos treneren; sletter du kontoen, slettes heat-spor, resultater og deltakelsen din, og samlinger du
+    eier merkes slettet.
+    <!-- D39 D40 -->Utløpte paringskoder for Garmin og Polar slettes ved neste paring, ikke på klokkeslett;
+    koblingen slettes når du kobler fra eller sletter kontoen.
+    <!-- D42 -->Loggen over oppslag i analysetilgangen slettes etter 180 døgn; slettede økter er ikke med.
+    <!-- D46 -->Døgntakene mot misbruk teller kall per konto, per installasjons-id og per kort kode av
+    IP-adressen, og tellerne ryddes etter to døgn.
+    <!-- D32 -->Ventelista på tidel.no er ikke knyttet til noen konto; ubekreftede adresser ryddes etter 30
+    døgn og avmeldte etter 90 (avmelding på tidel.no/avmeld/).
+    <!-- D36 -->Kjøreveiens cache og kvoter har ingen rydding ennå; forslaget er 90 og 2 døgn.
+    <!-- D27 -->Tilbakemeldinger ligger uten frist, til de slettes med kontoen eller du ber oss fjerne dem.
+    <!-- D1 D5 -->Det du sletter, ligger i Supabases daglige sikkerhetskopier av basen til de går ut.
+    </p>
 
-  <h2>10. Barn</h2>
-  <p>Motocrosskjørere er ofte unge, og Tidel kan brukes av alle som kjører. Appen spør ikke om
-    fødselsdato, profilerer ikke brukere, viser ingen reklame og har ingen offentlig sosial strøm.
-    Den er ikke rettet mot barn under 13 år, og ønsker en forelder eller foresatt en konto fjernet,
-    holder én e-post til <a href="mailto:post@tidel.no">post@tidel.no</a>.</p>
-  <p><strong>Én ting bør en forelder vite:</strong> beste rundetid på en bane deles på banens
-    liste som standard, sammen med navnet som står i appen (punkt 5). Det slås av for én økt i
-    gjennomgangen av økta, eller for alle under <strong>Mer &rarr; Personvern</strong> &mdash;
-    der velger du også om det skal stå fullt navn eller bare forbokstav. Ingen andre deler av økta
-    deles: ikke sporet, ikke pulsen, ikke posisjon utenfor selve runden.</p>
-  <p><strong>Treningssamlinger i pilotfasen er for voksne deltakere.</strong> Egen støtte for
-    foresatt-samtykke må være på plass før samlinger brukes av barn og unge, og Tidel sier tydelig
-    fra i appen når det endrer seg.</p>
+  <h2 id="rettigheter">10. Rettighetene dine</h2>
+  <p>Etter personvernforordningen kan du be om innsyn, retting, sletting, begrensning og en kopi du kan ta
+    med deg. <!-- D33 D1 -->To av dem gjør du selv: Mer &rarr; Sikkerhetskopi eksporterer alt, og punkt 9 sletter kontoen.
+    For resten, skriv til <a href="mailto:post@tidel.no">post@tidel.no</a>.</p>
+  <p><!-- D41 -->Grunnlaget er tjenesten du har bedt om, og samtykke for det valgfrie, som tilgang til Apple Helse eller Health Connect, trukket i telefonens innstillinger.
+    <!-- D14 D42 D24 -->Banemodellen (punkt 7) og bruksstatistikken (punkt 2) bygger på berettiget
+    interesse (artikkel 6 nr. 1 bokstav f): riktige mål av banen for alle, og feil som blir funnet;
+    modellen får pseudonymiserte data klippet til banen, og statistikken har ingen konto-id. Du kan
+    protestere ved å slå av «Bidra til banemodellen» under Mer &rarr; Personvern og «Bruksstatistikk»
+    under Mer &rarr; Tilbakemelding.</p>
+  <p>Vi utleverer data til offentlig myndighet bare der loven krever det. Mener du at dataene dine
+    behandles feil, kan du klage til <strong>Datatilsynet</strong>.</p>
 
-  <h2>11. Endringer</h2>
-  <p>Endres denne erklæringen, endres datoen øverst. Endres noe som faktisk betyr noe for hva som
-    samles inn eller hvor det havner, sier appen fra &mdash; vi stoler ikke på at du leser en
-    nettside på nytt.</p>
+  <h2 id="barn">11. Barn</h2>
+  <p>Motocrosskjørere er ofte unge. <!-- D10 D17 -->Appen spør ikke om fødselsdato, profilerer ikke brukere, viser ingen
+    reklame og har ingen offentlig sosial strøm. Den er ikke rettet mot barn under 13 år, og ønsker en
+    foresatt en konto fjernet, holder én e-post til <a href="mailto:post@tidel.no">post@tidel.no</a>.</p>
+  <p><strong>Én ting bør en forelder vite:</strong> <!-- D8 -->beste rundetid på en bane deles på banens
+    liste som standard, sammen med navnet som står i appen (punkt 5). <!-- D8 -->Det slås av i
+    gjennomgangen eller under <strong>Mer &rarr; Personvern</strong>, der du også velger fullt navn eller
+    forbokstav. </p>
+  <p><!-- D21 -->Treningssamlinger i pilotfasen er for voksne deltakere; foresatt-samtykke må på plass
+    først, og appen sier fra når det endrer seg.</p>
 
-  <h2>12. Kontakt</h2>
+  <h2 id="endringer">12. Endringer</h2>
+  <p>Endres denne erklæringen, endres datoen øverst. Appen kan varsle om en endring først i en ny
+    appversjon.</p>
+
+  <h2 id="kontakt">13. Kontakt</h2>
   <p>Magnus Linnerud Støme &middot; Tidel &middot; Norge<br>
     <a href="mailto:post@tidel.no">post@tidel.no</a></p>
 </main>
@@ -355,7 +438,7 @@
 <footer>
   <div class="in">
     <div class="rad">
-      <a href="/">Hjem</a><a href="/download/">Download</a><a href="/support/">Hjelp</a><a href="/privacy/">Privacy</a>
+      <a href="/">Hjem</a><a href="/download/">Last ned</a><a href="/support/">Hjelp</a><a href="/privacy/">Privacy</a>
       <a href="/personvern/">Personvern</a><a href="/terms/">Vilkår</a>
       <a href="/delete-account/">Slett konto</a><a href="/contact/">Kontakt</a>
     </div>

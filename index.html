@@ -1,4 +1,10 @@
 <!doctype html>
+<!-- V4 (16. okt 2026, markedsplanen punkt 4): sida er norsk når nettleseren er norsk (nb/nn/no),
+     engelsk ellers — samme grep som /r/. Det statiske innholdet er engelsk, så sida er riktig
+     også uten skript; de norske tekstene legges over av js/forside.js med textContent (aldri
+     innerHTML). Nøklene står som data-t. Tre ting først på norsk: rundetider er gratis, du
+     trenger ingen boks, laget av en norsk fører. Nederst: ventelista «Si fra når Tidel åpner»
+     (eget kryss, aldri forhåndskrysset; bekreftelse på e-post; for voksne). -->
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -29,7 +35,7 @@
 <!-- Forsida laster KUN sin egen sidekapslede stilfil. css/tidel.css og
      css/forside.css er uroert og betjener fortsatt de juridiske sidene
      og /download/ slik de alltid har gjort. -->
-<link rel="stylesheet" href="/css/forside-v2.css?v=2609090223">
+<link rel="stylesheet" href="/css/forside-v2.css?v=2611171133">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"SoftwareApplication",
  "name":"Tidel","alternateName":"Tidel — MX Performance Tracker",
@@ -64,22 +70,22 @@
       <span>TIDEL</span>
     </a>
     <div class="navLinks">
-      <a href="#progress">Progress</a>
-      <a href="#analysis">Analysis</a>
-      <a href="#devices">Devices</a>
+      <a href="#progress" data-t="navProgress">Progress</a>
+      <a href="#analysis" data-t="navAnalysis">Analysis</a>
+      <a href="#devices" data-t="navDevices">Devices</a>
     </div>
-    <a class="button buttonSmall" href="/download/">GET TIDEL <span aria-hidden="true">↗</span></a>
+    <a class="button buttonSmall" href="/download/" data-t="navGet">GET TIDEL <span aria-hidden="true">↗</span></a>
   </nav>
 
   <div class="heroContent shell">
-    <p class="eyebrow">Motocross progression, measured</p>
-    <h1>RIDE TODAY.<br><span>GET FASTER</span><br>ALL SEASON.</h1>
+    <p class="eyebrow" data-t="heroEyebrow">Motocross progression, measured</p>
+    <h1 data-t="heroH1">RIDE TODAY.<br><span>GET FASTER</span><br>ALL SEASON.</h1>
     <img class="heroLogo" src="/assets/site/sticker.png" alt="Tidel — MX Performance Tracker">
-    <p class="heroCopy">Tidel automatically finds the track, the finish line and every lap&mdash;then
+    <p class="heroCopy" data-t="heroCopy">Tidel automatically finds the track, the finish line and every lap&mdash;then
       connects your rides into proof of progress.</p>
     <div class="heroActions">
-      <a class="button" href="/download/">START TRACKING <span aria-hidden="true">↗</span></a>
-      <a class="textLink" href="#progress">SEE A SEASON UNFOLD <span aria-hidden="true">↓</span></a>
+      <a class="button" href="/download/" data-t="heroStart">START TRACKING <span aria-hidden="true">↗</span></a>
+      <a class="textLink" href="#progress" data-t="heroSee">SEE A SEASON UNFOLD <span aria-hidden="true">↓</span></a>
     </div>
     <!-- Butikkknappene fylles av js/butikk.js. Den fila er ikke roert:
          den er det eneste stedet butikkstatus og butikk-URL-er settes. -->
@@ -87,25 +93,25 @@
   </div>
 
   <div class="heroProof shell">
-    <div><span>Track</span><strong>FROLAND MX</strong></div>
-    <div><span>02 May</span><strong>2:59.29</strong></div>
-    <div><span>08 Aug</span><strong>2:14.71</strong></div>
-    <div class="proofHighlight"><span>Season progress</span><strong>&minus;44.58 SEC</strong></div>
+    <div><span data-t="proofTrack">Track</span><strong>FROLAND MX</strong></div>
+    <div><span data-t="proofD1">02 May</span><strong>2:59.29</strong></div>
+    <div><span data-t="proofD2">08 Aug</span><strong>2:14.71</strong></div>
+    <div class="proofHighlight"><span data-t="proofSeason">Season progress</span><strong data-t="proofDelta">&minus;44.58 SEC</strong></div>
   </div>
 </section>
 
 <!-- ══════════════ 01 · MANIFEST ══════════════ -->
 <section class="manifesto">
   <div class="shell manifestoGrid">
-    <p class="sectionIndex">01 / The difference</p>
+    <p class="sectionIndex" data-t="manIndex">01 / The difference</p>
     <div>
-      <h2>A LAP IS A RESULT.<br><span>A SEASON IS PROGRESS.</span></h2>
-      <p>Most timing apps tell you what happened once. Tidel connects every ride at the same track,
+      <h2 data-t="manH2">A LAP IS A RESULT.<br><span>A SEASON IS PROGRESS.</span></h2>
+      <p data-t="manP">Most timing apps tell you what happened once. Tidel connects every ride at the same track,
         so you can see whether the work is actually working.</p>
     </div>
     <div class="manifestoStamp" aria-label="Progress is the product">
-      <span>The product is</span>
-      <strong>PROGRESS</strong>
+      <span data-t="stampSpan">The product is</span>
+      <strong data-t="stampStrong">PROGRESS</strong>
       <i>↗</i>
     </div>
   </div>
@@ -116,23 +122,23 @@
   <div class="shell">
     <header class="sectionHeader">
       <div>
-        <p class="sectionIndex">02 / Your season</p>
-        <h2>THE FULL STORY,<br>NOT ONE FAST LAP.</h2>
+        <p class="sectionIndex" data-t="pgIndex">02 / Your season</p>
+        <h2 data-t="pgH2">THE FULL STORY,<br>NOT ONE FAST LAP.</h2>
       </div>
-      <p>Bad days stay in the data. Breakthroughs do too. That is how four rides become a
+      <p data-t="pgP">Bad days stay in the data. Breakthroughs do too. That is how four rides become a
         direction&mdash;not a highlight reel.</p>
     </header>
 
     <div class="progressPanel">
       <div class="panelTopline">
-        <span>FROLAND MX / SEASON 2026</span>
-        <span class="liveMark"><i></i> 4 RIDES CONNECTED</span>
+        <span data-t="pgTop">FROLAND MX / SEASON 2026</span>
+        <span class="liveMark" data-t="pgLive"><i></i> 4 RIDES CONNECTED</span>
       </div>
 
       <div class="progressReadout" aria-live="polite">
-        <div><span class="dataLabel">Selected session</span><strong id="pgDato">08 AUG</strong></div>
-        <div><span class="dataLabel">Best lap</span><strong id="pgTid">2:14.71</strong></div>
-        <div><span class="dataLabel">Vs. first ride</span><strong id="pgDelta" class="redText">&minus;44.58 S</strong></div>
+        <div><span class="dataLabel" data-t="pgL1">Selected session</span><strong id="pgDato">08 AUG</strong></div>
+        <div><span class="dataLabel" data-t="pgL2">Best lap</span><strong id="pgTid">2:14.71</strong></div>
+        <div><span class="dataLabel" data-t="pgL3">Vs. first ride</span><strong id="pgDelta" class="redText">&minus;44.58 S</strong></div>
       </div>
 
       <div class="graphWrap" aria-label="Lap time progression across four rides at Froland MX">
@@ -154,14 +160,14 @@
           <circle cx="640" cy="118" r="6"  class="graphDot" data-i="2"></circle>
           <circle cx="920" cy="220" r="10" class="graphDot active" data-i="3"></circle>
         </svg>
-        <span class="axisLabel">LAP TIME ↓</span>
+        <span class="axisLabel" data-t="pgAxis">LAP TIME ↓</span>
       </div>
 
       <div class="sessionTabs">
-        <button type="button" class="sessionTab" aria-pressed="false" data-i="0"><span>02 MAY</span><strong>2:59.29</strong></button>
-        <button type="button" class="sessionTab" aria-pressed="false" data-i="1"><span>08 JUN</span><strong>2:36.84</strong></button>
-        <button type="button" class="sessionTab" aria-pressed="false" data-i="2"><span>22 JUL</span><strong>2:41.22</strong></button>
-        <button type="button" class="sessionTab active" aria-pressed="true" data-i="3"><span>08 AUG</span><strong>2:14.71</strong></button>
+        <button type="button" class="sessionTab" aria-pressed="false" data-i="0"><span data-t="tab0">02 MAY</span><strong>2:59.29</strong></button>
+        <button type="button" class="sessionTab" aria-pressed="false" data-i="1"><span data-t="tab1">08 JUN</span><strong>2:36.84</strong></button>
+        <button type="button" class="sessionTab" aria-pressed="false" data-i="2"><span data-t="tab2">22 JUL</span><strong>2:41.22</strong></button>
+        <button type="button" class="sessionTab active" aria-pressed="true" data-i="3"><span data-t="tab3">08 AUG</span><strong>2:14.71</strong></button>
       </div>
     </div>
 
@@ -169,7 +175,7 @@
       <img src="/assets/site/progress-v3.jpg" loading="lazy"
            alt="Aerial view of four motocross rides across a winding forest circuit">
       <figcaption>
-        <span>FOUR RIDES / ONE TRACK / A CLEAR DIRECTION</span>
+        <span data-t="pgCap">FOUR RIDES / ONE TRACK / A CLEAR DIRECTION</span>
         <strong>&minus;44.58 S</strong>
       </figcaption>
     </figure>
@@ -181,33 +187,33 @@
   <div class="shell">
     <header class="sectionHeader">
       <div>
-        <p class="sectionIndex">03 / Find the why</p>
-        <h2>DON&rsquo;T JUST SEE<br>THAT YOU&rsquo;RE FASTER.</h2>
+        <p class="sectionIndex" data-t="anIndex">03 / Find the why</p>
+        <h2 data-t="anH2">DON&rsquo;T JUST SEE<br>THAT YOU&rsquo;RE FASTER.</h2>
       </div>
-      <p>Compare pace, racing line and consistency from the same track. Find the corner that
+      <p data-t="anP">Compare pace, racing line and consistency from the same track. Find the corner that
         changed&mdash;and the one that still costs you.</p>
     </header>
 
     <figure class="analysisHero">
       <img src="/assets/site/analysis-v2.jpg" loading="lazy"
            alt="Motocross rider compared against a ghost lap with racing lines">
-      <figcaption><span>SELECTED LAP</span><i></i> <span>REFERENCE LAP</span></figcaption>
+      <figcaption><span data-t="anSel">SELECTED LAP</span><i></i> <span data-t="anRef">REFERENCE LAP</span></figcaption>
       <div class="analysisHeroCopy">
-        <span>TURN 07 / FROLAND MX</span>
-        <strong>THE LINE<br>SEPARATES HERE.</strong>
+        <span data-t="anTurn">TURN 07 / FROLAND MX</span>
+        <strong data-t="anLine">THE LINE<br>SEPARATES HERE.</strong>
       </div>
     </figure>
 
     <div class="sectorModule">
       <div class="sectorBreakdown">
         <div class="sectorTopline">
-          <span>FROLAND MX / LAP 06 VS. LAP 11</span>
-          <span>LOWER IS FASTER</span>
+          <span data-t="secTop">FROLAND MX / LAP 06 VS. LAP 11</span>
+          <span data-t="secLower">LOWER IS FASTER</span>
         </div>
         <div class="sectorHeadline">
-          <span class="dataLabel">Lap delta</span>
+          <span class="dataLabel" data-t="secLabel">Lap delta</span>
           <strong>&minus;1.90 S</strong>
-          <p>Three gains. Two losses. One clear place to work next.</p>
+          <p data-t="secP">Three gains. Two losses. One clear place to work next.</p>
         </div>
         <div class="sectorRows" aria-label="Time gained or lost in five sectors">
           <div class="sectorRow"><span>S01</span><div class="sectorRail"><i class="gain" style="width:44%"></i></div><strong class="gainText">&minus;0.86 S</strong></div>
@@ -217,16 +223,16 @@
           <div class="sectorRow"><span>S05</span><div class="sectorRail"><i class="loss" style="width:36%"></i></div><strong class="lossText">+0.58 S</strong></div>
         </div>
         <div class="sectorLegend">
-          <span><i class="gain"></i> TIME GAINED</span>
-          <span><i class="loss"></i> TIME LOST</span>
+          <span data-t="legGain"><i class="gain"></i> TIME GAINED</span>
+          <span data-t="legLoss"><i class="loss"></i> TIME LOST</span>
         </div>
       </div>
 
       <div class="sectorData">
         <div class="analysisTabs" role="group" aria-label="Choose analysis view">
-          <button type="button" class="analysisTab active" aria-pressed="true"  data-a="0">TIME DELTA</button>
-          <button type="button" class="analysisTab"        aria-pressed="false" data-a="1">RACING LINE</button>
-          <button type="button" class="analysisTab"        aria-pressed="false" data-a="2">PACE</button>
+          <button type="button" class="analysisTab active" aria-pressed="true"  data-a="0" data-t="tabDelta">TIME DELTA</button>
+          <button type="button" class="analysisTab"        aria-pressed="false" data-a="1" data-t="tabLine">RACING LINE</button>
+          <button type="button" class="analysisTab"        aria-pressed="false" data-a="2" data-t="tabPace">PACE</button>
         </div>
         <div class="analysisReadout" aria-live="polite">
           <span class="dataLabel" id="anLabel">Time delta</span>
@@ -235,8 +241,8 @@
           <p id="anCopy">Tidel combines your best sectors to show what your next clean lap could be.</p>
         </div>
         <div class="analysisStatRow">
-          <span>BEST LAP <strong>2:14.71</strong></span>
-          <span>BEST SECTORS <strong>2:09.86</strong></span>
+          <span data-t="statBest">BEST LAP <strong>2:14.71</strong></span>
+          <span data-t="statSect">BEST SECTORS <strong>2:09.86</strong></span>
         </div>
       </div>
     </div>
@@ -246,14 +252,14 @@
 <!-- ══════════════ 04 · PROSESS ══════════════ -->
 <section class="processSection">
   <div class="shell">
-    <p class="sectionIndex">04 / Zero friction</p>
+    <p class="sectionIndex" data-t="prIndex">04 / Zero friction</p>
     <div class="processGrid">
-      <article><span>01</span><h3>RIDE</h3>
-        <p>Start moving. Tidel recognises the track and finds each lap automatically.</p></article>
-      <article><span>02</span><h3>CONNECT</h3>
-        <p>Every session joins your history for that track&mdash;without mixing incomparable circuits.</p></article>
-      <article><span>03</span><h3>PROGRESS</h3>
-        <p>Return with one clear target and watch the trend change across the season.</p></article>
+      <article><span>01</span><h3 data-t="pr1h">RIDE</h3>
+        <p data-t="pr1p">Start moving. Tidel recognises the track and finds each lap automatically.</p></article>
+      <article><span>02</span><h3 data-t="pr2h">CONNECT</h3>
+        <p data-t="pr2p">Every session joins your history for that track&mdash;without mixing incomparable circuits.</p></article>
+      <article><span>03</span><h3 data-t="pr3h">PROGRESS</h3>
+        <p data-t="pr3p">Return with one clear target and watch the trend change across the season.</p></article>
     </div>
   </div>
 </section>
@@ -263,15 +269,15 @@
   <div class="devicesBackdrop"></div>
   <div class="shell devicesGrid">
     <div class="deviceCopy">
-      <p class="sectionIndex">05 / Bring what you have</p>
-      <h2>YOUR RIDE.<br>YOUR DEVICE.<br><span>ONE HISTORY.</span></h2>
-      <p>Track live from your phone, import a watch file, or connect high-frequency GPS.
+      <p class="sectionIndex" data-t="devIndex">05 / Bring what you have</p>
+      <h2 data-t="devH2">YOUR RIDE.<br>YOUR DEVICE.<br><span>ONE HISTORY.</span></h2>
+      <p data-t="devP">Track live from your phone, import a watch file, or connect high-frequency GPS.
         Tidel keeps the season in one place.</p>
       <div class="deviceList">
         <span>IPHONE</span><span>ANDROID</span><span>APPLE WATCH</span><span>GARMIN</span>
         <span>POLAR</span><span>SUUNTO</span><span>GPX</span><span>RACEBOX 25 HZ</span>
       </div>
-      <p class="deviceNote">Product names identify compatibility only. Tidel is not affiliated with,
+      <p class="deviceNote" data-t="devNote">Product names identify compatibility only. Tidel is not affiliated with,
         endorsed by or partnered with any of these companies.</p>
     </div>
 
@@ -282,8 +288,8 @@
         <img src="/assets/site/app-home.jpg" loading="lazy"
              alt="Tidel app showing motocross sessions and progress">
       </div>
-      <div class="phoneNote noteTop"><span>LIVE OR IMPORTED</span><strong>EVERY RIDE COUNTS</strong></div>
-      <div class="phoneNote noteBottom"><span>NO SIGNAL?</span><strong>KEEP RIDING</strong></div>
+      <div class="phoneNote noteTop"><span data-t="noteTopS">LIVE OR IMPORTED</span><strong data-t="noteTopB">EVERY RIDE COUNTS</strong></div>
+      <div class="phoneNote noteBottom"><span data-t="noteBotS">NO SIGNAL?</span><strong data-t="noteBotB">KEEP RIDING</strong></div>
     </div>
   </div>
 </section>
@@ -292,12 +298,41 @@
 <section class="offlineSection">
   <div class="shell offlineGrid">
     <div>
-      <p class="sectionIndex">06 / Built for the track</p>
-      <h2>NO SIGNAL.<br><span>NO PROBLEM.</span></h2>
+      <p class="sectionIndex" data-t="offIndex">06 / Built for the track</p>
+      <h2 data-t="offH2">NO SIGNAL.<br><span>NO PROBLEM.</span></h2>
     </div>
-    <p>Tidel records while you ride and syncs when the connection returns. Because the best tracks
+    <p data-t="offP">Tidel records while you ride and syncs when the connection returns. Because the best tracks
       rarely come with perfect reception.</p>
-    <div class="offlineStat"><span>Connection required</span><strong>0%</strong></div>
+    <div class="offlineStat"><span data-t="offStat">Connection required</span><strong data-t="offVal">0%</strong></div>
+  </div>
+</section>
+
+<!-- ══════════════ 07 · VENTELISTA ══════════════
+     V4: «Si fra når Tidel åpner». Markedsføringsloven § 15: eget kryss (aldri forhåndskrysset),
+     teksten ved krysset er ordrett den som ligger i basen med versjon (SKY-VENTELISTE-1-SAMTYKKE.sql,
+     SAMTYKKE_VERSJON i js/forside.js), bekreftelse fra innboksen før noen står på lista, avmelding i
+     hver e-post, og skjemaet er for voksne. Skjemaet sender bare adressen, versjonen og språket —
+     ingen annen persondata. Det usynlige feltet «nettside» er en robotfelle: fylles det, sendes ingenting. -->
+<section class="waitSection" id="venteliste">
+  <div class="shell waitGrid">
+    <div>
+      <p class="sectionIndex" data-t="wIndex">07 / Be the first to know</p>
+      <h2 data-t="wH2">TELL ME<br><span>WHEN TIDEL OPENS.</span></h2>
+      <p class="waitCopy" data-t="wCopy">Tidel is in beta. Leave your email and you get one message when the app
+        opens to everyone. Lap times stay free.</p>
+    </div>
+    <form class="waitForm" id="waitForm" novalidate>
+      <label class="waitField" for="wEpost"><span data-t="wLabel">Your email</span>
+        <input type="email" name="epost" id="wEpost" autocomplete="email" inputmode="email" required
+               maxlength="254" placeholder="name@example.com" data-ph="wPh"></label>
+      <label class="waitConsent"><input type="checkbox" id="wKryss" name="samtykke" required>
+        <span data-t="wSamtykke">Yes, Tidel may email me: once when the app opens to everyone, and at most once a month until then. I am an adult, and I can unsubscribe in every email.</span></label>
+      <button type="submit" class="button" id="wKnapp" data-t="wKnapp">TELL ME WHEN TIDEL OPENS <span aria-hidden="true">↗</span></button>
+      <p class="waitStatus" id="wStatus" role="status" aria-live="polite"></p>
+      <p class="waitNote" data-t="wNote">We use the address for this alone, delete it 90 days after you unsubscribe, and never share it.
+        You first get an email to confirm. This form is for adults. Details in the <a href="/site-privacy/">website privacy notice</a>.</p>
+      <input type="text" name="nettside" class="waitHoney" tabindex="-1" autocomplete="off" aria-hidden="true">
+    </form>
   </div>
 </section>
 
@@ -306,11 +341,11 @@
   <div class="shell finalGrid">
     <div class="finalMark"><img src="/assets/site/sticker.png" loading="lazy" alt="Tidel logo"></div>
     <div>
-      <p class="eyebrow">The next ride starts the trend</p>
-      <h2>STOP GUESSING.<br><span>START PROGRESSING.</span></h2>
+      <p class="eyebrow" data-t="finEyebrow">The next ride starts the trend</p>
+      <h2 data-t="finH2">STOP GUESSING.<br><span>START PROGRESSING.</span></h2>
       <div class="stores" id="footStores"></div>
     </div>
-    <a class="button finalButton" href="/download/">GET TIDEL <span aria-hidden="true">↗</span></a>
+    <a class="button finalButton" href="/download/" data-t="finGet">GET TIDEL <span aria-hidden="true">↗</span></a>
   </div>
 </section>
 
@@ -323,22 +358,23 @@
     <!-- UENDREDE JURIDISKE LENKER. Adressene er noeyaktig de samme som foer
          redesignet, og de samme som staar i App Store Connect og Play Console. -->
     <nav class="footerLinks" aria-label="Legal and support">
-      <a href="/download/">Download</a>
-      <a href="/support/">Support</a>
+      <a href="/download/" data-t="fDownload">Download</a>
+      <a href="/support/" data-t="fSupport">Support</a>
       <a href="/privacy/">Privacy</a>
       <a href="/personvern/">Personvern</a>
-      <a href="/terms/">Terms</a>
-      <a href="/delete-account/">Delete account</a>
-      <a href="/contact/">Contact</a>
-      <a href="/site-privacy/">Website privacy</a>
+      <a href="/terms/" data-t="fTerms">Terms</a>
+      <a href="/licenses/" data-t="fLicenses" data-href-nb="/lisenser/">Licenses</a>
+      <a href="/delete-account/" data-t="fDelete">Delete account</a>
+      <a href="/contact/" data-t="fContact">Contact</a>
+      <a href="/site-privacy/" data-t="fSitePrivacy">Website privacy</a>
     </nav>
     <p class="footerMeta">© 2026 Tidel — Magnus Linnerud Støme, Norway ·
       <a href="mailto:post@tidel.no">post@tidel.no</a></p>
   </div>
 </footer>
 
-<script src="/js/maaling.js?v=2609090223"></script>
-<script src="/js/forside.js?v=2609090223"></script>
-<script src="/js/butikk.js?v=2609090223"></script>
+<script src="/js/maaling.js?v=2611171133"></script>
+<script src="/js/forside.js?v=2611171133"></script>
+<script src="/js/butikk.js?v=2611171133"></script>
 </body>
 </html>

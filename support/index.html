@@ -8,8 +8,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Support — Tidel</title>
 <meta name="description" content="Help with Tidel: devices, importing rides, GPS accuracy, RaceBox, your account and privacy.">
+<!-- R6 (23. okt 2026): svarene om data (klokker, konto, pris og personvern) er skrevet fra datakartet docs/DATAKART.md.
+     Hver setning om data har <!- - Dn - -> med raden, og tools/datakart/lag-tekst.mjs --sjekk leser dem mot kartet. -->
 <link rel="icon" href="/assets/brand/web/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="/css/tidel.css?v=2609090223">
+<link rel="stylesheet" href="/css/tidel.css?v=2611171133">
 </head>
 <body>
 
@@ -29,7 +31,7 @@
   <p class="lead">Tidel is in beta and moving fast. If something is broken, we would rather hear it
     than not &mdash; write to <a href="mailto:post@tidel.no">post@tidel.no</a> and a person
     answers.</p>
-  <p class="meta">Last updated 9 September 2026</p>
+  <p class="meta">Last updated 16 November 2026</p>
 
   <h2>Devices</h2>
   <div class="faq">
@@ -42,26 +44,22 @@
     <details>
       <summary>Does my watch work?</summary>
       <div class="sv">
-        <p><strong>Apple Watch:</strong> yes, on iPhone. Record the ride as a workout, and Tidel
+        <p><!-- D41 --><strong>Apple Watch:</strong> yes, on iPhone. <!-- D41 -->Record the ride as a workout, and Tidel
           reads the route and heart rate from Apple Health.</p>
-        <p><strong>Garmin, Polar, Suunto, Coros and others:</strong> it depends on the watch, not on
-          Tidel. Two routes work:</p>
-        <ul>
-          <li>The watch writes workouts to <strong>Apple Health</strong> &mdash; then Tidel imports
-            them like any other workout, on iPhone.</li>
-          <li>You export the ride as a <strong>GPX file</strong> and open it in Tidel. This works on
-            both iPhone and Android.</li>
-        </ul>
-        <p>Tidel is not affiliated with any of these companies, and there is no direct integration
-          with their apps.</p>
+        <p><!-- D39 --><strong>Garmin:</strong> a small Tidel app on the watch sends the session to your Tidel account;
+          Garmin itself gets nothing from Tidel.</p>
+        <p><!-- D40 --><strong>Polar:</strong> connect your Polar account in the app, and Tidel fetches the sessions
+          from Polar.</p>
+        <p><!-- D41 --><strong>Suunto, Coros and others:</strong> if the watch writes workouts to Apple Health or
+          Health Connect, Tidel imports them like any other workout; otherwise export the ride as a
+          <strong>GPX file</strong> and open it in Tidel.</p>
+        <p>Tidel is not affiliated with any of these companies.</p>
       </div>
     </details>
     <details>
       <summary>Is there a difference between iPhone and Android?</summary>
-      <div class="sv"><p>The analysis is identical. The difference is import: reading workouts
-        straight from Apple Health is an iPhone feature, because Health is an Apple system. On
-        Android you record with the phone or import a GPX file. Health Connect support is not built
-        yet.</p></div>
+      <div class="sv"><p>The analysis is identical. <!-- D41 -->The difference is where workouts come from: Apple
+        Health on iPhone, Health Connect on Android, and GPX files on both.</p></div>
     </details>
   </div>
 
@@ -78,7 +76,8 @@
       <div class="sv">
         <p>Go to <strong>More &rarr; Import</strong>. From there you can:</p>
         <ul>
-          <li>pull workouts straight from <strong>Apple Health</strong> (iPhone),</li>
+          <li>pull workouts straight from <strong>Apple Health</strong> (iPhone) or <strong>Health Connect</strong>
+            (Android),</li>
           <li>open a <strong>GPX file</strong> from any app or watch,</li>
           <li>drop in an <strong>Apple Health export zip</strong> if you want your whole history at
             once,</li>
@@ -90,7 +89,10 @@
     <details>
       <summary>It imported my bike ride to the shops as a session</summary>
       <div class="sv"><p>Tidel filters out rides that do not look like laps, but it is not perfect.
-        Delete the session from the session list &mdash; that removes its GPS file too.</p></div>
+        <!-- D5 D7 -->Delete the session from the session list; it is marked deleted and disappears for you and
+        your friends. <!-- D6 -->From Tidel 1.21 the app deletes its raw GPS file; one it does not delete is
+        unreadable, goes into the deletion queue when the session is deleted, and is removed by the nightly
+        job.</p></div>
     </details>
   </div>
 
@@ -146,54 +148,59 @@
     </details>
   </div>
 
-  <h2>Your account</h2>
+  <h2 data-kart>Your account</h2>
   <div class="faq">
     <details>
       <summary>I never made an account. Do I have one?</summary>
-      <div class="sv"><p>Yes &mdash; an anonymous one, created automatically so your sessions
-        survive a new phone. There is no email, no password and no profile to fill in. You can see
-        its 8-character code under <strong>More &rarr; My share code</strong>.</p></div>
+      <div class="sv"><p><!-- D2 -->Yes: in the beta an anonymous one is created automatically, with no email and no
+        password, so your sessions follow you to a new phone. <!-- D2 -->When Tidel opens to everyone, the account
+        needs an email address and a password. <!-- D1 -->You can see its 8-character share code under
+        <strong>More &rarr; My share code</strong>.</p></div>
     </details>
     <details>
       <summary>How do I move to a new phone?</summary>
-      <div class="sv"><p>Export a backup from <strong>More &rarr; Backup</strong> on the old phone
-        and open it on the new one. That carries everything across, including sessions, tracks,
-        settings and trophies.</p></div>
+      <div class="sv"><p><!-- D33 -->Export a backup from <strong>More &rarr; Backup</strong> on the old phone and open it
+        on the new one; it carries sessions, tracks, settings and trophies. <!-- D5 D11 -->Signed in to the same
+        account, the sessions and synced settings also come back from the server.</p></div>
     </details>
     <details>
       <summary>How do I delete everything?</summary>
-      <div class="sv"><p>In the app: <strong>More &rarr; Your account &rarr; Delete my account</strong>.
-        Without the app installed, see <a href="/delete-account/">tidel.no/delete-account</a>. There
-        is a 7-day grace period, then it is permanently gone.</p></div>
+      <div class="sv"><p><!-- D1 -->In the app: <strong>More &rarr; Your account &rarr; Delete my account</strong>, or
+        without the app <a href="/delete-account/">tidel.no/delete-account</a>. <!-- D1 D2 -->There is a 7-day grace
+        period, and the night after it a nightly job completes the deletion (you can also finish it with
+        &ldquo;Complete deletion now&rdquo; in the app); the page says what is deleted and what is not.</p></div>
     </details>
     <details>
       <summary>Is there a web version?</summary>
-      <div class="sv"><p>A web version is being built for deeper analysis on a big screen. It is in
-        private testing and not open yet.</p></div>
+      <div class="sv"><p><!-- D2 -->A web version is being built for deeper analysis on a big screen; it is in private
+        testing. <!-- D2 -->You attach an email address to the account in the app: <strong>More &rarr; Your
+        account &rarr; Link an email to the account</strong>.</p></div>
     </details>
   </div>
 
-  <h2>Price and privacy</h2>
+  <h2 data-kart>Price and privacy</h2>
   <div class="faq">
     <details>
       <summary>What does it cost?</summary>
-      <div class="sv"><p>Nothing while in beta. There are no ads and no in-app purchases. If paid
-        features arrive later, we will say so in advance and your existing rides stay
-        accessible.</p></div>
+      <!-- V4 runde 3 (16. okt 2026): løftet om ingen reklame og ingen kjøp i appen var sant for betaen og blir usant
+           ved lansering (Tidel Pro ligger bygd bak en bryter, docs/NODBREMS.md). Samme ord som /download/. -->
+      <div class="sv"><p><!-- D31 -->Lap times are free, and stay free. <!-- D35 D38 D48 -->No ads. <!-- D2 -->When Tidel opens to
+        everyone, you create an account so your seasons follow you between phones. <!-- D31 -->Paid extras may
+        come later; we say so in advance, and the rides you have recorded stay yours.</p></div>
     </details>
     <details>
       <summary>Who can see my rides?</summary>
       <!-- Rettet 9. september 2026 (granskningsfunn WEB-N1). Svaret sa «there is no public
            leaderboard». Banen HAR en liste, og beste rundetid legges på den som standard
            (eierordre 4. sep). Samme tekst som /privacy/ §2 og vilkårenes §5 nå bærer. -->
-      <div class="sv"><p>Your sessions are private by default: the ride, the GPS trace and the
-        heart rate are yours, and nobody sees them unless you deliberately share a session or a
-        record.</p>
-        <p>One thing is shared without you asking: <strong>your best lap time on a track</strong>
-        goes on that track&rsquo;s own list, with the rider name you show, <strong>by
-        default</strong>. That is how riders on the same track compare times. Turn it off for one
-        session while reviewing it, or for good under <strong>More &rarr; Privacy</strong>. The
-        full detail is in the <a href="/privacy/">Privacy Policy</a>.</p></div>
+      <div class="sv"><p><!-- D5 D6 -->Your sessions are private by default: the ride, the GPS trace and the heart rate
+        are yours, and nobody sees them unless you deliberately share a session.</p>
+        <p><!-- D8 D12 D14 -->Three things are shared without you asking: <strong>your best lap time on a track</strong>
+        goes on that track&rsquo;s own list, with the rider name you show, <strong>by default</strong>; a new
+        track you ride goes to the shared catalogue with your name as a credit; and your riding on the track
+        itself goes, without name or account, into the shared track model. <!-- D8 D14 -->Turn the list off for
+        one session while reviewing it, or for good under <strong>More &rarr; Privacy</strong>, where you can
+        also opt out of the track model; the full detail is in the <a href="/privacy/">Privacy Policy</a>.</p></div>
     </details>
   </div>
 

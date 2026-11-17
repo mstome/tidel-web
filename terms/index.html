@@ -18,7 +18,7 @@
 <title>Terms of Service — Tidel</title>
 <meta name="description" content="The terms that apply when you use the Tidel app.">
 <link rel="icon" href="/assets/brand/web/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="/css/tidel.css?v=2609090223">
+<link rel="stylesheet" href="/css/tidel.css?v=2611171133">
 </head>
 <body>
 
@@ -37,7 +37,7 @@
   <h1>Terms of Service</h1>
   <p class="lead">The agreement between you and Tidel. It is short on purpose, and written to be
     read rather than skipped.</p>
-  <p class="meta">Last updated 9 September 2026 &middot; Tidel, Magnus Linnerud Støme, Norway</p>
+  <p class="meta">Last updated 7 November 2026 &middot; Tidel, Magnus Linnerud Støme, Norway</p>
 
   <div class="kort">
     <p><strong>The three that matter most.</strong> Tidel is a training tool, not official timing.
@@ -63,49 +63,55 @@
     not to lose data &mdash; but <strong>keep your own backups</strong> of anything you cannot
     afford to lose. The app can export your entire history under More &rarr; Backup.</p>
 
-  <h2>4. Your account</h2>
-  <p>Tidel creates an anonymous account for you automatically; there is no sign-up. If you attach
-    an email address and password, you are responsible for keeping the password to yourself and for
-    what happens under your account.</p>
-  <p>You may delete your account at any time &mdash; see
-    <a href="/delete-account/">tidel.no/delete-account</a>. We may suspend or close an account that
+  <h2 data-kart>4. Your account</h2>
+  <!-- R6 (23. okt 2026): §4–§6 er skrevet fra datakartet docs/DATAKART.md; hver setning om data har <!- - Dn - -> med raden. -->
+  <p><!-- D2 -->In the beta Tidel creates an anonymous account for you automatically; when Tidel opens to
+    everyone, the account needs an email address and a password. <!-- D2 -->If the account has an email
+    address and password, you are responsible for keeping the password to yourself and for what happens
+    under your account.</p>
+  <p><!-- D1 -->You may delete your account at any time &mdash; see
+    <a href="/delete-account/">tidel.no/delete-account</a>. <!-- D1 -->We may suspend or close an account that
     is used to break these terms, to attack the service, or to harm other users.</p>
 
-  <h2>5. Your data is yours</h2>
-  <p>Your rides, lap times, notes and telemetry belong to you. You grant Tidel only the permission
-    needed to run the service for you: to store your data, process it into the analysis you asked
-    for, and show it back to you and to the people you deliberately share it with.</p>
+  <h2 data-kart>5. Your data is yours</h2>
+  <p><!-- D5 D6 D7 -->Your rides, lap times, notes and telemetry belong to you. <!-- D5 D6 -->You grant Tidel only
+    the permission needed to run the service for you: to store your data, process it into the analysis
+    you asked for, and show it back to you and to the people you deliberately share it with.</p>
   <!-- Rettet 9. september 2026 (granskningsfunn WEB-N1). Avsnittet lovet at vi «never
        publish your rides, your lap times …», mens appen deler beste rundetid på banens
        liste SOM STANDARD (eierordre 4. sep — deling PÅ som standard), akkurat slik
        /privacy/ §2 og /personvern/ §2 alltid har sagt. Vilkårene er den strengeste
-       teksten av de fire og kan ikke love mindre deling enn erklæringen beskriver. -->
-  <p>We do not sell your data and we do not use it for advertising. We never publish your rides,
-    your heart rate or your GPS traces. Three things can become public. Two of them only through
-    section 6: the geometry of a track you add, and the rider name you have chosen, shown as a
-    credit on it.</p>
-  <p>The third is <strong>your best lap time on a track</strong>. It is shared on that
-    track&rsquo;s own list, together with the rider name you show, <strong>by default</strong> —
-    that is how riders on the same track compare times. You turn it off for one session while
-    reviewing that session, or for good under <strong>More &rarr; Privacy</strong>, and the session
-    itself &mdash; the ride, the trace, the heart rate &mdash; stays private either way. See the
-    <a href="/privacy/">Privacy Policy</a> for the detail.</p>
+       teksten av de fire og kan ikke love mindre deling enn erklæringen beskriver.
+       7. nov 2026 (sluttlesingen #35): §5 lovet at GPS-sporene aldri ble publisert, og §6 at
+       katalogen aldri tok med sporet. Det var for mye. Banens liste viser linja fra beste runde
+       (D8, rekorder.kode), og omrisset av en bane kan være linja fra din beste runde (D12,
+       skyOmriss). Bare råopptaket (sporfila) publiseres aldri. -->
+  <p><!-- D1-D50 -->We do not sell your data and we do not use it for advertising. <!-- D6 D9 -->We never publish
+    a session&rsquo;s raw GPS file or your heart rate. <!-- D12 D3 D15 D8 -->Four things can become
+    public: the geometry of a track you add (section 6), the rider name you have chosen, shown as a credit on it, your riding on
+    the track itself, folded without name or account into the shared track model, and your best lap time
+    on a track.</p>
+  <p><!-- D8 -->It is shared on that track&rsquo;s own list, with the rider name you show, <strong>by default</strong>;
+    that is how riders on the same track compare times. <!-- D8 -->The list also shows the line of that
+    lap. <!-- D8 D5 -->You turn the sharing off for one session while reviewing that session, or for good
+    under <strong>More &rarr; Privacy</strong>, and the session itself &mdash; the ride, the raw GPS file,
+    the heart rate &mdash; stays private either way;
+    see the <a href="/privacy/">Privacy Policy</a> for the detail.</p>
 
-  <h2>6. The shared track catalogue</h2>
-  <p>Tidel keeps a public catalogue of tracks: name, position, outline, finish line and sector
-    boundaries. When you ride somewhere new, or correct a track&rsquo;s layout, that
-    <strong>track geometry becomes part of the shared catalogue</strong> and other riders can use
-    it. You grant us a perpetual, non-exclusive right to keep and distribute that geometry as part
-    of the service.</p>
+  <h2 data-kart>6. The shared track catalogue</h2>
+  <p><!-- D12 -->Tidel keeps a public catalogue of tracks: name, position, outline, finish line and sector
+    boundaries. <!-- D12 D13 -->When you ride somewhere new, or correct a track&rsquo;s layout, that
+    <strong>track geometry becomes part of the shared catalogue</strong> and other riders can use it.
+    <!-- D12 -->You grant us a perpetual, non-exclusive right to keep and distribute that geometry as part of
+    the service.</p>
   <!-- WEB-N1: setningen gjaldt alltid bare KATALOGEN, men sto rett under et §5 som
        nektet for all publisering av rundetider. Nå som §5 sier sannheten om banens
        liste, må denne peke dit — ellers leses den som det samme løftet én gang til. -->
-  <p>This covers track information only. It never includes your GPS trace or your account, and the
-    geometry itself carries no lap times &mdash; the track&rsquo;s own list of best times is a
-    separate thing, described in section 5. If you have entered a rider name, it is published
-    alongside the tracks you add, as a credit &mdash; leave it blank under More &rarr; Rider if you would rather not be named. The
-    geometry stays in the catalogue if you later delete your account, with your name and account
-    removed from it.</p>
+  <p><!-- D12 -->This covers track information only: never a session&rsquo;s raw GPS file or your account,
+    and no lap times; the track&rsquo;s own list is described in section 5. <!-- D12 -->The outline of a
+    track may be built from the line of your best lap, at most 120 points. <!-- D3 D12 -->If you have
+    entered a rider name, it is published alongside the tracks you add, as a credit. <!-- D12 -->The geometry stays in the catalogue if you later delete your account, with your
+    name and account removed from it.</p>
 
   <h2>7. Riding is dangerous. Your attention belongs to the track.</h2>
   <div class="kort">

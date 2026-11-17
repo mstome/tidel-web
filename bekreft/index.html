@@ -1,0 +1,223 @@
+<!doctype html>
+<!-- ═══════════════════════════════════════════════════════════════════════════════════
+     TIDEL — bekreft e-posten på ventelista.   https://tidel.no/bekreft/#<nb|en>.<kode>
+
+     N2 (16. okt 2026): lenka i bekreftelses-e-posten fra ventelista går hit, med språket
+     skjemaet lagret og bekreftelseskoden etter # (epost.ts: bekreftLenke). Alt etter # sendes
+     ALDRI i HTTP-forespørselen: GitHub Pages ser «GET /bekreft/», og koden står aldri i en
+     serverlogg eller i en Referer.
+
+     HVORFOR EN SIDE MED KNAPP: et e-postprogram som sjekker lenker (bedriftsfiltre, «trygge
+     lenker»), åpner HVER lenke i e-posten for å se om den er farlig. Før N2 bekreftet lenka
+     adressen med én GET, så et slikt program kunne sette folk på lista uten at de gjorde noe —
+     da er det ikke et ekte samtykke. Nå gjør sida ingenting når den åpnes. Først når en person
+     trykker på knappen, går ETT POST til Edge-funksjonen venteliste (?bekreft=<kode>, uten kropp
+     og uten egne hoder — ingen nøkkel trengs, koden er nøkkelen). Svaret er et ord: bekreftet,
+     alt_bekreftet eller ugyldig. Samme grep som /avmeld/ (M6).
+
+     SPRÅK: lenka bærer språket skjemaet lagret (#nb.<kode> eller #en.<kode>), så sida snakker
+     samme språk som e-posten. En lenke uten språk (#<kode>, det Edge sender en gammel lenke til)
+     følger nettleseren, som /avmeld/. Sida er skrevet på engelsk; norsk legges over med
+     textContent.
+
+     Ingen telling (maaling.js) og ingen skript utenfra: sida bærer en kode som gjelder én
+     adresse. Koden vises aldri; den brukes bare når den har formen 64 tegn 0-9a-f. Tekst settes
+     KUN med textContent, aldri innerHTML. Målt i tests/web.html seksjon 16.
+     ═══════════════════════════════════════════════════════════════════════════════════ -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Confirm your email — Tidel</title>
+<meta name="description" content="Confirm your email for the Tidel waiting list.">
+<!-- noindex: sida har bare innhold for den som har en lenke fra en e-post. -->
+<meta name="robots" content="noindex,nofollow">
+<meta name="referrer" content="no-referrer">
+<meta name="theme-color" content="#08080A">
+<link rel="icon" href="/assets/brand/web/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/css/tidel.css?v=2611171133">
+<style>
+  /* samme spalte og byggeklosser som /avmeld/, /v/ og /r/: kicker, stor overskrift, rød strek, meldingsboks */
+  .rWrap{max-width:860px;margin:0 auto;padding:44px 24px 80px}
+  .rKick{font-family:var(--disp);font-weight:700;font-size:12px;letter-spacing:.3em;
+    text-transform:uppercase;color:var(--acc);margin:0}
+  .rWho{font-family:var(--disp);font-weight:700;font-size:clamp(28px,6vw,46px);
+    letter-spacing:.03em;text-transform:uppercase;margin:14px 0 0;line-height:1.05;
+    overflow-wrap:anywhere;word-break:break-word}
+  .rRule{height:3px;background:var(--acc);width:120px;margin:26px 0 0}
+  .rNote{color:#D2D2D8;margin:30px 0 0;max-width:62ch}
+  .rCta{display:flex;gap:14px;flex-wrap:wrap;margin:28px 0 0}
+  /* min-height 44: trykkflaten skal nås med hansker */
+  .rCta .btn{min-height:44px}
+  .btn[disabled]{opacity:.6;cursor:default}
+  .aStatus{color:#D2D2D8;margin:14px 0 0;min-height:1.4em;max-width:62ch}
+  .rMsg{border-left:3px solid var(--line2);background:var(--bg2);padding:18px 22px;
+    margin:30px 0 0;color:#D2D2D8}
+  .rMsg.bad{border-left-color:var(--acc)}
+  .hid{display:none}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="brand" href="/"><span class="wmSet">TID<svg class="wm" viewBox="0 0 52 70" aria-hidden="true"><rect width="52" height="16"/><rect class="m" y="27" width="52" height="16"/><rect y="54" width="52" height="16"/></svg>L</span><small>MX Performance Tracker</small></a>
+  <div class="links">
+    <a href="/support/" data-t="navHjelp">Support</a>
+    <a href="/site-privacy/" data-t="navPersonvern">Privacy</a>
+    <a href="/contact/" data-t="navKontakt">Contact</a>
+  </div>
+</nav>
+
+<main class="rWrap">
+
+  <!-- ── med en kode: knappen ──────────────────────────────────────────────── -->
+  <div id="aVis" class="hid">
+    <p class="rKick" data-t="kick">Waiting list</p>
+    <h1 class="rWho" data-t="tittel">Confirm your email</h1>
+    <div class="rRule"></div>
+    <p class="rNote" id="aNote" data-t="note">Press the button and you are on the list. Wasn't you? Close this page and nothing happens.</p>
+    <div class="rCta"><button class="btn primary" type="button" id="aKnapp" data-t="knapp">Put me on the list</button></div>
+    <p class="aStatus" id="aStatus" role="status" aria-live="polite"></p>
+  </div>
+
+  <!-- ── svaret, eller en lenke uten kode ───────────────────────────────────── -->
+  <div id="aMsg" class="hid">
+    <p class="rKick" data-t="kick">Waiting list</p>
+    <h1 class="rWho" id="mTitle"></h1>
+    <div class="rRule"></div>
+    <div class="rMsg" id="mBox"><p id="mText"></p></div>
+    <div class="rCta"><a class="btn" href="/" id="mHjem" data-t="hjem">Go to tidel.no</a></div>
+  </div>
+
+  <noscript>
+    <p class="rKick">Tidel</p>
+    <h1 class="rWho">Confirm your email</h1>
+    <div class="rRule"></div>
+    <div class="rMsg"><p>The button on this page needs JavaScript. Open the link in a browser
+      with JavaScript turned on.</p>
+      <p lang="nb">Knappen på denne sida trenger JavaScript. Åpne lenka i en nettleser med
+      JavaScript slått på.</p></div>
+  </noscript>
+</main>
+
+<footer>
+  <div class="in">
+    <div class="rad">
+      <a href="/" data-t="fHjem">Home</a><a href="/support/" data-t="fHjelp">Support</a><a href="/site-privacy/" data-t="fPersonvern">Site privacy</a>
+      <a href="/contact/" data-t="fKontakt">Contact</a>
+    </div>
+    <div class="sig">
+      <span>&copy; 2026 Tidel</span><span>post@tidel.no</span>
+      <span class="sp">EVERY TENTH COUNTS.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+'use strict';
+(function () {
+
+  /* Edge-funksjonen ventelista bor i (samme adresse som /avmeld/ og basen kaller). */
+  var EDGE = 'https://ouodkduowjbkawayounh.supabase.co/functions/v1/venteliste';
+
+  function nettleserensSprak() {
+    var l = (navigator.languages && navigator.languages.length ? navigator.languages[0] : navigator.language) || '';
+    return /^(nb|nn|no)(-|$)/i.test(String(l)) ? 'nb' : 'en';
+  }
+
+  /* Lenka bærer #<nb|en>.<kode> eller #<kode>. Bare 64 tegn 0-9a-f slipper gjennom som kode,
+     og bare nb og en som språk — alt annet er «lenka mangler koden». */
+  function fraAdressen() {
+    var h = String(location.hash || '').replace(/^#/, '').trim();
+    var m = /^(?:(nb|en)\.)?([0-9a-f]{64})$/.exec(h);
+    return m ? { kode: m[2], sprak: m[1] || '' } : { kode: '', sprak: '' };
+  }
+
+  var TEKST = {
+    nb: {
+      navHjelp: 'Hjelp', navPersonvern: 'Personvern', navKontakt: 'Kontakt',
+      fHjem: 'Hjem', fHjelp: 'Hjelp', fPersonvern: 'Nettstedets personvern', fKontakt: 'Kontakt',
+      kick: 'Ventelista', tittel: 'Bekreft e-posten', fane: 'Bekreft e-posten — Tidel',
+      note: 'Trykk på knappen, så står du på lista. Var det ikke deg? Lukk sida, så skjer ingenting.',
+      knapp: 'Sett meg på lista', sender: 'Bekrefter …', hjem: 'Gå til tidel.no',
+      feil: 'Fikk ikke kontakt. Prøv igjen om litt, eller skriv til post@tidel.no.',
+      bekreftet: ['Du står på lista', 'Takk, adressen er bekreftet. Du hører fra Tidel når appen åpner.'],
+      alt: ['Alt bekreftet', 'Adressen var bekreftet fra før. Du står på lista og trenger ikke gjøre noe mer.'],
+      ugyldig: ['Lenka gjelder ikke lenger', 'Lenka er gammel, eller adressen er meldt av. Skriv adressen på nytt på tidel.no, så kommer en ny e-post.'],
+      mangler: ['Lenka mangler koden', 'Bruk lenka i e-posten fra Tidel. Den bærer koden som bekrefter adressen.']
+    },
+    en: {
+      navHjelp: 'Support', navPersonvern: 'Privacy', navKontakt: 'Contact',
+      fHjem: 'Home', fHjelp: 'Support', fPersonvern: 'Site privacy', fKontakt: 'Contact',
+      kick: 'Waiting list', tittel: 'Confirm your email', fane: 'Confirm your email — Tidel',
+      note: 'Press the button and you are on the list. Wasn\'t you? Close this page and nothing happens.',
+      knapp: 'Put me on the list', sender: 'Confirming …', hjem: 'Go to tidel.no',
+      feil: 'Could not get through. Try again in a moment, or write to post@tidel.no.',
+      bekreftet: ['You are on the list', 'Thanks, the address is confirmed. You hear from Tidel when the app opens.'],
+      alt: ['Already confirmed', 'The address was confirmed before. You are on the list, and nothing more is needed.'],
+      ugyldig: ['That link no longer works', 'The link is old, or the address is unsubscribed. Enter the address again on tidel.no and a new email comes.'],
+      mangler: ['The link has no code', 'Use the link in the email from Tidel. It carries the code that confirms your address.']
+    }
+  };
+  var LENKE = fraAdressen();
+  var SPRAK = LENKE.sprak || nettleserensSprak(), T = TEKST[SPRAK];
+
+  function $(id) { return document.getElementById(id); }
+  function sett(id, tekst) { var e = $(id); if (e) e.textContent = tekst == null ? '' : String(tekst); }
+  function vis(id, på) { var e = $(id); if (e) e.classList.toggle('hid', !på); }
+
+  function oversett() {
+    document.documentElement.lang = SPRAK;
+    document.title = T.fane;
+    var alle = document.querySelectorAll('[data-t]'), i;
+    for (i = 0; i < alle.length; i++) {
+      var k = alle[i].getAttribute('data-t');
+      if (typeof T[k] === 'string') alle[i].textContent = T[k];
+    }
+  }
+
+  /* skjema: en lenke som ikke virker, sender rett til skjemaet på forsida, så adressen kan skrives på nytt */
+  function melding(par, ille, skjema) {
+    sett('mTitle', par[0]);
+    sett('mText', par[1]);
+    var b = $('mBox'); if (b) b.classList.toggle('bad', !!ille);
+    var h = $('mHjem'); if (h) h.setAttribute('href', skjema ? '/#venteliste' : '/');
+    vis('aMsg', true); vis('aVis', false);
+  }
+
+  var KODE = LENKE.kode, opptatt = false;
+
+  function bekreft() {
+    var k = $('aKnapp');
+    if (opptatt || !KODE || !k) return;
+    opptatt = true;
+    k.disabled = true;
+    sett('aKnapp', T.sender);
+    sett('aStatus', '');
+    /* ETT POST, uten kropp og uten egne hoder: en «enkel» forespørsel, ingen forhåndsforespørsel. */
+    fetch(EDGE + '?bekreft=' + KODE, { method: 'POST' }).then(function (r) {
+      return r.ok ? r.json() : Promise.reject(new Error('HTTP ' + r.status));
+    }).then(function (j) {
+      var s = j && j.status;
+      if (s === 'bekreftet') melding(T.bekreftet, false, false);
+      else if (s === 'alt_bekreftet') melding(T.alt, false, false);
+      else melding(T.ugyldig, true, true);
+    }).catch(function () {
+      opptatt = false;
+      k.disabled = false;
+      sett('aKnapp', T.knapp);
+      sett('aStatus', T.feil);
+    });
+  }
+
+  oversett();
+  if (!KODE) {
+    melding(T.mangler, true, true);
+  } else {
+    vis('aVis', true); vis('aMsg', false);
+    var knapp = $('aKnapp'); if (knapp) knapp.addEventListener('click', bekreft);
+  }
+})();
+</script>
+</body>
+</html>

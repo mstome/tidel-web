@@ -1,0 +1,135 @@
+<!doctype html>
+<!-- Norsk versjon av /licenses/. MÅ holdes i synk med den engelske — og med arket
+     «Lisenser og datakilder» under Mer → Hjelp i appen (openLisensArk i app/app-template.html):
+     samme kilder, samme lisenser, samme ordlyd i krediteringene. Lisenstekstene som må følge
+     med (OFL 1.1, MIT, Apache 2.0) ligger som filer under /licenses/ og skal være byte for byte
+     lik filene appen bygges med; tests/web.html seksjon 10 måler det. Sida påstår ingen avtale:
+     det som står her, er det som er sant i dag. -->
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lisenser og datakilder — Tidel</title>
+<meta name="description" content="Hvilke åpne data og hvilken åpen kildekode Tidel bruker, hvem som eier dem, og hva lisensene krever.">
+<link rel="icon" href="/assets/brand/web/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/css/tidel.css?v=2611171133">
+</head>
+<body>
+
+<nav class="nav">
+  <a class="brand" href="/"><span class="wmSet">TID<svg class="wm" viewBox="0 0 52 70" aria-hidden="true"><rect width="52" height="16"/><rect class="m" y="27" width="52" height="16"/><rect y="54" width="52" height="16"/></svg>L</span><small>MX Performance Tracker</small></a>
+  <div class="links">
+    <a href="/support/">Hjelp</a>
+    <a href="/personvern/">Personvern</a>
+    <a href="/terms/">Vilkår</a>
+    <a href="/contact/">Kontakt</a>
+  </div>
+</nav>
+
+<main class="doc">
+  <div class="kick">Lisenser</div>
+  <h1>Lisenser og data&shy;kilder</h1>
+  <p class="lead">Tidel bruker åpne data og åpen kildekode fra andre. Her står hvem, hva de brukes
+    til, og hva lisensene krever.</p>
+  <p class="meta">Sist oppdatert 15. oktober 2026 &middot; gjelder Tidel for iOS og Android, og tidel.no
+    &middot; English version: <a href="/licenses/">licenses</a></p>
+
+  <div class="kort">
+    <p><strong>Kort fortalt.</strong> Baneposisjonene kommer fra OpenStreetMap, satellittfotoene fra
+      Esri, bakken i 3D-modellen fra Kartverket, og 3D-visningen, QR-kodene, appinnpakkingen og skrifta
+      er åpen kildekode. Det samme står i appen under <strong>Mer &rarr; Hjelp &rarr; Lisenser og
+      datakilder</strong>, der også lisenstekstene kan leses.</p>
+  </div>
+
+  <h2>1. Kart og baner</h2>
+  <h3>Baneregisteret</h3>
+  <p>Posisjonene og navnene på de fleste banene i registeret kommer fra <strong>OpenStreetMap</strong>,
+    &copy; OpenStreetMap-bidragsyterne, under
+    <a href="https://www.openstreetmap.org/copyright">Open Database License (ODbL)</a>.
+    Klubb, åpningstider og kontaktopplysninger er samlet fra banenes, klubbenes og forbundenes egne
+    nettsider; kilden står på hver baneside i appen.</p>
+
+  <h3>Satellittfoto</h3>
+  <p>Kartflisene i appen og bildene på tidel.no kommer fra <strong>Esri World Imagery</strong>:
+    <em>Source: Esri, Vantor, Earthstar Geographics, and the GIS User Community</em>. Flisene hentes
+    fra leverandøren når kartet vises.
+    <a href="https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9">Om tjenesten</a>.</p>
+
+  <h3>Kjørevei</h3>
+  <p>Kjøreveien til en bane i Utforsk regnes av <a href="https://openrouteservice.org/">openrouteservice</a>
+    (HeiGIT), med kartdata &copy; OpenStreetMap-bidragsyterne.</p>
+
+  <h3>Terreng og 3D</h3>
+  <p>Bakken i 3D-modellen av banen og relieffbildene er bygd av <strong>Høydedata &copy; Kartverket</strong>,
+    <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>
+    (<a href="https://hoydedata.no/">hoydedata.no</a>). Utenfor Norge brukes
+    <a href="https://registry.opendata.aws/terrain-tiles/">Terrain Tiles</a> (Tilezen/Mapzen, AWS Open Data);
+    kildene bak hver modell krediteres i 3D-visningen.</p>
+
+  <h2>2. Programvare</h2>
+  <table>
+    <tr><th>Hva</th><th>Brukes til</th><th>Lisens</th></tr>
+    <tr>
+      <td><strong>three.js</strong> r169<br>&copy; 2010-2024 three.js authors</td>
+      <td>3D-visningen av banen</td>
+      <td><a href="/licenses/three-LICENSE.txt">MIT</a></td>
+    </tr>
+    <tr>
+      <td><strong>jsQR</strong> 1.4.0<br>Copyright 2018 Cosmo Wolfe</td>
+      <td>Leser QR-koder med kameraet</td>
+      <td><a href="/licenses/jsqr-LICENSE.txt">Apache 2.0</a></td>
+    </tr>
+    <tr>
+      <td><strong>QR Code generator</strong><br>&copy; Project Nayuki</td>
+      <td>Lager QR-koden for delekoden din</td>
+      <td>MIT</td>
+    </tr>
+    <tr>
+      <td><strong>Capacitor</strong><br>Ionic</td>
+      <td>Pakker appen for iPhone og Android</td>
+      <td>MIT</td>
+    </tr>
+    <tr>
+      <td>Health Connect-klienten, AndroidX og Kotlin-korutiner<br>Google og JetBrains</td>
+      <td>Android-utgaven: import fra Health Connect</td>
+      <td>Apache 2.0</td>
+    </tr>
+  </table>
+  <p>Lisensnotisene står i hver moduls eget filhode i appen, slik lisensene krever.</p>
+
+  <h2>3. Skrift</h2>
+  <p><strong>Barlow Condensed</strong>, &copy; 2017 The Barlow Project Authors
+    (<a href="https://github.com/jpt/barlow">github.com/jpt/barlow</a>), under
+    <a href="/licenses/OFL.txt">SIL Open Font License 1.1</a>. Skrifta brukes i tall og overskrifter i
+    appen og på tidel.no, og lisensteksten følger med i begge.</p>
+
+  <h2>4. Lisenstekstene</h2>
+  <ul>
+    <li><a href="/licenses/OFL.txt">SIL Open Font License 1.1</a> &mdash; Barlow Condensed</li>
+    <li><a href="/licenses/three-LICENSE.txt">MIT License</a> &mdash; three.js; samme tekst gjelder QR Code
+      generator og Capacitor, med hver sin opphavsrettslinje</li>
+    <li><a href="/licenses/jsqr-LICENSE.txt">Apache License 2.0</a> &mdash; jsQR, og bibliotekene fra Google
+      og JetBrains i Android-utgaven</li>
+  </ul>
+  <p>De samme tekstene er bakt inn i appen og kan leses under Mer &rarr; Hjelp &rarr; Lisenser og
+    datakilder.</p>
+
+  <h2>5. Kontakt</h2>
+  <p>Spørsmål om kilder eller lisenser: <a href="mailto:post@tidel.no">post@tidel.no</a>.</p>
+</main>
+
+<footer>
+  <div class="in">
+    <div class="rad">
+      <a href="/">Hjem</a><a href="/download/">Last ned</a><a href="/support/">Hjelp</a><a href="/privacy/">Privacy</a>
+      <a href="/personvern/">Personvern</a><a href="/terms/">Vilkår</a><a href="/lisenser/">Lisenser</a>
+      <a href="/delete-account/">Slett konto</a><a href="/contact/">Kontakt</a>
+    </div>
+    <div class="sig">
+      <span>&copy; 2026 Tidel</span><span>post@tidel.no</span><span>Bilder &copy; Esri</span>
+      <span class="sp">HVER TIDEL TELLER.</span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

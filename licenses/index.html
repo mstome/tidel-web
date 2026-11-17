@@ -1,0 +1,136 @@
+<!doctype html>
+<!-- English version of /lisenser/. MUST be kept in sync with the Norwegian page and with the
+     "Licenses and data sources" sheet under More → Help in the app (openLisensArk in
+     app/app-template.html): same sources, same licenses, same wording in the credits. The license
+     texts that must ship (OFL 1.1, MIT, Apache 2.0) live as files in this folder and must be byte
+     for byte identical to the files the app is built with; tests/web.html section 10 measures it.
+     The page claims no agreement: what is written here is what is true today. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Licenses and data sources — Tidel</title>
+<meta name="description" content="Which open data and open-source code Tidel uses, who owns it, and what the licenses require.">
+<link rel="icon" href="/assets/brand/web/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/css/tidel.css?v=2611171133">
+</head>
+<body>
+
+<nav class="nav">
+  <a class="brand" href="/"><span class="wmSet">TID<svg class="wm" viewBox="0 0 52 70" aria-hidden="true"><rect width="52" height="16"/><rect class="m" y="27" width="52" height="16"/><rect y="54" width="52" height="16"/></svg>L</span><small>MX Performance Tracker</small></a>
+  <div class="links">
+    <a href="/support/">Support</a>
+    <a href="/privacy/">Privacy</a>
+    <a href="/terms/">Terms</a>
+    <a href="/contact/">Contact</a>
+  </div>
+</nav>
+
+<main class="doc">
+  <div class="kick">Licenses</div>
+  <h1>Licenses and data sources</h1>
+  <p class="lead">Tidel uses open data and open-source code from others. Here is who, what it is used
+    for, and what the licenses require.</p>
+  <p class="meta">Last updated 15 October 2026 &middot; applies to the Tidel app for iOS and Android, and to
+    tidel.no &middot; Norsk versjon: <a href="/lisenser/">lisenser</a></p>
+
+  <div class="kort">
+    <p><strong>In short.</strong> Track positions come from OpenStreetMap, satellite imagery from Esri,
+      the ground in the 3D model from Kartverket, and the 3D view, the QR codes, the app packaging and
+      the typeface are open source. The same is listed in the app under <strong>More &rarr; Help &rarr;
+      Licenses and data sources</strong>, where the license texts can be read too.</p>
+  </div>
+
+  <h2>1. Maps and tracks</h2>
+  <h3>The track register</h3>
+  <p>The positions and names of most tracks in the register come from <strong>OpenStreetMap</strong>,
+    &copy; OpenStreetMap contributors, under the
+    <a href="https://www.openstreetmap.org/copyright">Open Database License (ODbL)</a>.
+    Club, opening hours and contact details are collected from the tracks', clubs' and federations' own
+    websites; the source is shown on each track page in the app.</p>
+
+  <h3>Satellite imagery</h3>
+  <p>The map tiles in the app and the images on tidel.no come from <strong>Esri World Imagery</strong>:
+    <em>Source: Esri, Vantor, Earthstar Geographics, and the GIS User Community</em>. The tiles are
+    fetched from the provider when the map is shown.
+    <a href="https://www.arcgis.com/home/item.html?id=10df2279f9684e4a9f6a7f08febac2a9">About the service</a>.</p>
+
+  <h3>Driving route</h3>
+  <p>The driving distance to a track in Explore is computed by
+    <a href="https://openrouteservice.org/">openrouteservice</a> (HeiGIT), with map data &copy; OpenStreetMap
+    contributors.</p>
+
+  <h3>Terrain and 3D</h3>
+  <p>The ground in the 3D model of the track and the relief images are built from <strong>elevation data
+    &copy; Kartverket</strong>, <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>
+    (<a href="https://hoydedata.no/">hoydedata.no</a>). Outside Norway,
+    <a href="https://registry.opendata.aws/terrain-tiles/">Terrain Tiles</a> (Tilezen/Mapzen, AWS Open Data)
+    are used; the sources behind each model are credited in the 3D view.</p>
+
+  <h2>2. Software</h2>
+  <table>
+    <tr><th>What</th><th>Used for</th><th>License</th></tr>
+    <tr>
+      <td><strong>three.js</strong> r169<br>&copy; 2010-2024 three.js authors</td>
+      <td>The 3D view of the track</td>
+      <td><a href="/licenses/three-LICENSE.txt">MIT</a></td>
+    </tr>
+    <tr>
+      <td><strong>jsQR</strong> 1.4.0<br>Copyright 2018 Cosmo Wolfe</td>
+      <td>Reads QR codes with the camera</td>
+      <td><a href="/licenses/jsqr-LICENSE.txt">Apache 2.0</a></td>
+    </tr>
+    <tr>
+      <td><strong>QR Code generator</strong><br>&copy; Project Nayuki</td>
+      <td>Generates the QR code for your share code</td>
+      <td>MIT</td>
+    </tr>
+    <tr>
+      <td><strong>Capacitor</strong><br>Ionic</td>
+      <td>Packages the app for iPhone and Android</td>
+      <td>MIT</td>
+    </tr>
+    <tr>
+      <td>Health Connect client, AndroidX and Kotlin coroutines<br>Google and JetBrains</td>
+      <td>Android build: import from Health Connect</td>
+      <td>Apache 2.0</td>
+    </tr>
+  </table>
+  <p>The license notices are kept in each module's own file header in the app, as the licenses require.</p>
+
+  <h2>3. Typeface</h2>
+  <p><strong>Barlow Condensed</strong>, &copy; 2017 The Barlow Project Authors
+    (<a href="https://github.com/jpt/barlow">github.com/jpt/barlow</a>), under the
+    <a href="/licenses/OFL.txt">SIL Open Font License 1.1</a>. The typeface is used in numbers and headings
+    in the app and on tidel.no, and the license text ships with both.</p>
+
+  <h2>4. The license texts</h2>
+  <ul>
+    <li><a href="/licenses/OFL.txt">SIL Open Font License 1.1</a> &mdash; Barlow Condensed</li>
+    <li><a href="/licenses/three-LICENSE.txt">MIT License</a> &mdash; three.js; the same text applies to QR Code
+      generator and Capacitor, each with its own copyright line</li>
+    <li><a href="/licenses/jsqr-LICENSE.txt">Apache License 2.0</a> &mdash; jsQR, and the libraries from Google
+      and JetBrains in the Android build</li>
+  </ul>
+  <p>The same texts are built into the app and can be read under More &rarr; Help &rarr; Licenses and
+    data sources.</p>
+
+  <h2>5. Contact</h2>
+  <p>Questions about sources or licenses: <a href="mailto:post@tidel.no">post@tidel.no</a>.</p>
+</main>
+
+<footer>
+  <div class="in">
+    <div class="rad">
+      <a href="/">Home</a><a href="/download/">Download</a><a href="/support/">Support</a><a href="/privacy/">Privacy</a>
+      <a href="/personvern/">Personvern</a><a href="/terms/">Terms</a><a href="/licenses/">Licenses</a>
+      <a href="/delete-account/">Delete account</a><a href="/contact/">Contact</a>
+    </div>
+    <div class="sig">
+      <span>&copy; 2026 Tidel</span><span>post@tidel.no</span><span>Imagery &copy; Esri</span>
+      <span class="sp">EVERY TENTH COUNTS.</span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

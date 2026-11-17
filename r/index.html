@@ -20,12 +20,30 @@
      mxOktData() setter aldri `konto` (kun profilkoden gjør det), så en lenke som legges
      ut offentlig gir bort runden — ikke kontoen.
 
+     V2 (15. okt 2026): PROFILKODER har fått sin egen side, tidel.no/v/. På eierens ordre
+     (markedsplanen punkt 5, grunnlaget A4) bærer kompislenka venne-koden, og den som har
+     lenka kan legge avsenderen til som venn — som den som har et skjermbilde av QR-en.
+     En profilkode som havner HER sendes dit med samme kode («Åpne invitasjonen»), slik
+     /v/ sender en runde hit. Denne sida viser den ikke selv.
+
      SIKKERHET: rytternavn og banenavn kommer fra en fremmed URL. De skrives KUN med
      textContent, aldri innerHTML. Det er samme klasse feil som stored-XSS-funnet i
      sosialrunden, og en offentlig side som tar imot tekst fra hvem som helst er nettopp
      stedet den ville truffet.
+
+     T6 (15. okt 2026, markedsplanen punkt 5 — hver delt runde skal føre til appen):
+       · Teksten er norsk når nettleseren er norsk (nb/nn/no), engelsk ellers. Det
+         statiske innholdet i fila er engelsk, så sida er riktig også uten skript.
+       · Butikk-knappene står på selve siden (samme komponent som forsida og /download/,
+         fylt av /js/butikk.js), merket med kilden «runde». «Hent Tidel» går til
+         /download/?fra=runde, så nedlastingssida arver kilden.
+       · Ett fast forhåndsbilde (og:image, 1200 × 630) laget av merkevarefilene — aldri
+         et bilde med noens navn eller tid i.
+       · Én setning om hva mottakeren får: legg din egen runde oppå denne.
+       · Tellingen (/js/maaling.js) med merket data-tell-i-ramme: runden etter # forlater
+         aldri nettleseren — se maaling.js.
      ═══════════════════════════════════════════════════════════════════════════════════ -->
-<html lang="en">
+<html lang="en" data-kilde="runde">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -37,9 +55,16 @@
 <link rel="canonical" href="https://tidel.no/r/">
 <meta property="og:title" content="A shared lap on Tidel">
 <meta property="og:description" content="Time, track and racing line from a real motocross session.">
+<!-- Ett fast bilde for alle lenker: forhåndsvisningen i meldingsappen leser ikke
+     adressen etter #, og skal ikke gjøre det heller. Bildet bærer bare merket. -->
+<meta property="og:image" content="https://tidel.no/assets/brand/og-delt-runde.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta name="theme-color" content="#08080A">
 <link rel="icon" href="/assets/brand/web/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="/css/tidel.css?v=2609090223">
+<link rel="stylesheet" href="/css/tidel.css?v=2611171133">
+<!-- .stores/.store: butikk-knappene, samme komponent som forsida og /download/ -->
+<link rel="stylesheet" href="/css/forside.css?v=2611171133">
 <style>
   .rWrap{max-width:860px;margin:0 auto;padding:44px 24px 80px}
   .rKick{font-family:var(--disp);font-weight:700;font-size:12px;letter-spacing:.3em;
@@ -67,6 +92,8 @@
   .rNote{color:#D2D2D8;margin:34px 0 0;max-width:62ch}
   .rNote strong{color:var(--ink)}
   .rCta{display:flex;gap:14px;flex-wrap:wrap;margin:28px 0 0}
+  /* butikk-knappene under handlingsraden: samme avstand som mellom knappene */
+  .rStores{margin:14px 0 0}
   .rMsg{border-left:3px solid var(--line2);background:var(--bg2);padding:18px 22px;
     margin:30px 0 0;color:#D2D2D8}
   .rMsg h2{font-family:var(--disp);font-weight:700;text-transform:uppercase;
@@ -86,10 +113,10 @@
 <nav class="nav">
   <a class="brand" href="/"><span class="wmSet">TID<svg class="wm" viewBox="0 0 52 70" aria-hidden="true"><rect width="52" height="16"/><rect class="m" y="27" width="52" height="16"/><rect y="54" width="52" height="16"/></svg>L</span><small>MX Performance Tracker</small></a>
   <div class="links">
-    <a href="/#analysis">Analysis</a>
-    <a href="/support/">Support</a>
-    <a href="/privacy/">Privacy</a>
-    <a href="/contact/">Contact</a>
+    <a href="/#analysis" data-t="navAnalyse">Analysis</a>
+    <a href="/support/" data-t="navHjelp">Support</a>
+    <a href="/privacy/" data-t="navPersonvern" data-href-nb="/personvern/">Privacy</a>
+    <a href="/contact/" data-t="navKontakt">Contact</a>
   </div>
 </nav>
 
@@ -106,25 +133,22 @@
     <div class="rLine hid" id="rLineBox">
       <canvas id="rCanvas" width="880" height="560" role="img"
               aria-label="The racing line of the shared lap, coloured by speed"></canvas>
-      <div class="rLegend"><span>Slow</span><span class="rRamp"></span><span>Fast</span></div>
+      <div class="rLegend"><span data-t="sakte">Slow</span><span class="rRamp"></span><span data-t="fort">Fast</span></div>
     </div>
 
     <div class="rFacts hid" id="rFacts">
-      <div class="rFact"><div class="k">Lap time</div><div class="v" id="fTime"></div></div>
-      <div class="rFact"><div class="k">Top speed</div><div class="v" id="fTop"></div></div>
-      <div class="rFact"><div class="k">Average</div><div class="v" id="fAvg"></div></div>
-      <div class="rFact"><div class="k">Distance</div><div class="v" id="fDist"></div></div>
+      <div class="rFact"><div class="k" data-t="rundetid">Lap time</div><div class="v" id="fTime"></div></div>
+      <div class="rFact"><div class="k" data-t="toppfart">Top speed</div><div class="v" id="fTop"></div></div>
+      <div class="rFact"><div class="k" data-t="snitt">Average</div><div class="v" id="fAvg"></div></div>
+      <div class="rFact"><div class="k" data-t="distanse">Distance</div><div class="v" id="fDist"></div></div>
     </div>
 
-    <p class="rNote">
-      This is a real lap, measured by GPS on a phone &mdash; <strong>no transponder, nothing
-      bolted to the bike</strong>. Tidel turns a ride you already did into lap times,
-      sector times and a racing line you can compare against your own.
-    </p>
+    <p class="rNote" id="rNote"><span data-t="note1">This is a real lap, measured by GPS on a phone &mdash; </span><strong data-t="note2">no transponder, nothing bolted to the bike</strong><span data-t="note3">. Tidel turns a ride you already did into lap times, sector times and a racing line you can compare against your own. </span><strong data-t="faar">Get Tidel, ride the same track, and lay your own lap over this one.</strong></p>
     <div class="rCta">
-      <a class="btn primary" href="/download/">Get Tidel</a>
-      <a class="btn" href="/#analysis">See what it measures</a>
+      <a class="btn primary" href="/download/?fra=runde" data-t="hent">Get Tidel</a>
+      <a class="btn" href="/#analysis" data-t="se">See what it measures</a>
     </div>
+    <div class="stores rStores" data-butikk="knapper"></div>
   </div>
 
   <!-- ── ingen kode, feil kode, eller en annen kodetype ───────────────────── -->
@@ -134,9 +158,11 @@
     <div class="rRule"></div>
     <div class="rMsg" id="mBox"><p id="mText"></p></div>
     <div class="rCta">
-      <a class="btn primary" href="/download/">Get Tidel</a>
-      <a class="btn" href="/">Go to tidel.no</a>
+      <a class="btn primary hid" id="mAapne" href="/v/" data-t="aapne">Open the invitation</a>
+      <a class="btn primary" href="/download/?fra=runde" data-t="hent">Get Tidel</a>
+      <a class="btn" href="/" data-t="hjem">Go to tidel.no</a>
     </div>
+    <div class="stores rStores" data-butikk="knapper"></div>
   </div>
 
   <noscript>
@@ -144,16 +170,18 @@
     <h1 class="rWho">A shared lap</h1>
     <div class="rRule"></div>
     <div class="rMsg"><p>This page reads the lap straight out of the link, in your
-      browser &mdash; so it needs JavaScript. Nothing is uploaded either way.</p></div>
+      browser &mdash; so it needs JavaScript. Nothing is uploaded either way.</p>
+      <p lang="nb">Denne sida leser runden rett ut av lenka, i nettleseren din &mdash; derfor
+      trenger den JavaScript. Ingenting lastes opp noen vei.</p></div>
   </noscript>
 </main>
 
 <footer>
   <div class="in" style="max-width:1320px;padding:0 40px">
     <div class="rad">
-      <a href="/">Home</a><a href="/support/">Support</a><a href="/privacy/">Privacy</a>
-      <a href="/personvern/">Personvern</a><a href="/terms/">Terms</a>
-      <a href="/delete-account/">Delete account</a><a href="/contact/">Contact</a>
+      <a href="/" data-t="fHjem">Home</a><a href="/support/" data-t="fHjelp">Support</a><a href="/privacy/">Privacy</a>
+      <a href="/personvern/">Personvern</a><a href="/terms/" data-t="fVilkar">Terms</a>
+      <a href="/delete-account/" data-t="fSlett">Delete account</a><a href="/contact/" data-t="fKontakt">Contact</a>
     </div>
     <div class="sig">
       <span>&copy; 2026 Tidel &mdash; Magnus Linnerud St&oslash;me, Norway</span>
@@ -163,10 +191,90 @@
   </div>
 </footer>
 
-<script src="/js/mxshare.js?v=2609090223"></script>
+<script src="/js/mxshare.js?v=2611171133"></script>
 <script>
 'use strict';
 (function () {
+
+  /* ── språk ───────────────────────────────────────────────────────────────────
+     Norsk når nettleseren er norsk (nb, nn eller no først i lista), engelsk ellers.
+     Fila er skrevet på engelsk; de norske tekstene legges over med textContent, så
+     det er like umulig å smugle inn markup her som fra adressen. */
+  function sprak() {
+    var l = (navigator.languages && navigator.languages.length ? navigator.languages[0] : navigator.language) || '';
+    return /^(nb|nn|no)(-|$)/i.test(String(l)) ? 'nb' : 'en';
+  }
+  var TEKST = {
+    nb: {
+      locale: 'nb-NO', kmt: 'km/t',
+      navAnalyse: 'Analyse', navHjelp: 'Hjelp', navPersonvern: 'Personvern', navKontakt: 'Kontakt',
+      fHjem: 'Hjem', fHjelp: 'Hjelp', fVilkar: 'Vilkår', fSlett: 'Slett konto', fKontakt: 'Kontakt',
+      deltRunde: 'Delt runde', deltBane: 'Delt bane', enForer: 'En fører', enRunde: 'En runde', paa: ' på ',
+      sakte: 'Sakte', fort: 'Fort', lerret: 'Kjørelinja i den delte runden, farget etter fart',
+      rundetid: 'Rundetid', toppfart: 'Toppfart', snitt: 'Snitt', distanse: 'Distanse',
+      note1: 'Dette er en ekte runde, målt med GPS på en telefon — ',
+      note2: 'ingen transponder, ingenting skrudd fast på sykkelen',
+      note3: '. Tidel gjør en tur du alt har kjørt, om til rundetider, seksjonstider og en kjørelinje du kan sammenlikne med din egen. ',
+      faar: 'Hent Tidel, kjør samme bane, og legg din egen runde oppå denne.',
+      hent: 'Hent Tidel', se: 'Se hva den måler', hjem: 'Gå til tidel.no', aapne: 'Åpne invitasjonen',
+      mIngen: ['En delt runde',
+        'Denne sida viser én crossrunde som noen har sendt deg — tida, banen og kjørelinja. '
+        + 'Hele runden ligger i selve lenka, så ingenting er lastet opp noe sted. Åpne lenka du '
+        + 'fikk, så står runden her.'],
+      mDekoder: ['Fikk ikke lest runden',
+        'Dekoderen ble ikke lastet. Last sida på nytt, og skjer det igjen: skriv til '
+        + 'post@tidel.no — du får svar fra et menneske.'],
+      mLenke: ['Lenka bar ingen runde',
+        'Koden i adressen lot seg ikke lese. Den ble trolig kuttet på veien — meldingsapper '
+        + 'korter av og til ned lange lenker. Be om den på nytt, eller be avsenderen dele den '
+        + 'som kode inne i appen.'],
+      mProfil: ['Det er en kompisinvitasjon',
+        'Denne lenka bærer en førerprofil — navnet og koden som gjør dere til venner i '
+        + 'appen — ikke en runde. Åpne den som invitasjon, så står den der.'],
+      mBane: ['Det er en banekode',
+        'Denne lenka bærer et baneoppsett — målstreken og seksjonene for en crossbane. Lim den '
+        + 'inn i Tidel-appen under Sosialt, så står banen der med alt på plass.'],
+      mFeil: ['Fikk ikke lest runden',
+        'Noe gikk galt under lesingen av lenka. Last sida på nytt, eller be avsenderen dele '
+        + 'den igjen.']
+    },
+    en: {
+      locale: 'en-GB', kmt: 'km/h',
+      navAnalyse: 'Analysis', navHjelp: 'Support', navPersonvern: 'Privacy', navKontakt: 'Contact',
+      fHjem: 'Home', fHjelp: 'Support', fVilkar: 'Terms', fSlett: 'Delete account', fKontakt: 'Contact',
+      deltRunde: 'Shared lap', deltBane: 'Shared track', enForer: 'A rider', enRunde: 'A lap', paa: ' at ',
+      sakte: 'Slow', fort: 'Fast', lerret: 'The racing line of the shared lap, coloured by speed',
+      rundetid: 'Lap time', toppfart: 'Top speed', snitt: 'Average', distanse: 'Distance',
+      note1: 'This is a real lap, measured by GPS on a phone — ',
+      note2: 'no transponder, nothing bolted to the bike',
+      note3: '. Tidel turns a ride you already did into lap times, sector times and a racing line you can compare against your own. ',
+      faar: 'Get Tidel, ride the same track, and lay your own lap over this one.',
+      hent: 'Get Tidel', se: 'See what it measures', hjem: 'Go to tidel.no', aapne: 'Open the invitation',
+      mIngen: ['A shared lap',
+        'This page shows a single motocross lap that somebody sent you — the time, '
+        + 'the track and the racing line. The whole lap travels inside the link itself, '
+        + 'so nothing was uploaded anywhere. Open the link you were given, and it '
+        + 'appears here.'],
+      mDekoder: ['Could not read the lap',
+        'The decoder did not load. Reload the page, and if it keeps happening, write to '
+        + 'post@tidel.no — you get a reply from a person.'],
+      mLenke: ['That link did not carry a lap',
+        'The code in the address could not be read. It was probably cut short on the '
+        + 'way — chat apps sometimes shorten long links. Ask for it again, or have '
+        + 'the sender share it as a code inside the app.'],
+      mProfil: ['That is a buddy invitation',
+        'This link carries a rider profile — the name and the code that make you '
+        + 'friends in the app — not a lap. Open it as an invitation, and it is there.'],
+      mBane: ['That is a track code',
+        'This link carries a track setup — the finish line and the sectors for a '
+        + 'motocross track. Paste it into the Tidel app under Social, and the track '
+        + 'appears with everything already in place.'],
+      mFeil: ['Could not read the lap',
+        'Something went wrong while decoding the link. Reload the page, or ask the sender '
+        + 'to share it again.']
+    }
+  };
+  var SPRAK = sprak(), T = TEKST[SPRAK];
 
   /* ── speilet fra appen, med vilje ────────────────────────────────────────────
      fmtT og speedColor er GJENGITT her, ikke importert. Alternativet ville vært å
@@ -199,6 +307,19 @@
   /* ALT som kommer fra adressen settes med textContent. Aldri innerHTML. */
   function sett(id, tekst) { var e = $(id); if (e) e.textContent = tekst == null ? '' : String(tekst); }
 
+  /* Den faste teksten på sidas eget språk — også med textContent. */
+  function oversett() {
+    document.documentElement.lang = SPRAK;
+    var alle = document.querySelectorAll('[data-t]'), i;
+    for (i = 0; i < alle.length; i++) {
+      var k = alle[i].getAttribute('data-t');
+      if (typeof T[k] === 'string') alle[i].textContent = T[k];
+      var h = alle[i].getAttribute('data-href-' + SPRAK);
+      if (h) alle[i].setAttribute('href', h);
+    }
+    var cv = $('rCanvas'); if (cv) cv.setAttribute('aria-label', T.lerret);
+  }
+
   /* MXB1-formatet setter INGEN grense paa navnelengde — en lenke kan altsaa baere et
      rytternavn paa ti tusen tegn og velte hele sida, eller fylle fanetittelen med hva
      som helst. 60 er samme tak appen selv bruker paa banenavn (app-template:11152). */
@@ -209,9 +330,9 @@
   }
   function vis(id, på) { var e = $(id); if (e) e.classList.toggle('hid', !på); }
 
-  function melding(tittel, tekst, ille) {
-    sett('mTitle', tittel);
-    sett('mText', tekst);
+  function melding(par, ille) {
+    sett('mTitle', par[0]);
+    sett('mText', par[1]);
     var b = $('mBox'); if (b) b.classList.toggle('bad', !!ille);
     vis('rMsg', true); vis('rRide', false);
   }
@@ -285,18 +406,18 @@
   function visRunde(d) {
     var rytter = kort(d.rytter, 48);
     var bane = kort(d.baneNavn, 48);
-    sett('rRider', rytter || 'A rider');
+    sett('rRider', rytter || T.enForer);
     sett('rTrack', bane);
     var sep = $('rSep'); if (sep) sep.style.display = bane ? '' : 'none';
 
     var harTid = d.bestetidMs != null && isFinite(d.bestetidMs) && d.bestetidMs > 0;
     sett('rTime', harTid ? fmtT(d.bestetidMs / 1000) : '–');
-    sett('rKick', harTid ? 'Shared lap' : 'Shared track');
+    sett('rKick', harTid ? T.deltRunde : T.deltBane);
 
     if (d.dato != null && isFinite(d.dato)) {
       var dt = new Date(+d.dato);
       if (!isNaN(dt.getTime())) {
-        sett('rWhen', dt.toLocaleDateString('en-GB',
+        sett('rWhen', dt.toLocaleDateString(T.locale,
           { day: 'numeric', month: 'long', year: 'numeric' }));
       }
     }
@@ -317,8 +438,8 @@
       }
       var sek = harTid ? d.bestetidMs / 1000 : 0;
       sett('fTime', harTid ? fmtT(sek) : '–');
-      sett('fTop', Math.round(topp) + ' km/h');
-      sett('fAvg', sek > 0 ? Math.round(m / sek * 3.6) + ' km/h' : '–');
+      sett('fTop', Math.round(topp) + ' ' + T.kmt);
+      sett('fAvg', sek > 0 ? Math.round(m / sek * 3.6) + ' ' + T.kmt : '–');
       sett('fDist', Math.round(m) + ' m');
       /* ResizeObserver, ikke window.resize: lerretet skal følge SIN EGEN boks. Målt at
          window.resize ikke alltid fyrer når visningen endrer bredde (bl.a. i en innebygd
@@ -337,8 +458,8 @@
       window.addEventListener('resize', påNytt, { passive: true });
       window.addEventListener('orientationchange', påNytt, { passive: true });
     }
-    document.title = (harTid ? fmtT(d.bestetidMs / 1000) : 'A lap')
-      + (bane ? ' at ' + kort(bane, 32) : '') + ' — Tidel';
+    document.title = (harTid ? fmtT(d.bestetidMs / 1000) : T.enRunde)
+      + (bane ? T.paa + kort(bane, 32) : '') + ' — Tidel';
   }
 
   function kodeFraAdressen() {
@@ -355,56 +476,48 @@
 
   function start() {
     var kode = kodeFraAdressen();
+    vis('mAapne', false);
     if (!kode) {
-      melding('A shared lap',
-        'This page shows a single motocross lap that somebody sent you — the time, '
-        + 'the track and the racing line. The whole lap travels inside the link itself, '
-        + 'so nothing was uploaded anywhere. Open the link you were given, and it '
-        + 'appears here.');
+      melding(T.mIngen);
       return;
     }
     if (!window.MXShare) {
-      melding('Could not read the lap',
-        'The decoder did not load. Reload the page, and if it keeps happening, write to '
-        + 'post@tidel.no — you get a reply from a person.', true);
+      melding(T.mDekoder, true);
       return;
     }
     MXShare.dekod(kode).then(function (r) {
       if (!r || !r.ok || !r.data) {
-        melding('That link did not carry a lap',
-          'The code in the address could not be read. It was probably cut short on the '
-          + 'way — chat apps sometimes shorten long links. Ask for it again, or have '
-          + 'the sender share it as a code inside the app.', true);
+        melding(T.mLenke, true);
         return;
       }
       var d = r.data;
-      /* Type 2 er en RYTTERPROFIL og bærer avsenderens venne-kode. Den skal aldri
-         vises på en offentlig side, og aller minst kontofeltet. */
+      /* Type 2 er en RYTTERPROFIL og bærer avsenderens venne-kode. Siden V2 (15. okt
+         2026, eierens ordre) har den sin egen side, tidel.no/v/, som viser navnet og de
+         åtte tegnene — den hører hjemme DER, ikke her. Samme kode, samme sted etter #,
+         satt som attributt av en fast sti, aldri som markup (som /v/ gjør for en runde). */
       if (d.type === 2) {
-        melding('That is a rider code',
-          'This link carries somebody’s rider profile, not a lap. Rider codes are '
-          + 'meant to be scanned inside the Tidel app, where they connect two accounts — '
-          + 'so this page deliberately does not show it.');
+        melding(T.mProfil);
+        var a = $('mAapne');
+        if (a) { a.setAttribute('href', '/v/#' + kode); vis('mAapne', true); }
         return;
       }
       if (d.type === 3) {
-        melding('That is a track code',
-          'This link carries a track setup — the finish line and the sectors for a '
-          + 'motocross track. Paste it into the Tidel app under Social, and the track '
-          + 'appears with everything already in place.');
+        melding(T.mBane);
         return;
       }
       visRunde(d);
     }).catch(function () {
-      melding('Could not read the lap',
-        'Something went wrong while decoding the link. Reload the page, or ask the sender '
-        + 'to share it again.', true);
+      melding(T.mFeil, true);
     });
   }
 
+  oversett();
   window.addEventListener('hashchange', start);
   start();
 })();
 </script>
+<script src="/js/butikk.js?v=2611171133"></script>
+<!-- Tellingen, med merket som sier at adressen bærer noe privat: se maaling.js. -->
+<script src="/js/maaling.js?v=2611171133" data-tell-i-ramme></script>
 </body>
 </html>

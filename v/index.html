@@ -1,0 +1,394 @@
+<!doctype html>
+<!-- ═══════════════════════════════════════════════════════════════════════════════════
+     TIDEL — kompislenke.   https://tidel.no/v/#MXB1:…
+
+     V2 (15. okt 2026, markedsplanen punkt 5, grunnlaget A4): kompisinvitasjonen var en
+     rå kode (MXB1:…) uten forklaring, og QR-en viste bare tegn i et vanlig kamera. Nå
+     peker QR-en og «Del som melding» på profilarket hit, og sida sier HVEM som inviterer,
+     gir appen, viser koden og sier hva mottakeren gjør. Samme form og stil som /r/.
+
+     KODEN I ADRESSEN er den samme MXB1-profilkoden appen alt lager (type 2): navnet
+     føreren selv skrev, hjemmebanen og de åtte tegnene som kobler to kontoer. Alt etter
+     «#» sendes ALDRI i HTTP-forespørselen (se hodet i /r/): GitHub Pages ser «GET /v/».
+     Tellingen (/js/maaling.js, data-tell-i-ramme) går gjennom en ramme på samme sti,
+     uten # — navnet og koden forlater aldri nettleseren.
+
+     De åtte tegnene ER venne-koden: den som har lenka kan legge føreren til som venn,
+     akkurat som den som har et skjermbilde av QR-en. Det er samme kode appen alt viser
+     på arket, og «Lag ny kode» i appen gjør gamle lenker, QR-er og koder ubrukelige.
+
+     SIKKERHET: rytternavnet kommer fra en fremmed URL. Det skrives KUN med textContent,
+     aldri innerHTML — samme regel som /r/. Koden vises bare når den har de åtte tegnenes
+     form (0-9 A-Z uten I, L, O, U); alt annet sies ærlig fra om.
+
+     Sida er skrevet på engelsk; norsk legges over med textContent når nettleseren er
+     norsk (nb/nn/no), så sida er riktig også uten skript. Butikk-knappene er samme
+     komponent som forsida (/js/butikk.js), merket med kilden «venn»; «Hent Tidel» går til
+     /download/?fra=venn. Ett fast forhåndsbilde (merket, 1200 × 630) — aldri et bilde med
+     noens navn i.
+
+     Andre kodetyper i adressen: en runde (type 1) sendes videre til /r/ med samme kode,
+     en bane (3) og en treningsinvitasjon (4) hører hjemme i appen. Sida viser dem med
+     vilje ikke.
+     ═══════════════════════════════════════════════════════════════════════════════════ -->
+<html lang="en" data-kilde="venn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Race me in Tidel — Tidel</title>
+<meta name="description" content="A motocross rider wants to race you in Tidel. Get the app, type the code, and you see each other's lap times.">
+<!-- noindex: uten en kode i adressen har sida ikke noe innhold, og MED en kode er
+     innholdet én persons invitasjon. Ingen av delene hører hjemme i et søkeregister. -->
+<meta name="robots" content="noindex,follow">
+<link rel="canonical" href="https://tidel.no/v/">
+<meta property="og:title" content="Race me in Tidel">
+<meta property="og:description" content="A motocross rider wants to race you in Tidel — lap times and racing lines from the phone in your pocket.">
+<!-- Ett fast bilde for alle lenker: forhåndsvisningen i meldingsappen leser ikke
+     adressen etter #, og skal ikke gjøre det heller. Bildet bærer bare merket. -->
+<meta property="og:image" content="https://tidel.no/assets/brand/og-delt-runde.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="theme-color" content="#08080A">
+<link rel="icon" href="/assets/brand/web/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/css/tidel.css?v=2611171133">
+<!-- .stores/.store: butikk-knappene, samme komponent som forsida, /download/ og /r/ -->
+<link rel="stylesheet" href="/css/forside.css?v=2611171133">
+<style>
+  .rWrap{max-width:860px;margin:0 auto;padding:44px 24px 80px}
+  .rKick{font-family:var(--disp);font-weight:700;font-size:12px;letter-spacing:.3em;
+    text-transform:uppercase;color:var(--acc);margin:0}
+  /* overflow-wrap:anywhere er IKKE pynt: rytternavnet kommer fra en fremmed adresse,
+     og et navn uten mellomrom ville ellers dyttet hele sida sidelengs (målt på /r/). */
+  .rWho{font-family:var(--disp);font-weight:700;font-size:clamp(28px,6vw,46px);
+    letter-spacing:.03em;text-transform:uppercase;margin:14px 0 0;line-height:1.05;
+    overflow-wrap:anywhere;word-break:break-word}
+  .rRule{height:3px;background:var(--acc);width:120px;margin:26px 0 0}
+
+  .rNote{color:#D2D2D8;margin:30px 0 0;max-width:62ch}
+  .rNote strong{color:var(--ink)}
+
+  /* stegene: tre linjer, nummeret i husets display-skrift — ingen ikoner, ingen kort */
+  .vSteg{list-style:none;margin:30px 0 0;padding:0;border-top:1px solid var(--line);max-width:62ch}
+  .vSteg li{display:flex;gap:16px;padding:16px 0;border-bottom:1px solid var(--line);color:#D2D2D8}
+  /* .vSteg li slår .hid på spesifisitet (0,1,1 mot 0,1,0): uten denne sto BEGGE steg 2 på
+     sida samtidig (målt på det første skjermbildet). */
+  .vSteg li.hid{display:none}
+  .vSteg .n{font-family:var(--disp);font-weight:700;font-size:22px;line-height:1.2;color:var(--acc);
+    flex:0 0 26px;font-variant-numeric:tabular-nums}
+  .vSteg .t{flex:1 1 auto;min-width:0}
+  .vSteg strong{color:var(--ink)}
+  /* koden: de åtte tegnene i samme form som appens «Eller skriv inn koden» (display,
+     bred sperring), stor nok til å leses over bordet */
+  .vKodeRad{display:flex;align-items:center;gap:14px 18px;flex-wrap:wrap;margin:10px 0 2px}
+  .vKode{font-family:var(--disp);font-weight:700;font-size:clamp(36px,10vw,56px);line-height:1;
+    letter-spacing:.14em;color:var(--ink);font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+  /* min-height 44: trykkflaten skal nås med hansker (målt 43 px med 12 px padding alene) */
+  .vKodeRad .btn{padding:12px 20px;font-size:14px;min-height:44px}
+
+  .rCta{display:flex;gap:14px;flex-wrap:wrap;margin:28px 0 0}
+  /* butikk-knappene under handlingsraden: samme avstand som mellom knappene */
+  .rStores{margin:14px 0 0}
+  .rMsg{border-left:3px solid var(--line2);background:var(--bg2);padding:18px 22px;
+    margin:30px 0 0;color:#D2D2D8}
+  .rMsg h2{font-family:var(--disp);font-weight:700;text-transform:uppercase;
+    letter-spacing:.06em;font-size:19px;margin:0 0 8px;color:var(--ink)}
+  .rMsg.bad{border-left-color:var(--acc)}
+  .hid{display:none}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="brand" href="/"><span class="wmSet">TID<svg class="wm" viewBox="0 0 52 70" aria-hidden="true"><rect width="52" height="16"/><rect class="m" y="27" width="52" height="16"/><rect y="54" width="52" height="16"/></svg>L</span><small>MX Performance Tracker</small></a>
+  <div class="links">
+    <a href="/#analysis" data-t="navAnalyse">Analysis</a>
+    <a href="/support/" data-t="navHjelp">Support</a>
+    <a href="/privacy/" data-t="navPersonvern" data-href-nb="/personvern/">Privacy</a>
+    <a href="/contact/" data-t="navKontakt">Contact</a>
+  </div>
+</nav>
+
+<main class="rWrap">
+
+  <!-- ── en invitasjon ──────────────────────────────────────────────────────── -->
+  <div id="rRide" class="hid">
+    <p class="rKick" id="rKick" data-t="invitasjon">Invitation</p>
+    <h1 class="rWho"><span id="vNavn"></span> <span data-t="vil">wants to race you in Tidel</span></h1>
+    <div class="rRule"></div>
+
+    <p class="rNote"><span data-t="note1">Tidel times your laps with the phone in your pocket &mdash; </span><strong data-t="note2">no transponder, nothing bolted to the bike</strong><span data-t="note3">. As friends in the app you see each other&rsquo;s lap times and racing lines, and can lay one lap over the other.</span></p>
+
+    <ol class="vSteg" id="vSteg">
+      <li><span class="n">1</span><span class="t" data-t="s1">Get Tidel on your phone &mdash; the buttons are below.</span></li>
+      <li id="vStegKode"><span class="n">2</span><span class="t"><span data-t="s2">Open Social and type the code under &ldquo;Buddy&rsquo;s code&rdquo;:</span>
+        <span class="vKodeRad"><span class="vKode" id="vKode"></span><button class="btn" type="button" id="vKopier" data-t="kopier">Copy the code</button></span></span></li>
+      <li id="vStegEldre" class="hid"><span class="n">2</span><span class="t" data-t="s2eldre">This invitation was made by an older version of the app and cannot connect your accounts. Ask for a new one.</span></li>
+      <li id="vStegLenke"><span class="n">3</span><span class="t" data-t="s3">Or paste this whole link in the same place. That is it &mdash; you are friends in Tidel.</span></li>
+    </ol>
+
+    <div class="rCta">
+      <a class="btn primary" href="/download/?fra=venn" data-t="hent">Get Tidel</a>
+      <a class="btn" href="/#analysis" data-t="se">See what it measures</a>
+    </div>
+    <div class="stores rStores" data-butikk="knapper"></div>
+  </div>
+
+  <!-- ── ingen kode, feil kode, eller en annen kodetype ───────────────────── -->
+  <div id="rMsg" class="hid">
+    <p class="rKick" id="mKick">Tidel</p>
+    <h1 class="rWho" id="mTitle"></h1>
+    <div class="rRule"></div>
+    <div class="rMsg" id="mBox"><p id="mText"></p></div>
+    <div class="rCta">
+      <a class="btn primary hid" id="mAapne" href="/r/" data-t="aapne">Open the lap</a>
+      <a class="btn primary" href="/download/?fra=venn" data-t="hent">Get Tidel</a>
+      <a class="btn" href="/" data-t="hjem">Go to tidel.no</a>
+    </div>
+    <div class="stores rStores" data-butikk="knapper"></div>
+  </div>
+
+  <noscript>
+    <p class="rKick">Tidel</p>
+    <h1 class="rWho">An invitation</h1>
+    <div class="rRule"></div>
+    <div class="rMsg"><p>This page reads the invitation straight out of the link, in your
+      browser &mdash; so it needs JavaScript. Nothing is uploaded either way.</p>
+      <p lang="nb">Denne sida leser invitasjonen rett ut av lenka, i nettleseren din &mdash; derfor
+      trenger den JavaScript. Ingenting lastes opp noen vei.</p></div>
+  </noscript>
+</main>
+
+<footer>
+  <div class="in" style="max-width:1320px;padding:0 40px">
+    <div class="rad">
+      <a href="/" data-t="fHjem">Home</a><a href="/support/" data-t="fHjelp">Support</a><a href="/privacy/">Privacy</a>
+      <a href="/personvern/">Personvern</a><a href="/terms/" data-t="fVilkar">Terms</a>
+      <a href="/delete-account/" data-t="fSlett">Delete account</a><a href="/contact/" data-t="fKontakt">Contact</a>
+    </div>
+    <div class="sig">
+      <span>&copy; 2026 Tidel &mdash; Magnus Linnerud St&oslash;me, Norway</span>
+      <span>post@tidel.no</span>
+      <span class="sp">EVERY TENTH COUNTS.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="/js/mxshare.js?v=2611171133"></script>
+<script>
+'use strict';
+(function () {
+
+  /* ── språk ───────────────────────────────────────────────────────────────────
+     Norsk når nettleseren er norsk (nb, nn eller no først i lista), engelsk ellers.
+     Fila er skrevet på engelsk; de norske tekstene legges over med textContent, så
+     det er like umulig å smugle inn markup her som fra adressen. */
+  function sprak() {
+    var l = (navigator.languages && navigator.languages.length ? navigator.languages[0] : navigator.language) || '';
+    return /^(nb|nn|no)(-|$)/i.test(String(l)) ? 'nb' : 'en';
+  }
+  var TEKST = {
+    nb: {
+      navAnalyse: 'Analyse', navHjelp: 'Hjelp', navPersonvern: 'Personvern', navKontakt: 'Kontakt',
+      fHjem: 'Hjem', fHjelp: 'Hjelp', fVilkar: 'Vilkår', fSlett: 'Slett konto', fKontakt: 'Kontakt',
+      invitasjon: 'Invitasjon', enForer: 'En fører', vil: 'vil kjøre mot deg i Tidel',
+      tittel: ' vil kjøre mot deg — Tidel',
+      note1: 'Tidel måler rundene dine med telefonen i lomma — ',
+      note2: 'ingen transponder, ingenting skrudd fast på sykkelen',
+      note3: '. Som venner i appen ser dere hverandres rundetider og kjørelinjer, og kan legge den ene runden oppå den andre.',
+      s1: 'Hent Tidel på telefonen din — knappene står under.',
+      s2: 'Åpne Sosialt, og skriv inn koden under «Kode fra kompis»:',
+      s2eldre: 'Invitasjonen er laget av en eldre versjon av appen og kan ikke koble kontoene deres. Be om en ny.',
+      s3: 'Eller lim inn hele denne lenka samme sted. Det er alt — da er dere venner i Tidel.',
+      kopier: 'Kopier koden', kopiert: 'Kopiert', merket: 'Koden er merket — hold inne og velg Kopier',
+      hent: 'Hent Tidel', se: 'Se hva den måler', hjem: 'Gå til tidel.no', aapne: 'Åpne runden',
+      mIngen: ['En kompisinvitasjon',
+        'Denne sida viser en invitasjon fra en Tidel-fører — navnet og koden som gjør dere til '
+        + 'venner i appen. Hele invitasjonen ligger i selve lenka, så ingenting er lastet opp noe '
+        + 'sted. Åpne lenka du fikk, så står den her.'],
+      mDekoder: ['Fikk ikke lest invitasjonen',
+        'Dekoderen ble ikke lastet. Last sida på nytt, og skjer det igjen: skriv til '
+        + 'post@tidel.no — du får svar fra et menneske.'],
+      mLenke: ['Lenka bar ingen invitasjon',
+        'Koden i adressen lot seg ikke lese. Den ble trolig kuttet på veien — meldingsapper '
+        + 'korter av og til ned lange lenker. Be om den på nytt, eller be om de åtte tegnene '
+        + 'i en melding.'],
+      mRunde: ['Det er en delt runde',
+        'Denne lenka bærer en runde, ikke en invitasjon. Åpne den som delt runde, så står '
+        + 'tida, banen og kjørelinja der.'],
+      mBane: ['Det er en banekode',
+        'Denne lenka bærer et baneoppsett — målstreken og seksjonene for en crossbane. Lim den '
+        + 'inn i Tidel-appen under Sosialt, så står banen der med alt på plass.'],
+      mTrening: ['Det er en treningsinvitasjon',
+        'Denne lenka bærer en invitasjon til en treningssamling. Den skannes inne i '
+        + 'Tidel-appen, under Sosialt — så denne sida viser den ikke.'],
+      mFeil: ['Fikk ikke lest invitasjonen',
+        'Noe gikk galt under lesingen av lenka. Last sida på nytt, eller be om den igjen.']
+    },
+    en: {
+      navAnalyse: 'Analysis', navHjelp: 'Support', navPersonvern: 'Privacy', navKontakt: 'Contact',
+      fHjem: 'Home', fHjelp: 'Support', fVilkar: 'Terms', fSlett: 'Delete account', fKontakt: 'Contact',
+      invitasjon: 'Invitation', enForer: 'A rider', vil: 'wants to race you in Tidel',
+      tittel: ' wants to race you — Tidel',
+      note1: 'Tidel times your laps with the phone in your pocket — ',
+      note2: 'no transponder, nothing bolted to the bike',
+      note3: '. As friends in the app you see each other’s lap times and racing lines, and can lay one lap over the other.',
+      s1: 'Get Tidel on your phone — the buttons are below.',
+      s2: 'Open Social and type the code under “Buddy’s code”:',
+      s2eldre: 'This invitation was made by an older version of the app and cannot connect your accounts. Ask for a new one.',
+      s3: 'Or paste this whole link in the same place. That is it — you are friends in Tidel.',
+      kopier: 'Copy the code', kopiert: 'Copied', merket: 'The code is selected — hold and choose Copy',
+      hent: 'Get Tidel', se: 'See what it measures', hjem: 'Go to tidel.no', aapne: 'Open the lap',
+      mIngen: ['An invitation',
+        'This page shows an invitation from a Tidel rider — the name and the code that make '
+        + 'you friends in the app. The whole invitation travels inside the link itself, so '
+        + 'nothing was uploaded anywhere. Open the link you were given, and it appears here.'],
+      mDekoder: ['Could not read the invitation',
+        'The decoder did not load. Reload the page, and if it keeps happening, write to '
+        + 'post@tidel.no — you get a reply from a person.'],
+      mLenke: ['That link did not carry an invitation',
+        'The code in the address could not be read. It was probably cut short on the '
+        + 'way — chat apps sometimes shorten long links. Ask for it again, or ask for the '
+        + 'eight characters in a message.'],
+      mRunde: ['That is a shared lap',
+        'This link carries a lap, not an invitation. Open it as a shared lap, and the time, '
+        + 'the track and the racing line are there.'],
+      mBane: ['That is a track code',
+        'This link carries a track setup — the finish line and the sectors for a '
+        + 'motocross track. Paste it into the Tidel app under Social, and the track '
+        + 'appears with everything already in place.'],
+      mTrening: ['That is a training invitation',
+        'This link carries an invitation to a training session. It is scanned inside the '
+        + 'Tidel app, under Social — so this page does not show it.'],
+      mFeil: ['Could not read the invitation',
+        'Something went wrong while decoding the link. Reload the page, or ask for it again.']
+    }
+  };
+  var SPRAK = sprak(), T = TEKST[SPRAK];
+
+  function $(id) { return document.getElementById(id); }
+  /* ALT som kommer fra adressen settes med textContent. Aldri innerHTML. */
+  function sett(id, tekst) { var e = $(id); if (e) e.textContent = tekst == null ? '' : String(tekst); }
+
+  /* Den faste teksten på sidas eget språk — også med textContent. */
+  function oversett() {
+    document.documentElement.lang = SPRAK;
+    var alle = document.querySelectorAll('[data-t]'), i;
+    for (i = 0; i < alle.length; i++) {
+      var k = alle[i].getAttribute('data-t');
+      if (typeof T[k] === 'string') alle[i].textContent = T[k];
+      var h = alle[i].getAttribute('data-href-' + SPRAK);
+      if (h) alle[i].setAttribute('href', h);
+    }
+  }
+
+  /* MXB1-formatet setter INGEN grense på navnelengde (se /r/). 48 tegn holder for et
+     navn og stopper et navn som ville fylt hele skjermen. */
+  function kort(s, n) {
+    s = (s == null ? '' : String(s)).replace(/\s+/g, ' ').trim();
+    n = n || 48;
+    return s.length > n ? s.slice(0, n - 1) + '…' : s;
+  }
+  function vis(id, på) { var e = $(id); if (e) e.classList.toggle('hid', !på); }
+
+  function melding(par, ille) {
+    sett('mTitle', par[0]);
+    sett('mText', par[1]);
+    var b = $('mBox'); if (b) b.classList.toggle('bad', !!ille);
+    vis('rMsg', true); vis('rRide', false);
+  }
+
+  /* Venne-koden slik appen lager den: åtte tegn av 0-9 og A-Z uten I, L, O og U
+     (samme regel som appens «Kode fra kompis»). Noe annet vises ikke som kode. */
+  function venneKode(k) {
+    k = (k == null ? '' : String(k)).trim().toUpperCase();
+    return /^[0-9A-HJKMNP-TV-Z]{8}$/.test(k) ? k : '';
+  }
+
+  function visInvitasjon(d) {
+    var navn = kort(d.rytter) || T.enForer;
+    sett('vNavn', navn);
+    var kode = venneKode(d.konto);
+    sett('vKode', kode);
+    vis('vStegKode', !!kode);
+    vis('vStegEldre', !kode);
+    /* Uten venne-kode kobler ikke lenka kontoene heller — da skal steg 3 ikke love det. */
+    vis('vStegLenke', !!kode);
+    vis('rRide', true); vis('rMsg', false);
+    document.title = navn + T.tittel;
+  }
+
+  /* Kopier-knappen: utklippstavla når sida får lov, ellers merkes koden så den kan
+     kopieres for hånd. Teksten på knappen sier hva som skjedde, og går tilbake. */
+  function kopier() {
+    var b = $('vKopier'), kode = ($('vKode') || {}).textContent || '';
+    if (!b || !kode) return;
+    var tilbake = function () { setTimeout(function () { sett('vKopier', T.kopier); }, 1800); };
+    var merk = function () {
+      try {
+        var r = document.createRange(); r.selectNodeContents($('vKode'));
+        var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r);
+        sett('vKopier', T.merket); tilbake();
+      } catch (e) { /* ingen markering å gi */ }
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(kode).then(function () { sett('vKopier', T.kopiert); tilbake(); }, merk);
+    } else merk();
+  }
+
+  function kodeFraAdressen() {
+    /* Fragmentet er stedet koden bor. Vi godtar også ?k= for en lenke som har vært
+       gjennom en tjeneste som spiser fragmenter, men SKRIVER aldri den formen selv. */
+    var h = (location.hash || '').replace(/^#/, '');
+    if (!h) {
+      var m = /[?&]k=([^&]+)/.exec(location.search || '');
+      if (m) h = m[1];
+    }
+    try { h = decodeURIComponent(h); } catch (e) { /* rå streng er også gyldig */ }
+    return h.trim();
+  }
+
+  function start() {
+    var kode = kodeFraAdressen();
+    vis('mAapne', false);
+    if (!kode) {
+      melding(T.mIngen);
+      return;
+    }
+    if (!window.MXShare) {
+      melding(T.mDekoder, true);
+      return;
+    }
+    MXShare.dekod(kode).then(function (r) {
+      if (!r || !r.ok || !r.data) {
+        melding(T.mLenke, true);
+        return;
+      }
+      var d = r.data;
+      if (d.type === 1) {
+        /* En runde hører hjemme på /r/ — samme kode, samme sted etter #. Adressen settes
+           som attributt av en fast sti, aldri som markup. */
+        melding(T.mRunde);
+        var a = $('mAapne');
+        if (a) { a.setAttribute('href', '/r/#' + encodeURIComponent(kode)); vis('mAapne', true); }
+        return;
+      }
+      if (d.type === 3) { melding(T.mBane); return; }
+      if (d.type === 4) { melding(T.mTrening); return; }
+      if (d.type !== 2) { melding(T.mLenke, true); return; }
+      visInvitasjon(d);
+    }).catch(function () {
+      melding(T.mFeil, true);
+    });
+  }
+
+  oversett();
+  var kb = $('vKopier'); if (kb) kb.addEventListener('click', kopier);
+  window.addEventListener('hashchange', start);
+  start();
+})();
+</script>
+<script src="/js/butikk.js?v=2611171133"></script>
+<!-- Tellingen, med merket som sier at adressen bærer noe privat: se maaling.js. -->
+<script src="/js/maaling.js?v=2611171133" data-tell-i-ramme></script>
+</body>
+</html>

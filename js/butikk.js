@@ -38,6 +38,84 @@ var LENKER = {
 };
 var GRUPPE_URL = 'https://groups.google.com/g/tidel-testere';
 
+/* ══ T6 (15. okt 2026) — KAMPANJEMERKE PER KILDE ═══════════════════════════════════
+   Markedsplanen punkt 3: i dag vet vi ikke hvor en eneste bruker kom fra. Hver butikk-
+   lenke baerer derfor et merke som sier hvilken grov kilde den sto i — seks til aatte
+   kilder, ikke en per klubb (Apple viser en kampanje foerst etter fem nedlastinger, saa
+   smale kilder gir aldri et tall). Merket gaar dit butikkene leser det:
+     · App Store: ct=<kilde> (og pt=<leverandoernoekkel> naar den er satt), lest i App
+       Store Connect → Analytics → Campaigns. TestFlight-lenka ignorerer parametrene —
+       ufarlig, og den dagen LENKER.ios blir App Store-lenka, virker merket av seg selv.
+     · Google Play: referrer=utm_source%3Dtidel.no%26utm_medium%3Dlenke%26utm_campaign%3D
+       <kilde>, lest i Play Console → Acquisition. Opt-in-sida ignorerer det paa samme vis.
+   LENKER og BUTIKKER er uroert: merket legges paa i butikkLenke() idet knappen tegnes, saa
+   «en sannhet for lenkene» (versjon.json = LENKER.ios) staar. Reservesida /contact/ faar
+   ingen parametre. En kilde som ikke staar i KILDER blir «nett» — aldri fri tekst inn i
+   en lenke. Sida sier selv hvor den er: ?fra=<kilde> i adressen (delesiden sender folk
+   til /download/?fra=runde), ellers data-kilde paa <html> (delesiden selv), ellers «nett».
+   Cloudflare-tellingen logger ikke spoerrestrenger, saa ?fra= synes ikke der; det er
+   butikkenes egne tall som skal vise kilden. */
+var KILDER = {
+  nett:    'tidel.no selv: forsida og /download/ uten merke',
+  runde:   'en delt runde (tidel.no/r/)',
+  venn:    'kompislenka (tidel.no/v/): QR-en og «Del som melding» paa profilarket peker hit',
+  bane:    'banesidene og skilt paa banen',
+  klubb:   'klubbpakka: e-post, klubbens gruppe, oppslag i klubbhuset',
+  racebox: 'RaceBox- og Garmin-eierne (FAQ-en deres, Connect IQ-butikken)',
+  sosialt: 'sosiale medier: Instagram, Facebook-grupper, TikTok',
+  epost:   'ventelista og sesongstart-e-posten'
+};
+/* Apples leverandoernoekkel (pt=) staar i App Store Connect → Analytics → Campaigns →
+   «Create campaign link». Tom til eieren limer den inn; ct= sendes uansett. */
+var KAMPANJE = { pt: '' };
+
+function butikkLenke(id, kilde){
+  var base = LENKER[id] || LENKER.reserve;
+  if (!/^https:\/\//.test(base)) return base;            // reservesida: ingen merke
+  kilde = KILDER[kilde] ? kilde : 'nett';
+  var skille = base.indexOf('?') < 0 ? '?' : '&';
+  if (id === 'ios') {
+    return base + skille + (KAMPANJE.pt ? 'pt=' + encodeURIComponent(KAMPANJE.pt) + '&' : '')
+      + 'ct=' + kilde + (/^https:\/\/apps\.apple\.com\//.test(base) ? '&mt=8' : '');
+  }
+  if (id === 'and') {
+    return base + skille + 'referrer='
+      + encodeURIComponent('utm_source=tidel.no&utm_medium=lenke&utm_campaign=' + kilde);
+  }
+  return base;
+}
+function kildeFraSida(){
+  var m = /[?&]fra=([a-z]+)/.exec(String(location.search || ''));
+  if (m && KILDER[m[1]]) return m[1];
+  var h = document.documentElement, d = h && h.getAttribute ? h.getAttribute('data-kilde') : null;
+  return d && KILDER[d] ? d : 'nett';
+}
+
+/* ══ WEB-6 (5. nov 2026, bolk 25) — NORSK GREN ═════════════════════════════════════
+   Forsida (js/forside.js) og /r/ blir norske for en norsk nettleser, men knappene og
+   kortene herfra var bare engelske. Samme spraakvalg som der: norsk naar nettleseren er
+   norsk (nb, nn eller no foerst i lista), engelsk ellers. Bare navigator leses, aldri
+   adressen. De engelske feltene i BUTIKKER staar som foer (tests/web.html leser dem som
+   data); hver butikk har en nb-gren med de samme fem feltene, og butikkTekst() velger.
+   Kravlinja (meta) maa foelge bygget paa begge spraak (IOS-3 og WEB-12 under). */
+function butikkSprak(){
+  try {
+    var n = typeof navigator !== 'undefined' ? navigator : null;
+    var l = n ? ((n.languages && n.languages.length ? n.languages[0] : n.language) || '') : '';
+    return /^(nb|nn|no)(-|$)/i.test(String(l)) ? 'nb' : 'en';
+  } catch (e) { return 'en'; }
+}
+var BUTIKK_SPRAK = butikkSprak();
+var BUTIKK_FAST = {
+  en: { alle: 'Available to everyone.',
+        reserve: 'Beta places are limited while we test. Write to post@tidel.no and you get a reply from a person.' },
+  nb: { alle: 'Tilgjengelig for alle.',
+        reserve: 'Beta-plassene er få mens vi tester. Skriv til post@tidel.no, så får du svar fra et menneske.' }
+};
+function butikkTekst(b, felt){
+  return BUTIKK_SPRAK === 'nb' && b.nb && typeof b.nb[felt] === 'string' ? b.nb[felt] : b[felt];
+}
+
 var BUTIKKER = [
   { id:'ios', pre:'Download on the', navn:'App Store',
     status:'beta',                       // 'beta' | 'snart' | 'live'
@@ -52,7 +130,13 @@ var BUTIKKER = [
        finnes foer 16.4 — paa iOS 15 var bade skjermlaasen under opptak og hele zip-/gz-
        importveien doed. Tallet her maa foelge byggets verdi, ellers lover sida en
        installasjon App Store vil nekte. */
-    meta:'iPhone &middot; iOS 16.4 or later. Apple Watch rides import from Apple Health.' },
+    meta:'iPhone &middot; iOS 16.4 or later. Apple Watch rides import from Apple Health.',
+    nb:{ pre:'Last ned fra', merke:'TestFlight-beta',
+      cta:LENKER.ios ? 'Åpne i TestFlight' : 'Be om en plass i TestFlight',
+      req:LENKER.ios
+        ? 'Åpner TestFlight. Installer Apples TestFlight-app først &mdash; den er gratis.'
+        : 'Den offentlige TestFlight-lenka er ikke åpen ennå. Skriv til <a href="mailto:post@tidel.no">post@tidel.no</a>, så får du svar fra et menneske, som regel samme dag.',
+      meta:'iPhone &middot; iOS 16.4 eller nyere. Økter fra Apple Watch importeres fra Apple Helse.' } },
   { id:'and', pre:'Get it on', navn:'Google Play',
     status:'beta',
     merke:'Closed beta',
@@ -61,7 +145,11 @@ var BUTIKKER = [
     req:'Closed testing: your Google account has to be on the tester list first. Join <a href="' + GRUPPE_URL + '">the tidel-testere group</a> (or write to <a href="mailto:post@tidel.no">post@tidel.no</a>), then open the link above once &mdash; after that Play updates the app by itself.',
     /* minSdkVersion 26 i app-ios/scripts/patch-android-project.sh:71 = Android 8.0.
        Endres MIN_SDK der, endres denne linja i samme slipp. */
-    meta:'Android 8.0 or later. GPX import from any watch that can export one.' }
+    meta:'Android 8.0 or later. GPX import from any watch that can export one.',
+    nb:{ pre:'Tilgjengelig på', merke:'Lukket beta',
+      cta:'Bli tester på Google Play',
+      req:'Lukket testing: Google-kontoen din må stå på testerlista først. Bli med i <a href="' + GRUPPE_URL + '">gruppa tidel-testere</a> (eller skriv til <a href="mailto:post@tidel.no">post@tidel.no</a>), og åpne lenka over én gang &mdash; etter det oppdaterer Play appen selv.',
+      meta:'Android 8.0 eller nyere. GPX-import fra alle klokker som kan eksportere en GPX-fil.' } }
 ];
 
 var GLYF = {
@@ -75,19 +163,19 @@ function butikkFarge(status){
     : 'border-color:rgba(227,6,19,.6);color:#FF2438';
 }
 
-function butikkKnapper(){
+function butikkKnapper(kilde){
   var s = '', i;
   for (i = 0; i < BUTIKKER.length; i++) {
     var b = BUTIKKER[i];
-    s += '<a class="store" href="' + b.lenke + '">' + GLYF[b.id] +
-         '<span><span class="t1">' + b.pre + '</span>' +
+    s += '<a class="store" href="' + butikkLenke(b.id, kilde) + '">' + GLYF[b.id] +
+         '<span><span class="t1">' + butikkTekst(b, 'pre') + '</span>' +
          '<span class="t2">' + b.navn + '</span></span>' +
-         '<span class="st" style="' + butikkFarge(b.status) + '">' + b.merke + '</span></a>';
+         '<span class="st" style="' + butikkFarge(b.status) + '">' + butikkTekst(b, 'merke') + '</span></a>';
   }
   return s;
 }
 
-function butikkKort(){
+function butikkKort(kilde){
   var s = '', i;
   for (i = 0; i < BUTIKKER.length; i++) {
     var b = BUTIKKER[i];
@@ -96,16 +184,16 @@ function butikkKort(){
              '<span style="width:22px;height:22px;color:var(--mut);display:block">' + GLYF[b.id] + '</span>' +
              '<span class="plat">' + b.navn + '</span>' +
              '<span style="margin-left:auto;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;' +
-                    'padding:4px 9px;border:1px solid;' + butikkFarge(b.status) + '">' + b.merke + '</span>' +
+                    'padding:4px 9px;border:1px solid;' + butikkFarge(b.status) + '">' + butikkTekst(b, 'merke') + '</span>' +
            '</div>' +
-           '<p class="meta">' + b.meta + '</p>' +
-           '<a class="knapp' + (b.status === 'live' ? ' p' : '') + '" href="' + b.lenke + '">' + b.cta + '</a>' +
+           '<p class="meta">' + butikkTekst(b, 'meta') + '</p>' +
+           '<a class="knapp' + (b.status === 'live' ? ' p' : '') + '" href="' + butikkLenke(b.id, kilde) + '">' + butikkTekst(b, 'cta') + '</a>' +
            /* WEB-1: teksten under knappen er nå kortets EGEN (b.req) — den sier hva som
               skjer når du trykker, per butikk. Den gamle felles setningen sa «write to
               post@tidel.no» også for veier som ikke går via e-post i det hele tatt. */
            '<div class="req">' + (b.status === 'live'
-              ? 'Available to everyone.'
-              : (b.req || 'Beta places are limited while we test. Write to post@tidel.no and you get a reply from a person.')) +
+              ? BUTIKK_FAST[BUTIKK_SPRAK].alle
+              : (butikkTekst(b, 'req') || BUTIKK_FAST[BUTIKK_SPRAK].reserve)) +
            '</div>' +
          '</div>';
   }
@@ -114,7 +202,15 @@ function butikkKort(){
 
 (function(){
   function fyll(id, html){ var e = document.getElementById(id); if (e) e.innerHTML = html; }
-  fyll('heroStores', butikkKnapper());
-  fyll('footStores', butikkKnapper());
-  fyll('dlGrid',     butikkKort());
+  var kilde = kildeFraSida();
+  fyll('heroStores', butikkKnapper(kilde));
+  fyll('footStores', butikkKnapper(kilde));
+  fyll('dlGrid',     butikkKort(kilde));
+  /* Sider uten de faste id-ene (delesiden) sier selv hvor knappene skal: data-butikk="knapper" eller "kort". */
+  if (document.querySelectorAll) {
+    var alle = document.querySelectorAll('[data-butikk]'), i;
+    for (i = 0; i < alle.length; i++) {
+      alle[i].innerHTML = alle[i].getAttribute('data-butikk') === 'kort' ? butikkKort(kilde) : butikkKnapper(kilde);
+    }
+  }
 })();

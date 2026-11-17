@@ -82,6 +82,8 @@ th{font-family:var(--disp);font-weight:700;font-size:11px;letter-spacing:.16em;
   text-transform:uppercase;color:var(--dim)}
 td strong{color:var(--ink)}
 .ja{color:var(--loss)} .nei{color:var(--gain)}
+/* Bildeteksten over tabellen fra datakartet (personvern/privacy punkt 2): venstrestilt som resten av dokumentet. */
+table caption{text-align:left;caption-side:top;padding:0 0 10px;color:var(--mut);font-size:14px}
 
 .toc{border:1px solid var(--line);background:var(--bg2);padding:18px 22px;margin:30px 0}
 .toc h4{font-family:var(--disp);font-weight:700;font-size:11px;letter-spacing:.2em;
@@ -126,4 +128,12 @@ footer .sig .sp{margin-left:auto;letter-spacing:.12em}
   .doc h1{margin-top:44px}
   table{font-size:13px}
   th,td{padding:9px 7px}
+}
+/* 320-telefonen (29. sep): fire lenker ved ordmerket ble 326-327 px brede paa /personvern/, /download/ og /r/, og
+   «Kontakt»/«Contact» stakk 6-7 px ut av skjermen. Strammere luft mellom lenkene (ordmerket staar fortsatt 18 px inne,
+   paa linje med teksten under), og lenkene brytes heller enn aa dytte sida sidelengs om en skrift likevel blir bredere. */
+@media (max-width:380px){
+  .nav{padding:14px 18px;gap:10px}
+  .nav .links{gap:10px;min-width:0;flex-wrap:wrap;justify-content:flex-end;row-gap:4px}
+  .nav .links a{letter-spacing:.05em}
 }

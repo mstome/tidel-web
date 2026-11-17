@@ -13,27 +13,27 @@
 <meta property="og:image" content="https://tidel.no/assets/photo/start-gate.jpg">
 <meta name="theme-color" content="#08080A">
 <link rel="icon" href="/assets/brand/web/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="/css/tidel.css?v=2609090223">
-<link rel="stylesheet" href="/css/forside.css?v=2609090223">
+<link rel="stylesheet" href="/css/tidel.css?v=2611171133">
+<link rel="stylesheet" href="/css/forside.css?v=2611171133">
 </head>
 <body>
 
 <nav class="nav">
   <a class="brand" href="/"><span class="wmSet">TID<svg class="wm" viewBox="0 0 52 70" aria-hidden="true"><rect width="52" height="16"/><rect class="m" y="27" width="52" height="16"/><rect y="54" width="52" height="16"/></svg>L</span><small>MX Performance Tracker</small></a>
   <div class="links">
-    <a href="/#analysis">Analysis</a>
-    <a href="/support/">Support</a>
-    <a href="/privacy/">Privacy</a>
-    <a href="/contact/">Contact</a>
+    <a href="/#analysis" data-t="navAnalyse">Analysis</a>
+    <a href="/support/" data-t="navHjelp">Support</a>
+    <a href="/privacy/" data-t="navPersonvern" data-href-nb="/personvern/">Privacy</a>
+    <a href="/contact/" data-t="navKontakt">Contact</a>
   </div>
 </nav>
 
 <section class="dlHead">
   <div class="ph"></div><div class="tt"></div>
   <div class="wrap">
-    <div class="kick r">Download</div>
-    <h1 class="xxl" style="margin-top:16px;max-width:12ch">Get Tidel.</h1>
-    <p class="txt" style="margin-top:20px;font-size:18px">Tidel is in beta on both platforms.
+    <div class="kick r" data-t="kick">Download</div>
+    <h1 class="xxl" style="margin-top:16px;max-width:12ch" data-t="h1">Get Tidel.</h1>
+    <p class="txt" style="margin-top:20px;font-size:18px" data-t="inn">Tidel is in beta on both platforms.
       Pick yours below &mdash; the status is exactly what it says.</p>
   </div>
 </section>
@@ -44,34 +44,36 @@
 
     <div class="split even" style="margin-top:50px">
       <div>
-        <h2 class="lg">What you need</h2>
-        <p class="txt sm" style="margin-top:12px">A phone with GPS. That is the whole list. A watch, a
+        <h2 class="lg" data-t="h2Trenger">What you need</h2>
+        <p class="txt sm" style="margin-top:12px" data-t="pTrenger">A phone with GPS. That is the whole list. A watch, a
           RaceBox or a GPX file will all work too, but none of them are required to get a lap time.</p>
       </div>
+      <!-- V4 (16. okt 2026): løftene om ingen konto og ingen kjøp var sanne for betaen og blir usanne
+           ved lansering (registreringsporten og Tidel Pro ligger bygd bak brytere, docs/NODBREMS.md).
+           Her står det som er sant: konto kommer, rundetider forblir gratis. -->
       <div>
-        <h2 class="lg">No account needed</h2>
-        <p class="txt sm" style="margin-top:12px">Tidel works without signing up. There is no email to
-          enter and no password to pick before your first session.</p>
+        <h2 class="lg" data-t="h2Konto">An account is coming</h2>
+        <p class="txt sm" style="margin-top:12px" data-t="pKonto">The beta works without signing up. When Tidel opens to
+          everyone, you create an account so your seasons follow you between phones. Lap times stay free.</p>
       </div>
     </div>
 
     <div class="split even" style="margin-top:38px">
       <div>
-        <h2 class="lg">What beta means</h2>
-        <p class="txt sm" style="margin-top:12px">Features change, and some things break. You get
+        <h2 class="lg" data-t="h2Beta">What beta means</h2>
+        <p class="txt sm" style="margin-top:12px" data-t="pBeta">Features change, and some things break. You get
           updates often, and the fastest way to get something fixed is to write and say what
           happened. Keep a backup from More &rarr; Backup if a season matters to you.</p>
       </div>
       <div>
-        <h2 class="lg">What it costs</h2>
-        <p class="txt sm" style="margin-top:12px">Nothing. No ads, no in-app purchases. If paid
-          features arrive later, we will say so in advance and your existing rides stay
-          accessible.</p>
+        <h2 class="lg" data-t="h2Pris">What it costs</h2>
+        <p class="txt sm" style="margin-top:12px" data-t="pPris">Lap times are free, and stay free. No ads. Paid extras
+          may come later &mdash; we say so in advance, and the rides you have recorded stay yours.</p>
       </div>
     </div>
 
     <div class="shot" style="margin-top:52px;aspect-ratio:21/9">
-      <img src="/assets/photo/berm-roost.jpg" width="446" height="374" loading="lazy" alt="Rider on the throttle out of a berm">
+      <img src="/assets/photo/berm-roost.jpg" width="446" height="374" loading="lazy" alt="Rider on the throttle out of a berm" data-t-alt="bildeAlt">
     </div>
   </div>
 </section>
@@ -79,9 +81,9 @@
 <footer>
   <div class="in" style="max-width:1320px;padding:0 40px">
     <div class="rad">
-      <a href="/">Home</a><a href="/support/">Support</a><a href="/privacy/">Privacy</a>
-      <a href="/personvern/">Personvern</a><a href="/terms/">Terms</a>
-      <a href="/delete-account/">Delete account</a><a href="/contact/">Contact</a>
+      <a href="/" data-t="fHjem">Home</a><a href="/support/" data-t="fHjelp">Support</a><a href="/privacy/">Privacy</a>
+      <a href="/personvern/">Personvern</a><a href="/terms/" data-t="fVilkar">Terms</a>
+      <a href="/delete-account/" data-t="fSlett">Delete account</a><a href="/contact/" data-t="fKontakt">Contact</a>
     </div>
     <div class="sig">
       <span>&copy; 2026 Tidel &mdash; Magnus Linnerud Støme, Norway</span>
@@ -91,6 +93,52 @@
   </div>
 </footer>
 
-<script src="/js/butikk.js?v=2609090223"></script>
+<!-- T6: tellingen staar ogsaa her (markedsplanen punkt 3). Cloudflare logger ikke ?fra=,
+     saa kilden fra delesiden baeres videre i butikklenkene (butikk.js), ikke i tellingen. -->
+<script src="/js/maaling.js?v=2611171133"></script>
+<!-- WEB-6 (5. nov 2026, bolk 25): sida er skrevet paa engelsk. For en norsk nettleser (nb, nn eller no
+     foerst i lista, samme valg som forsida og /r/) legges de norske tekstene over med textContent,
+     nøkkel for nøkkel (data-t), aldri innerHTML. Kortene og knappene lager butikk.js paa samme spraak. -->
+<script>
+'use strict';
+(function () {
+  var l = (navigator.languages && navigator.languages.length ? navigator.languages[0] : navigator.language) || '';
+  if (!/^(nb|nn|no)(-|$)/i.test(String(l))) return;
+  var T = {
+    tittel: 'Hent Tidel — Tidel',
+    beskrivelse: 'Tidel er i beta på iPhone og Android. Slik kommer du inn.',
+    navAnalyse: 'Analyse', navHjelp: 'Hjelp', navPersonvern: 'Personvern', navKontakt: 'Kontakt',
+    kick: 'Last ned', h1: 'Hent Tidel.',
+    inn: 'Tidel er i beta på begge plattformene. Velg din under — statusen er akkurat det den sier.',
+    h2Trenger: 'Det du trenger',
+    pTrenger: 'En telefon med GPS. Det er hele lista. En klokke, en RaceBox eller en GPX-fil virker også, men ingen av dem trengs for å få en rundetid.',
+    h2Konto: 'En konto kommer',
+    pKonto: 'Betaen virker uten registrering. Når Tidel åpner for alle, lager du en konto, så følger sesongene deg fra telefon til telefon. Rundetider forblir gratis.',
+    h2Beta: 'Hva beta betyr',
+    pBeta: 'Funksjoner endres, og noe går i stykker. Du får oppdateringer ofte, og den raskeste veien til en retting er å skrive og si hva som skjedde. Ta en sikkerhetskopi under Mer → Sikkerhetskopi hvis en sesong betyr noe for deg.',
+    h2Pris: 'Hva det koster',
+    pPris: 'Rundetider er gratis, og forblir gratis. Ingen reklame. Betalte tillegg kan komme senere — vi sier fra på forhånd, og øktene du har tatt opp, forblir dine.',
+    bildeAlt: 'Fører på gassen ut av en dosering',
+    fHjem: 'Hjem', fHjelp: 'Hjelp', fVilkar: 'Vilkår', fSlett: 'Slett konto', fKontakt: 'Kontakt'
+  };
+  document.documentElement.lang = 'nb';
+  document.title = T.tittel;
+  var md = document.querySelector('meta[name="description"]');
+  if (md) md.setAttribute('content', T.beskrivelse);
+  var alle = document.querySelectorAll('[data-t]'), i;
+  for (i = 0; i < alle.length; i++) {
+    var k = alle[i].getAttribute('data-t');
+    if (typeof T[k] === 'string') alle[i].textContent = T[k];
+    var h = alle[i].getAttribute('data-href-nb');
+    if (h) alle[i].setAttribute('href', h);
+  }
+  var alt = document.querySelectorAll('[data-t-alt]');
+  for (i = 0; i < alt.length; i++) {
+    var a = alt[i].getAttribute('data-t-alt');
+    if (typeof T[a] === 'string') alt[i].setAttribute('alt', T[a]);
+  }
+})();
+</script>
+<script src="/js/butikk.js?v=2611171133"></script>
 </body>
 </html>

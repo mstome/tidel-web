@@ -6,16 +6,19 @@
        Identifiable — den skal nevne appens eller utviklerens navn
      URL-en legges inn i Play Console under App content → Data safety → Data deletion.
      Den MÅ virke uten innlogging: brukeren har kanskje alt avinstallert appen.
-     Endres slettelogikken i SKY-SLETTING.sql eller edge-funksjonen, må denne teksten følge.
+     R6 (23. okt 2026): det som slettes og det som blir, SKRIVES FRA DATAKARTET docs/DATAKART.md.
+     Lista mellom KART:SLETTING-markørene lages av tools/datakart/lag-tekst.mjs; hver setning om
+     data har <!- - Dn - -> med raden, og lag-tekst.mjs --sjekk leser dem mot kartet.
+     Endres slettelogikken, endres kartet først, så kjøres  node tools/datakart/lag-tekst.mjs
      ═══════════════════════════════════════════════════════════════════════════════ -->
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Delete your Tidel account — Tidel</title>
-<meta name="description" content="How to delete your Tidel account and all data associated with it.">
+<meta name="description" content="How to delete your Tidel account, what is deleted with it, and what is not.">
 <link rel="icon" href="/assets/brand/web/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="/css/tidel.css?v=2609090223">
+<link rel="stylesheet" href="/css/tidel.css?v=2611171133">
 </head>
 <body>
 
@@ -34,7 +37,7 @@
   <h1>Delete your<br>Tidel account</h1>
   <p class="lead">This page explains how to delete your account in the <strong>Tidel</strong> app
     (MX Performance Tracker, developed by Magnus Linnerud Støme) and everything stored with it.</p>
-  <p class="meta">Last updated 16 August 2026</p>
+  <p class="meta">Last updated 16 November 2026</p>
 
   <h2>Option 1 &mdash; in the app</h2>
   <p>If you still have Tidel installed, this is the fastest way and it takes effect immediately.</p>
@@ -60,47 +63,62 @@
     <a href="mailto:post@tidel.no">post@tidel.no</a>. A person reads it. You get a written
     confirmation when the deletion is done.</p>
 
-  <h2>What gets deleted</h2>
-  <p>All of this is <strong>permanently erased</strong> &mdash; not deactivated, not hidden:</p>
-  <ul>
-    <li>Your profile, rider name and account code</li>
-    <li>Every session, lap and record</li>
-    <li>Every raw GPS file you have uploaded, including heart rate and any external telemetry</li>
-    <li>Your settings and paired-device list</li>
-    <li>Your friend connections</li>
-    <li>Any feedback you sent from inside the app</li>
-    <li>Your sign-in, if you attached an email address to the account</li>
-  </ul>
-
-  <h2>What is kept, and why</h2>
+  <h2 data-kart>What is deleted, and what is not</h2>
+  <p><!-- D1-D52 -->The list is made from the same data map as the <a href="/privacy/">Privacy Policy</a>, one
+    entry per item Tidel collects; the policy says more about each:</p>
+<!-- KART:SLETTING -->
+<ul class="kart">
+<li><strong>Deleted with the account:</strong> Account id and share code, Email and password, Rider name and class, Profile picture, The session, The GPS track, Lap times, Best lap on the track’s list, Heart rate, Age, weight and resting heart rate, Settings that sync, Ground profiles, Friends and buddy links, What friends see, Reactions and track days, Sensor and serial number, “Where did you hear about Tidel?”, Consent to news by email, The “Later” counter, The email log, Position while recording, Garmin connection, Polar connection, Apple Health and Health Connect, The analysis access, Deletion devices.</li>
+<li><strong>Partly (the section that covers the row says what stays):</strong> Tracks you add, Finish lines, layouts and track info, Sessions you share with friends, Training sessions, Installation id, Usage statistics, Error reports from the app, “What stopped you?”, Feedback, Tidel Pro, IP address.</li>
+<li><strong>Not deleted with the account (kept at Tidel; the section that covers the row says more):</strong> The track model, The deletion receipt, The daily ops email to the owner, Daily caps against abuse.</li>
+<li><strong>Not held by Tidel (nothing there to delete):</strong> Shared cards and links, The backup, Maps and aerial imagery, The camera, The picture you set on a friend, Map tiles, Sector passes.</li>
+<li><strong>Not linked to the account:</strong> The waiting list on tidel.no, Driving route in Explore, Visit counting on tidel.no, The version check.</li>
+</ul>
+<!-- /KART:SLETTING -->
   <div class="kort ro">
-    <p><strong>Public track geometry.</strong> The name, position, outline, finish line and sector
-      boundaries of tracks in the shared catalogue stay in place &mdash; with your name and account
-      removed from them.</p>
-    <p>The reason is simple: if one rider leaving deleted the track, it would break for everyone
-      else who rides there. This is track information, not information about you. Your GPS traces,
-      lap times and identity are gone.</p>
+    <p><!-- D12 D13 -->Tracks, finish lines and track info you added stay in the shared catalogue when you delete
+      your account, with your name and account id removed where they are stored with a key; the
+      installation id on the track and the pseudonym on line proposals remain.
+      <!-- D12 -->If one rider leaving deleted the track, it would break for everyone else who rides there.
+      <!-- D15 -->A finished track model is an average with no link to you and stays (Privacy Policy, section
+      7).</p>
   </div>
-  <p>Anonymous usage events also remain, because they never carried a user id and cannot be traced
-    back to an account.</p>
+  <p><!-- D23 D24 D25 D26 -->Usage statistics, error reports and the answer to &ldquo;What stopped you?&rdquo;
+    carry no account id, only the installation id; when the account is deleted, they are deleted for the phones
+    we know are yours: the phones that uploaded your sessions and tracks or sent feedback with the account, and
+    from Tidel 1.21 the phone you delete from; if another account has also used the phone, the statistics from
+    it stay.
+    <!-- D27 -->Feedback is deleted with the account when it was sent with it (from Tidel 1.21), and otherwise
+    when it came from one of the same phones; from a phone another account has also used, it is kept with the
+    contact address you wrote.
+    <!-- D14 D42 -->Ground profiles under jumps are deleted with the account, and a deleted account never
+    contributes to the track model.
+    <!-- D43 -->When the account is deleted, a receipt with a salted pseudonym of the account id and counts is
+    written; it has no id and remains.
+    <!-- D18 -->A copy of a session you shared is removed from your friend&rsquo;s phone the next time their app
+    syncs; a file they exported from it stays with them.</p>
 
-  <h2>How long it takes</h2>
+  <h2 data-kart>How long it takes</h2>
   <ul>
-    <li><strong>Immediately:</strong> the account is locked. Nothing more can be written to it.</li>
-    <li><strong>7 days:</strong> a grace period in which you can undo the deletion, in case you
-      changed your mind or someone else pressed the button. Deleting from the app lets you cancel
-      it there; if you asked by email, just reply to the confirmation.</li>
-    <li><strong>After 7 days:</strong> everything listed above is permanently erased from the
-      database and from file storage.</li>
+    <li><!-- D1 D2 --><strong>Immediately:</strong> the account is locked: no new sessions or track files can be
+      uploaded to it.</li>
+    <li><!-- D1 D2 --><strong>7 days:</strong> a grace period in which you can undo the deletion, in the app or
+      by replying to our email.</li>
+    <li><!-- D1 D2 --><strong>After 7 days:</strong> a nightly job completes the deletion the following night;
+      you can also complete it with &ldquo;Complete deletion now&rdquo; in the app, or let us finish it if
+      you asked by email.</li>
+    <li><!-- D1 -->If you uninstall the app, the deletion is still completed after the grace period.</li>
+    <li><!-- D1 -->If you ask by email, allow up to 30 days in total; in practice it is done within a couple of
+      days plus the grace period.</li>
   </ul>
-  <p>If you ask by email, allow up to 30 days from your request in total &mdash; in practice it is
-    normally done within a couple of days, plus the grace period.</p>
 
-  <h2>Deleting only some of it</h2>
-  <p>You do not have to delete the whole account to get rid of one bad day. A single session can be
-    deleted inside the app, from the session list, and that removes its raw GPS file too.</p>
-  <p>You can also export everything first, under <strong>More &rarr; Backup</strong>, if you want a
-    copy before it goes.</p>
+  <h2 data-kart>Deleting only some of it</h2>
+  <p><!-- D5 D7 -->A single session can be deleted inside the app, from the session list; it is marked deleted
+    with its laps and record, and disappears for you and your friends.
+    <!-- D6 -->From Tidel 1.21 the app deletes its raw GPS file; one it does not delete is unreadable to anyone,
+    goes into the deletion queue when the session is deleted, and is removed by the nightly job.
+    <!-- D33 -->You can export everything first under <strong>More &rarr; Backup</strong>; that file stays on
+    your phone and is never touched by the server.</p>
 
   <h2>Questions</h2>
   <p>Anything unclear, write to <a href="mailto:post@tidel.no">post@tidel.no</a>. See also the

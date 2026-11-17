@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Website privacy — Tidel</title>
-<meta name="description" content="What tidel.no measures when you visit the website. No cookies, no tracking across sites, no advertising.">
+<meta name="description" content="What tidel.no measures when you visit the website, and what the waiting list stores. No cookies, no tracking across sites, no advertising.">
 <link rel="canonical" href="https://tidel.no/site-privacy/">
 <meta name="robots" content="index,follow">
 <meta name="theme-color" content="#08080A">
 <link rel="icon" href="/assets/brand/web/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="/css/tidel.css?v=2609090223">
+<link rel="stylesheet" href="/css/tidel.css?v=2611171133">
 </head>
 <body>
 
@@ -30,19 +30,23 @@
   <h1>Website privacy</h1>
   <p class="lead">This page is about the website you are reading right now. It is separate from the
     app&rsquo;s privacy policy, which covers the Tidel app for iOS and Android.</p>
-  <p class="meta">Last updated 18 August 2026 &middot;
+  <p class="meta">Last updated 16 November 2026 &middot;
     App privacy policy: <a href="/privacy/">English</a> &middot; <a href="/personvern/">norsk</a></p>
 
   <div class="kort ok">
     <p><strong>No cookies. No tracking across websites. No advertising, and nothing sold to
-      anyone.</strong> tidel.no does not ask for consent because it does not store or read anything
-      on your device.</p>
+      anyone.</strong> tidel.no does not ask for cookie consent because it does not store or read anything
+      on your device. The one thing it asks you to agree to is the waiting list on the front page
+      &mdash; and only if you fill it in yourself.</p>
   </div>
 
   <h2>What is measured</h2>
-  <p>The front page counts visits so the developer can tell whether anyone is finding it. The
-    measurement is done by <strong>Cloudflare Web Analytics</strong>, which is designed to work
-    without cookies and without building a profile of you.</p>
+  <p>The front page, <code>/download/</code>, the shared-lap page <code>/r/</code>, the buddy link
+    <code>/v/</code> and the track pages under <code>/bane/</code> count visits so the developer can tell
+    whether anyone is finding them. The measurement is done by <strong>Cloudflare Web Analytics</strong>,
+    which is designed to work without cookies and without building a profile of you. On <code>/r/</code>
+    and <code>/v/</code> the lap or the buddy code travels after <code>#</code> in the address; it never
+    leaves your browser, and the visit is counted on the plain path only.</p>
 
   <table>
     <tr><th>What</th><th>Why</th></tr>
@@ -62,28 +66,73 @@
     <li>The measurement cannot be linked to a Tidel account, a session, a lap time or a position.</li>
   </ul>
 
+  <h2>The waiting list</h2>
+  <p>The front page has one field: <strong>tell me when Tidel opens</strong>. Nothing is stored unless
+    you type your address, tick the box yourself and press the button. The box is never pre-ticked.
+    The form is for adults; under-15s cannot consent to marketing email themselves.</p>
+  <table>
+    <tr><th>What is stored</th><th>Why</th></tr>
+    <tr><td>Your email address</td><td>To send you the message you asked for</td></tr>
+    <tr><td>When you signed up, and the exact wording you ticked (as a version number)</td><td>To be able to show that, and how, you consented</td></tr>
+    <tr><td>Your language (Norwegian or English)</td><td>To write to you in it</td></tr>
+    <tr><td>When you confirmed, and when you unsubscribed</td><td>So mail goes only to confirmed addresses, and never again after you leave</td></tr>
+    <tr><td>When the opening email was sent to you, and how many times it could not be sent</td><td>So you get it once, and never twice</td></tr>
+  </table>
+  <ul>
+    <li><strong>Double confirmation.</strong> You first get one email with a link. You are not on the
+      list until you open it and press the button on the page it opens, and an unconfirmed address
+      is deleted after 30 days.</li>
+    <li><strong>What you get:</strong> one email when Tidel opens to everyone, and at most one a month
+      until then. No more than that.</li>
+    <li><strong>Unsubscribe</strong> with the link at the bottom of every email, including the first
+      one. The address is then marked as unsubscribed so it is not emailed again, and removed after
+      90 days.</li>
+    <li>The address is used for this alone. It is not linked to a Tidel account, and never shared or
+      sold. The form sends your address, the consent version and your language &mdash; nothing else.</li>
+    <li><strong>Flood guard.</strong> To stop one sender from filling the list, the database counts
+      sign-ups per day against a short code of your email address and a salted hash of the network address the
+      request came from. Neither is stored next to your email, and both are deleted after two days.</li>
+  </ul>
+  <p lang="nb"><strong>P&aring; norsk:</strong> ventelista p&aring; forsida lagrer e-postadressen din, n&aring;r du
+    meldte deg p&aring;, hvilken samtykketekst du krysset av for, spr&aring;ket, og n&aring;r du bekreftet eller meldte deg
+    av. N&aring;r Tidel &aring;pner, lagres ogs&aring; n&aring;r e-posten om det ble sendt til deg, og hvor mange ganger den ikke kunne
+    sendes, s&aring; ingen f&aring;r den to ganger. Ingenting sendes f&oslash;r du har &aring;pnet lenka i e-posten og trykket p&aring; knappen der; en ubekreftet adresse slettes etter 30 d&oslash;gn.
+    Du f&aring;r &eacute;n e-post n&aring;r Tidel &aring;pner, og h&oslash;yst &eacute;n i m&aring;neden fram til da. Avmelding st&aring;r i hver
+    e-post; en avmeldt adresse fjernes etter 90 d&oslash;gn. Skjemaet er for voksne. Adressen brukes bare til dette
+    og deles ikke. Mot flom teller basen p&aring;meldinger per d&oslash;gn mot en kort kode av e-postadressen og en saltet hash av
+    nettadressen kallet kom fra; ingen av dem lagres sammen med e-posten, og begge slettes etter to d&oslash;gn.</p>
+
   <h2>The legal bit</h2>
-  <p>The lawful basis is legitimate interest under GDPR article 6(1)(f): knowing whether a website
-    is read at all is a normal part of running one. Because no information is stored on or read
-    from your device, the Norwegian ekomlov &sect; 3-15 (the &laquo;cookie rule&raquo;) does not require
-    consent here.</p>
-  <p>Cloudflare acts as a data processor. Their documentation for this product is at
-    <a href="https://developers.cloudflare.com/web-analytics/">developers.cloudflare.com/web-analytics</a>.</p>
+  <p>For the visit counting, the lawful basis is legitimate interest under GDPR article 6(1)(f): knowing
+    whether a website is read at all is a normal part of running one. Because no information is stored
+    on or read from your device, the Norwegian ekomlov &sect; 3-15 (the &laquo;cookie rule&raquo;) does
+    not require consent here.</p>
+  <p>For the waiting list, the lawful basis is your consent, GDPR article 6(1)(a), given the way the
+    Norwegian Marketing Control Act &sect; 15 requires: by an active tick, documented, and withdrawable
+    at any time with the unsubscribe link.</p>
+  <p>Processors: <strong>Cloudflare</strong> for the counting
+    (<a href="https://developers.cloudflare.com/web-analytics/">developers.cloudflare.com/web-analytics</a>);
+    for the waiting list, <strong>Supabase</strong> stores the list in the European Union (Ireland), the
+    same database as the app, and <strong>Resend</strong> sends the emails from no-reply@tidel.no. Both
+    act on Tidel&rsquo;s instructions only.</p>
 
   <h2>Turning it off</h2>
   <p>Any content blocker that blocks <code>static.cloudflareinsights.com</code> stops the
     measurement completely, and the site works exactly the same without it. Sending
     <strong>Do Not Track</strong> or <strong>Global Privacy Control</strong> from your browser is
-    also respected &mdash; the script is not loaded at all in that case.</p>
+    also respected &mdash; the script is not loaded at all in that case. The waiting list needs
+    nothing turned off: it does nothing until you fill it in.</p>
 
   <h2>Contact</h2>
   <p>Magnus Linnerud St&oslash;me, Norway &mdash; <a href="mailto:post@tidel.no">post@tidel.no</a>.
+    One email is enough to have your address removed from the list entirely.
     You have the right to complain to Datatilsynet.</p>
 
   <div class="kort ro">
     <p>Looking for what the <strong>app</strong> collects? That is a different document:
       <a href="/privacy/">Privacy Policy</a> (English) or
-      <a href="/personvern/">Personvernerkl&aelig;ring</a> (norsk). Neither has changed.</p>
+      <a href="/personvern/">Personvernerkl&aelig;ring</a> (norsk). Each has its own date at the
+      top, which moves whenever it changes.</p>
   </div>
 </main>
 

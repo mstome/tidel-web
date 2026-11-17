@@ -7,3 +7,5 @@ Disallow: /konsept/
 Disallow: /dev.html
 
 Sitemap: https://tidel.no/sitemap.xml
+# Banesidene (V3): egen sitemap, laget av tools/banesider/lag-banesider.mjs
+Sitemap: https://tidel.no/bane/sitemap.xml
